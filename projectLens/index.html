@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProjectLens Suite Documentation</title>
+  <style>
+    /* ── Theme Container Integration (Fixed Overlap Bug) ── */
+    .tlab-standalone-viewport {
+      position: relative !important;
+      width: 100% !important;
+      min-height: auto !important;
+      background: #ffffff !important; /* Forces your crisp white layout background */
+      box-sizing: border-box;
+      clear: both;
+    }
+
+    /* ── Design System Tokens ─────────────────────────── */
+    .tlab-standalone-viewport {
+      --ink:       #0f172a; /* Sharp Dark Slate text */
+      --ink-muted: #475569;
+      --ink-faint: #94a3b8;
+      --paper:     #ffffff;
+      --surface:   #ffffff; 
+      --border:    #e2e8f0; /* Soft crisp separator borders */
+      --accent:    #4f46e5;
+      --accent-2:  #0ea5e9;
+      --accent-3:  #10b981;
+      --warn:      #f59e0b;
+      --danger:    #ef4444;
+      --topbar-h:  56px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+      font-family: var(--font-sans);
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .tlab-standalone-viewport *, 
+    .tlab-standalone-viewport *::before, 
+    .tlab-standalone-viewport *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    /* -- New Stick Rule --*/
+    /* 1. Force the layout block wrapper to create an isolated layout frame */
+    .tlab-standalone-viewport {
+      position: relative !important;
+      contain: layout;
+    }
+
+    /* 2. Lock the Topbar stickiness down using pure CSS rules */
+    .tlab-standalone-viewport #topbar {
+      position: -webkit-sticky !important;
+      position: sticky !important;
+      
+      /* CHANGE THIS: Set the gap from the very top of your screen */
+      top: 0px !important; 
+      left: 0;
+      right: 0;
+      padding-top: 60px !important;
+      background: #ffffff !important;
+      z-index: 9999 !important;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* 3. The Magic Fix: Tells the browser exactly where to land when navigating */
+    .tlab-standalone-viewport h2.doc-h2,
+    .tlab-standalone-viewport h3.doc-h3,
+    .tlab-standalone-viewport .section-anchor {
+      /* Topbar Height (56px) + Your Top Gap (50px) + Visual Cushion (20px) = 126px */
+      scroll-margin-top: 126px !important; 
+    }
+
+    /* ── Navigation Top Bar (Now Sticky) ────────────────── */
+    .tlab-standalone-viewport #topbar {
+      position: -webkit-sticky; /* Vendor prefix support for older iOS/Safari engines */
+      position: sticky;
+      top: 0; /* Adjust this value if your main theme header is also sticky! (e.g., top: 70px;) */
+      left: 0;
+      right: 0;
+      height: var(--topbar-h);
+      background: #ffffff !important; /* Solid background prevents body text from bleeding through on scroll */
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 24px;
+      z-index: 90; /* High enough to layer above documentation contents, low enough to slip under theme headers */
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tlab-standalone-viewport #topbar .logo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tlab-standalone-viewport #topbar .logo h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .tlab-standalone-viewport #topbar .logo h1 span { 
+      color: var(--accent); 
+    }
+
+    .tlab-standalone-viewport #topbar .logo p {
+      font-size: 9px;
+      color: var(--ink-faint);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tlab-standalone-viewport #topbar .divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ── Navigation Select Dropdown Component ─────────── */
+    .tlab-standalone-viewport #nav-select {
+      flex: 1;
+      min-width: 0;
+      height: 36px;
+      background: var(--paper);
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 28px 0 10px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .tlab-standalone-viewport #nav-select:focus { 
+      border-color: var(--accent); 
+      color: var(--ink); 
+    }
+
+    /* ── Content Wrapper Shell ───────────────────────── */
+    .tlab-standalone-viewport #main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      width: 100%;
+    }
+
+    /* ── Content Anchor Settings ─────────────────────── */
+    .tlab-standalone-viewport .section-anchor {
+      display: block;
+      position: relative;
+      visibility: hidden;
+    }
+
+    /* ── Headings ────────────────────────────────────── */
+    .tlab-standalone-viewport h2.doc-h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      margin: 48px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      word-break: break-word;
+    }
+
+    .tlab-standalone-viewport h2.doc-h2 .num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      color: var(--accent);
+      background: #ede9fe;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .tlab-standalone-viewport h3.doc-h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 32px 0 12px;
+    }
+
+    .tlab-standalone-viewport h4.doc-h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin: 24px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ── Typography Elements ─────────────────────────── */
+    .tlab-standalone-viewport p { 
+      margin-bottom: 16px; 
+      color: var(--ink-muted); 
+      font-size: 0.95rem; 
+    }
+    .tlab-standalone-viewport p strong { color: var(--ink); }
+    .tlab-standalone-viewport ul { margin: 0 0 16px 24px; }
+    .tlab-standalone-viewport li { margin-bottom: 8px; font-size: 0.95rem; color: var(--ink-muted); }
+    .tlab-standalone-viewport li strong { color: var(--ink); }
+    .tlab-standalone-viewport a { color: var(--accent); text-decoration: none; }
+    .tlab-standalone-viewport a:hover { text-decoration: underline; }
+
+    /* ── Layout Data Tables ──────────────────────────── */
+    .tlab-standalone-viewport .doc-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--paper);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tlab-standalone-viewport table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 550px;
+    }
+
+    .tlab-standalone-viewport thead tr { 
+      background: var(--ink); 
+      color: #ffffff; 
+    }
+
+    .tlab-standalone-viewport thead th { 
+      padding: 12px 14px; 
+      text-align: left; 
+      font-weight: 600; 
+    }
+
+    .tlab-standalone-viewport td { 
+      padding: 12px 14px; 
+      border-bottom: 1px solid var(--border); 
+      vertical-align: top; 
+    }
+
+    .tlab-standalone-viewport tbody tr:nth-child(even) { 
+      background: #f8fafc; 
+}
+
+    /* ── Code Display Engine ─────────────────────────── */
+    .tlab-standalone-viewport code {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      background: #f1f5f9;
+      color: #be123c;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .tlab-standalone-viewport pre {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: var(--ink);
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      line-height: 1.5;
+    }
+
+    .tlab-standalone-viewport pre code { 
+      background: none; 
+      border: none; 
+      color: inherit; 
+      padding: 0; 
+      font-size: inherit; 
+    }
+
+    /* ── Document Cover Header Block ─────────────────── */
+    .tlab-standalone-viewport .cover {
+      background: linear-gradient(135deg, var(--accent), #0ea5e9);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 36px 32px;
+      margin-bottom: 24px;
+    }
+
+    .tlab-standalone-viewport .cover h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .tlab-standalone-viewport .cover p {
+      color: rgba(255,255,255,.85);
+      font-size: .95rem;
+      margin-bottom: 6px;
+    }
+
+    .tlab-standalone-viewport .cover .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tlab-standalone-viewport .cover .badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      color: #ffffff;
+      padding: 3px 11px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    /* ── Callout Content Box ─────────────────────────── */
+    .tlab-standalone-viewport .box { 
+      padding: 14px 16px; 
+      border-radius: 6px; 
+      margin: 20px 0; 
+      font-size: 0.92rem; 
+      border-left: 4px solid; 
+    }
+
+    .tlab-standalone-viewport .box p { 
+      margin-bottom: 0; 
+      color: inherit; 
+      font-size: inherit; 
+    }
+
+    .tlab-standalone-viewport .box.info { 
+      background: #eff6ff; 
+      border-color: var(--accent-2); 
+      color: #1e40af; 
+    }
+
+    .tlab-standalone-viewport .box.warn { 
+      background: #fffbeb; 
+      border-color: var(--warn); 
+      color: #b45309; 
+    }
+
+    .tlab-standalone-viewport .box.tip { 
+      background: #ecfdf5; 
+      border-color: var(--accent-3); 
+      color: #065f46; 
+    }
+
+    /* ── Accordion FAQ Interface ─────────────────────── */
+    .tlab-standalone-viewport .faq-item { 
+      background: var(--paper); 
+      border: 1px solid var(--border); 
+      border-radius: 6px; 
+      margin-bottom: 12px; 
+      overflow: hidden; 
+    }
+
+    .tlab-standalone-viewport .faq-q { 
+      padding: 16px; 
+      font-size: 0.92rem; 
+      font-weight: 600; 
+      color: var(--ink); 
+      cursor: pointer; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 10px; 
+      user-select: none; 
+    }
+
+    .tlab-standalone-viewport .faq-q .arrow { 
+      font-size: 1.15rem; 
+      transform: rotate(90deg); 
+      transition: transform 0.2s ease; 
+      color: var(--ink-faint); 
+      line-height: 1; 
+    }
+
+    .tlab-standalone-viewport .faq-a { 
+      max-height: 0; 
+      overflow: hidden; 
+      transition: all 0.25s cubic-bezier(0,1,0,1); 
+      background: #fafafa; 
+    }
+
+    .tlab-standalone-viewport .faq-a p { 
+      padding: 16px; 
+      margin-bottom: 0; 
+      font-size: 0.9rem; 
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-q { 
+      border-bottom: 1px solid var(--border); 
+      background: #fdfdfd; 
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-q .arrow { 
+      transform: rotate(270deg); 
+      color: var(--accent); 
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-a { 
+      max-height: 1000px; 
+      transition: all 0.25s cubic-bezier(1,0,1,0); 
+    }
+
+    /* ── Footer ─────────────────────────────────────── */
+    .tlab-standalone-viewport footer {
+      text-align: center;
+      color: var(--ink-faint);
+      font-size: 0.78rem;
+      margin-top: 64px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+<div class="tlab-standalone-viewport">
+
+  <div id="topbar">
+    <div class="logo">
+      <h1>ProjectLens <span>Docs</span></h1>
+      <p>v2.1.0 core · v1.2 editor</p>
+    </div>
+    <div class="divider"></div>
+    <select id="nav-select" aria-label="Jump to section">
+      <option value="">☰ Jump to section…</option>
+      <optgroup label="Overview">
+        <option value="overview">1. Suite Overview</option>
+      </optgroup>
+      <optgroup label="ProjectLens — Core Plugin">
+        <option value="architecture">2. Architecture &amp; File Map</option>
+        <option value="post-type">3. Custom Post Type &amp; Taxonomies</option>
+        <option value="segments">4. Project Segments</option>
+        <option value="settings-meta">5. Project Settings &amp; Funding Meta</option>
+        <option value="styling">6. Styling &amp; Appearance</option>
+        <option value="templates">7. Frontend Templates</option>
+        <option value="access">8. Roles &amp; Access Control</option>
+        <option value="global-settings">9. Global Settings Page</option>
+        <option value="nav-menus">10. Navigation Menus</option>
+        <option value="demo-data">11. Demo Data</option>
+      </optgroup>
+      <optgroup label="ProjectLens Project Editor">
+        <option value="editor-overview">12. Editor Plugin Overview</option>
+        <option value="shortcode">13. Shortcode Reference</option>
+        <option value="editor-permissions">14. Permission Model</option>
+        <option value="editor-ajax">15. AJAX Endpoints</option>
+        <option value="editor-media">16. Media Library Behaviour</option>
+      </optgroup>
+      <optgroup label="Admin Guide">
+        <option value="install">17. Installation &amp; Setup</option>
+        <option value="admin-workflow">18. Day-to-Day Admin Workflow</option>
+        <option value="granting-access">19. Granting Editor Access</option>
+        <option value="locking">20. Locking Projects</option>
+        <option value="troubleshooting">21. Troubleshooting</option>
+      </optgroup>
+      <optgroup label="Reference">
+        <option value="faq">22. FAQ</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div id="main">
+
+    <div class="cover">
+      <h1>ProjectLens Suite</h1>
+      <p>Combined Technical Documentation &amp; Administrator Guide</p>
+      <p>Covers <strong>ProjectLens</strong> (core showcase plugin) and <strong>ProjectLens Project Editor</strong> (frontend editing add-on).</p>
+      <div class="badges">
+        <span class="badge">ProjectLens v2.1.0</span>
+        <span class="badge">Project Editor v1.2</span>
+        <span class="badge">Requires WordPress 6.0+</span>
+        <span class="badge">Requires PHP 8.0+</span>
+      </div>
+    </div>
+
+    <span class="section-anchor" id="overview"></span>
+    <h2 class="doc-h2"><span class="num">01</span> Suite Overview</h2>
+    <p>The ProjectLens suite is a development-portfolio system for showcasing funded projects (NGO, government, or grant-based work) on a WordPress site. It consists of two plugins that work together:</p>
+    
+    <div class="doc-table-wrap">
+      <table>
+        <thead>
+          <tr><th>Plugin</th><th>Slug / Text Domain</th><th>Version</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ProjectLens</strong></td>
+            <td><code>projectlens</code></td>
+            <td>2.1.0</td>
+            <td>Core plugin. Registers the <code>pl_project</code> custom post type, the segment-based content model, full-page frontend templates, styling controls, role-based access control, global settings, and demo data.</td>
+          </tr>
+          <tr>
+            <td><strong>ProjectLens Project Editor</strong></td>
+            <td><code>pl-project-editor</code></td>
+            <td>1.2</td>
+            <td>Add-on. Adds a <code>[pl_project_editor]</code> shortcode that renders a full project-editing interface on any frontend page, for users who hold the <code>pl_edit_projects</code> capability but do not have access to wp-admin.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="box info"><p><strong>Dependency:</strong> ProjectLens Project Editor requires the core ProjectLens plugin to be active. If ProjectLens is missing, the editor plugin displays an admin notice and does not load.</p></div>
+
+    <h3 class="doc-h3">What ProjectLens Projects Look Like</h3>
+    <p>Each project is a single post of type <code>pl_project</code>, displayed on its own full-page template (the active theme's header/footer are bypassed). The page uses a <strong>70/30 split layout</strong>:</p>
+    <ul>
+      <li><strong>Left panel (70%)</strong> — a vertical stack of "segments" (descriptive text, media sliders, metadata tables, team cards, timelines, document lists), each shown in summarised form.</li>
+      <li><strong>Right panel (30%)</strong> — a detail panel that displays the full content of whichever segment the visitor clicks "Show Detail" on. On mobile, this becomes a slide-over view with a back button.</li>
+    </ul>
+    <p>All projects are listed on an archive page with category/status filter pills and pagination.</p>
+
+    <span class="section-anchor" id="architecture"></span>
+    <h2 class="doc-h2"><span class="num">02</span> Architecture &amp; File Map</h2>
+    <h3 class="doc-h3">ProjectLens (core)</h3>
+    <pre><code>projectlens/
+├── projectlens.php                 Bootstrap: defines constants, hooks, asset enqueueing
+├── includes/
+│   ├── class-pl-post-type.php      Registers pl_project CPT + taxonomies
+│   ├── class-pl-segment.php        Segment type registry + all admin/frontend renderers
+│   ├── class-pl-meta-boxes.php     Admin meta boxes (segments, settings, styling) + save/sanitise
+│   ├── class-pl-settings.php       Global Settings admin page
+│   ├── class-pl-demo-data.php      One-click demo project install/remove
+│   ├── class-pl-access.php         Capability registration + Manage Access admin page
+│   └── class-pl-nav-menu.php       Sticky nav-strip menu locations for single/archive pages
+├── templates/
+│   ├── single-pl_project.php       Full-page template for a single project
+│   └── archive-pl_project.php      Full-page template for the projects archive
+├── admin/
+│   ├── css/admin.css
+│   └── js/admin.js                 Segment editor UI (drag/drop, media picker, repeaters)
+└── public/
+    ├── css/projectlens.css         Frontend styles (driven by CSS custom properties)
+    ├── js/projectlens.js           Frontend interactivity (sliders, detail panel, maps)
+    └── vendor/leaflet/             Bundled Leaflet.js for geo-location maps</code></pre>
+
+    <h3 class="doc-h3">ProjectLens Project Editor (add-on)</h3>
+    <pre><code>pl-project-editor/
+├── pl-project-editor.php           Bootstrap: checks dependency, loads PLE_Editor
+├── includes/
+│   └── class-ple-editor.php        Shortcode, AJAX handlers, sanitisation
+└── public/
+    ├── css/ple-editor.css
+    └── js/ple-editor.js            Frontend editor UI logic</code></pre>
+
+    <h3 class="doc-h3">Key Constants</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Constant</th><th>Plugin</th><th>Value / Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>PL_VERSION</code></td><td>ProjectLens</td><td><code>2.1.0</code></td></tr>
+          <tr><td><code>PL_PLUGIN_DIR</code> / <code>PL_PLUGIN_URL</code></td><td>ProjectLens</td><td>Absolute filesystem path / URL of the plugin directory</td></tr>
+          <tr><td><code>PLE_VERSION</code></td><td>Project Editor</td><td><code>1.2</code></td></tr>
+          <tr><td><code>PLE_PLUGIN_DIR</code> / <code>PLE_PLUGIN_URL</code></td><td>Project Editor</td><td>Absolute filesystem path / URL of the editor plugin directory</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-anchor" id="post-type"></span>
+    <h2 class="doc-h2"><span class="num">03</span> Custom Post Type &amp; Taxonomies</h2>
+    <h3 class="doc-h3">The <code>pl_project</code> Post Type</h3>
+    <p>Registered by <code>PL_Post_Type::register_cpt()</code> with the following notable settings:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>Slug / rewrite</code></td><td><code>project</code></td><td>Single projects are reachable at <code>/project/&lt;slug&gt;/</code></td></tr>
+          <tr><td><code>Has archive</code></td><td>Yes</td><td>Archive at <code>/project/</code></td></tr>
+          <tr><td><code>Supports</code></td><td>title, thumbnail, revisions, excerpt</td><td>Block editor is <strong>disabled</strong> so the custom meta boxes remain primary</td></tr>
+          <tr><td><code>show_in_rest</code></td><td>true</td><td>Enables the Query Loop block to list projects on FSE pages</td></tr>
+          <tr><td><code>rest_base</code></td><td><code>pl_projects</code></td><td>REST endpoint: <code>/wp-json/wp/v2/pl_projects</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="doc-h4">Capability Mapping</h4>
+    <p>The CPT maps to four custom capabilities (see <a href="#access">Section 8</a>):</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>WordPress capability</th><th>Mapped to</th></tr></thead>
+        <tbody>
+          <tr><td><code>edit_posts</code>, <code>edit_others_posts</code>, <code>read_private_posts</code>, <code>edit_private_posts</code>, <code>edit_published_posts</code></td><td><code>pl_edit_projects</code></td></tr>
+          <tr><td><code>publish_posts</code>, <code>create_posts</code></td><td><code>pl_create_projects</code></td></tr>
+          <tr><td><code>delete_posts</code>, <code>delete_private_posts</code>, <code>delete_published_posts</code>, <code>delete_others_posts</code></td><td><code>pl_delete_projects</code></td></tr>
+          <tr><td><code>read_post</code></td><td><code>read</code> (any visitor)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="doc-h4">Admin List Columns</h4>
+    <p>The Projects list table gains three extra columns sourced from <code>_pl_project_settings</code>:</p>
+    <ul>
+      <li><strong>Code</strong> — <code>project_code</code></li>
+      <li><strong>Funder</strong> — <code>funder_name</code></li>
+      <li><strong>Budget</strong> — formatted as <code>{currency} {amount}</code></li>
+    </ul>
+
+    <h4 class="doc-h4">Excerpt Sync</h4>
+    <p>On every save, <code>PL_Post_Type::sync_excerpt()</code> copies the plain-text version of <code>short_description</code> into <code>post_excerpt</code>, so theme Query Loop "Excerpt" blocks display it correctly.</p>
+
+    <h3 class="doc-h3">Taxonomies</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Taxonomy</th><th>Label</th><th>Hierarchical</th><th>Rewrite Slug</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>pl_category</code></td><td>Project Categories</td><td>Yes</td><td><code>project-category</code></td><td>Used for archive filter pills</td></tr>
+          <tr><td><code>pl_status</code></td><td>Project Status</td><td>No</td><td><code>project-status</code></td><td>Used for archive status pills</td></tr>
+          <tr><td><code>pl_tag</code></td><td>Project Tags</td><td>No</td><td><code>project-tag</code></td><td>Free-form tagging</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box info"><p><strong>Note:</strong> the <code>pl_status</code> taxonomy (for archive filtering) and the <code>project_status</code> meta field (used for the status badge on a project's header and card) are independent. Both can be used for filtering and display.</p></div>
+
+    <span class="section-anchor" id="segments"></span>
+    <h2 class="doc-h2"><span class="num">04</span> Project Segments</h2>
+    <p>A project's body content is built from an ordered list of <strong>segments</strong>, stored in post meta key <code>_pl_segments</code> as an array. Each segment has a <code>type</code>, a <code>title</code>, an <code>enabled</code> flag, and type-specific fields.</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Type key</th><th>Label</th><th>Fields stored</th><th>Summary view</th><th>Detail view</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>descriptive</code></td><td>Descriptive</td>
+            <td><code>subtitle</code>, <code>content</code> (rich text), <code>detail_content</code> (rich text)</td>
+            <td>Subtitle + <code>content</code> truncated to project word limit, with a "Show Detail" button</td>
+            <td>Full <code>detail_content</code> (falls back to <code>content</code> if empty)</td>
+          </tr>
+          <tr>
+            <td><code>media</code></td><td>Media Slider</td>
+            <td><code>slides[]</code> — each with <code>media_id</code>, <code>media_type</code>, <code>video_url</code>, <code>caption</code>, <code>description</code>, <code>geo_lat</code>, <code>geo_lng</code>, <code>geo_label</code></td>
+            <td>Horizontal thumbnail strip; videos show a play icon; YouTube/Vimeo URLs auto-fetch a thumbnail</td>
+            <td>Full-size viewer per slide, including embedded video and a Leaflet map for any slide with geo-coordinates</td>
+          </tr>
+          <tr>
+            <td><code>metadata</code></td><td>Project Metadata</td>
+            <td><code>fields[]</code> — each a <code>label</code>/<code>value</code> pair</td>
+            <td>First 5 fields as a definition list; "Show all N fields" button if more than 5</td>
+            <td>All fields as a full-width definition list</td>
+          </tr>
+          <tr>
+            <td><code>team</code></td><td>Team &amp; Stakeholders</td>
+            <td><code>members[]</code> — each with <code>avatar_id</code>, <code>name</code>, <code>role</code>, <code>email</code>, <code>bio</code></td>
+            <td>Row of clickable avatars with name/role</td>
+            <td>Card per member with larger avatar, email link, and bio</td>
+          </tr>
+          <tr>
+            <td><code>timeline</code></td><td>Timeline &amp; Milestones</td>
+            <td><code>milestones[]</code> — each with <code>title</code>, <code>date</code>, <code>status</code> (planned/active/completed/delayed), <code>description</code></td>
+            <td>Compact dot-list with title, date, and status</td>
+            <td>Full vertical timeline with descriptions and status badges</td>
+          </tr>
+          <tr>
+            <td><code>documents</code></td><td>Documents &amp; Downloads</td>
+            <td><code>files[]</code> — each with <code>file_id</code>, <code>label</code>, <code>description</code>, <code>allow_download</code>, <code>allow_viewer</code></td>
+            <td>Document count + clickable list with file-type icons</td>
+            <td>Full list with download buttons (per <code>allow_download</code>)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Segment Admin Controls</h3>
+    <ul>
+      <li><strong>Drag handle</strong> — reorder segments via jQuery UI Sortable.</li>
+      <li><strong>Title field</strong> — optional heading shown above the segment on the frontend.</li>
+      <li><strong>Visible checkbox</strong> — corresponds to <code>enabled</code>; hidden segments are skipped entirely on the frontend.</li>
+      <li><strong>Collapse toggle</strong> — purely a UI convenience in the admin editor (stored as <code>collapsed</code>).</li>
+      <li><strong>Delete</strong> — removes the segment and all its sub-items.</li>
+    </ul>
+
+    <h3 class="doc-h3">YouTube / Vimeo Thumbnails</h3>
+    <p>For <code>media</code> segments where a slide's <code>media_type</code> is <code>video_url</code> and no <code>media_id</code> is set, ProjectLens automatically derives a thumbnail:</p>
+    <ul>
+      <li><strong>YouTube</strong> — thumbnail URL is built directly from the video ID (<code>https://img.youtube.com/vi/&lt;id&gt;/hqdefault.jpg</code>), no API call needed.</li>
+      <li><strong>Vimeo</strong> — the plugin calls Vimeo's oEmbed endpoint and caches the result in a transient for 24 hours (<code>pl_vimeo_thumb_&lt;id&gt;</code>).</li>
+    </ul>
+
+    <span class="section-anchor" id="settings-meta"></span>
+    <h2 class="doc-h2"><span class="num">05</span> Project Settings &amp; Funding Metadata</h2>
+    <p>Stored in post meta key <code>_pl_project_settings</code>, edited via the <strong>Project Settings &amp; Funding Information</strong> meta box.</p>
+
+    <h3 class="doc-h3">Project Identity</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field key</th><th>Label</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td><code>project_code</code></td><td>Project Code / ID</td><td>Text</td></tr>
+          <tr><td><code>project_status</code></td><td>Project Status</td><td>Select — concept / planning / active / completed / certified / suspended / cancelled</td></tr>
+          <tr><td><code>short_description</code></td><td>Short Description</td><td>Text area (admin: HTML via <code>wp_kses_post</code>; frontend editor: plain text)</td></tr>
+          <tr><td><code>location</code></td><td>Project Location</td><td>Text</td></tr>
+          <tr><td><code>country</code></td><td>Country / Region</td><td>Text</td></tr>
+          <tr><td><code>website</code></td><td>Website / URL</td><td>URL</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Dates &amp; Duration</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field key</th><th>Label</th></tr></thead>
+        <tbody>
+          <tr><td><code>start_date</code></td><td>Start Date</td></tr>
+          <tr><td><code>end_date</code></td><td>End Date (Planned)</td></tr>
+          <tr><td><code>completion_date</code></td><td>Actual Completion Date</td></tr>
+          <tr><td><code>reporting_period</code></td><td>Reporting Period (e.g. "Q3 2024 / Annual")</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Funding &amp; Budget</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field key</th><th>Label</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td><code>funder_name</code></td><td>Funding Agency / Donor</td><td>Text</td></tr>
+          <tr><td><code>implementing_agency</code></td><td>Implementing Agency</td><td>Text</td></tr>
+          <tr><td><code>executing_agency</code></td><td>Executing Agency</td><td>Text</td></tr>
+          <tr><td><code>grant_number</code></td><td>Grant / Contract Number</td><td>Text</td></tr>
+          <tr><td><code>budget_currency</code></td><td>Currency</td><td>Select (USD, EUR, GBP, INR, AUD, CAD, JPY, CNY, CHF, SEK, NOK, DKK)</td></tr>
+          <tr><td><code>budget_total</code></td><td>Total Budget</td><td>Number (float)</td></tr>
+          <tr><td><code>grant_amount</code></td><td>Grant Amount</td><td>Number (float)</td></tr>
+          <tr><td><code>cofinancing</code></td><td>Co-financing Amount</td><td>Number (float)</td></tr>
+          <tr><td><code>disbursement</code></td><td>Disbursement to Date</td><td>Number (float)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Display Settings</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field key</th><th>Label</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>word_limit</code></td><td>Word Limit (truncation)</td><td>Per-project override for descriptive segment summaries. Range 10–500, default 60.</td></tr>
+          <tr><td><code>show_header</code></td><td>Show Project Header</td><td>Boolean. Hides/shows the title, featured image, and status badge at the top of the single page.</td></tr>
+          <tr><td><code>default_detail</code></td><td>Default Detail Panel</td><td>One of <code>metadata</code> (default), <code>first</code>, or <code>empty</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box info"><p><strong>short_description sanitisation:</strong> the core admin meta box sanitises this field with <code>wp_kses_post()</code> (allows safe HTML). The frontend editor sanitises it with <code>sanitize_textarea_field()</code> (plain text only) — see Section 14.</p></div>
+
+    <span class="section-anchor" id="styling"></span>
+    <h2 class="doc-h2"><span class="num">06</span> Styling &amp; Appearance</h2>
+    <p>Per-project visual styling is stored in post meta key <code>_pl_styling</code>, edited via the <strong>Styling &amp; Appearance</strong> side meta box (admin only). Values are emitted as CSS custom properties on the single-project page.</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field key</th><th>Label</th><th>Type</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><code>accent_color</code></td><td>Accent Color</td><td>Hex color</td><td><code>#2563eb</code></td></tr>
+          <tr><td><code>heading_color</code></td><td>Heading Color</td><td>Hex color</td><td><code>#111827</code></td></tr>
+          <tr><td><code>body_color</code></td><td>Body Text Color</td><td>Hex color</td><td><code>#374151</code></td></tr>
+          <tr><td><code>bg_color</code></td><td>Background Color</td><td>Hex color</td><td><code>#f9fafb</code></td></tr>
+          <tr><td><code>panel_bg</code></td><td>Panel Background</td><td>Hex color</td><td><code>#ffffff</code></td></tr>
+          <tr><td><code>border_color</code></td><td>Segment Border</td><td>Hex color</td><td><code>#e5e7eb</code></td></tr>
+          <tr><td><code>border_radius</code></td><td>Border Radius (px)</td><td>Integer, 0–32</td><td><code>8</code></td></tr>
+          <tr><td><code>font_size_base</code></td><td>Base Font Size (px)</td><td>Integer, 12–22</td><td><code>15</code></td></tr>
+          <tr><td><code>font_size_heading</code></td><td>Heading Font Size (px)</td><td>Integer, 14–40</td><td><code>20</code></td></tr>
+          <tr><td><code>btn_style</code></td><td>Button Style</td><td>Select — filled / outline / ghost</td><td><code>filled</code></td></tr>
+          <tr><td><code>font_family</code></td><td>Font Family</td><td>Select — system / inter / georgia / roboto</td><td><code>system</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Resulting CSS Custom Properties</h3>
+    <p>The single-project template writes a <code>:root</code> block with these variables, consumed throughout <code>projectlens.css</code>:</p>
+    <pre><code>--pl-accent
+--pl-heading
+--pl-body
+--pl-bg
+--pl-panel-bg
+--pl-border
+--pl-radius       (px)
+--pl-font-size    (px)
+--pl-h-size       (px)
+--pl-font-family</code></pre>
+
+    <h3 class="doc-h3">Lock from Frontend Editing</h3>
+    <p>The Styling meta box also contains the <strong>Lock from Frontend Editing</strong> checkbox, stored as post meta <code>_pl_locked</code>. This is the master switch covered in <a href="#locking">Section 20</a>.</p>
+
+    <span class="section-anchor" id="templates"></span>
+    <h2 class="doc-h2"><span class="num">07</span> Frontend Templates (Single &amp; Archive)</h2>
+    <p>Both the single project page and the projects archive use dedicated full-page templates that bypass the active theme (via the <code>template_include</code> filter). Each template calls <code>wp_head()</code> and <code>wp_footer()</code> so plugins/analytics still work, but the theme's header.php/footer.php are not used.</p>
+
+    <h3 class="doc-h3">Single Project Template (<code>single-pl_project.php</code>)</h3>
+    <ul>
+      <li><strong>Top bar</strong> — "← All Projects" link back to the archive, an optional sticky nav menu (Section 10), and the site name.</li>
+      <li><strong>Header block</strong> (if <code>show_header</code> is enabled) — featured image as a background, status badge, location, funder, date range, title, and short description.</li>
+      <li><strong>Main 70/30 layout</strong>: <code>#pl-summary-panel</code> (70%) renders every enabled segment; <code>#pl-detail-panel</code> (30%) initially shows a "Project Overview" block built from Project Settings fields.</li>
+      <li><strong>Embedded JSON</strong> — all segment data is embedded as <code>&lt;script id="pl-segments-data" type="application/json"&gt;</code>. <code>projectlens.js</code> reads these to power the detail panel, sliders, and Leaflet maps without further AJAX calls.</li>
+    </ul>
+
+    <h3 class="doc-h3">Archive Template (<code>archive-pl_project.php</code>)</h3>
+    <ul>
+      <li><strong>Top bar</strong> — optional sticky nav menu (archive location) + site name.</li>
+      <li><strong>Archive header</strong> — title with a live count of matching projects.</li>
+      <li><strong>Filter bar</strong> (if enabled in Global Settings): Category pills (<code>pl_category</code> terms) and Status pills (<code>pl_status</code> terms).</li>
+      <li><strong>Project grid</strong> — one card per project: thumbnail with status badge overlay, category tags, title, short description, location/funder/date meta row, and a "View Project →" link.</li>
+      <li><strong>Pagination</strong> — numbered page links based on <code>per_page</code> from Global Settings.</li>
+    </ul>
+
+    <h3 class="doc-h3">Query Loop / FSE Compatibility</h3>
+    <p>Because <code>show_in_rest</code> is enabled, the Query Loop block can list <code>pl_project</code> posts on full-site-editing pages. ProjectLens adds a <code>pre_get_posts</code> hook that ensures a secondary Query Loop query requesting <code>pl_project</code> is honoured even if WordPress would otherwise override it with the main query.</p>
+
+    <span class="section-anchor" id="access"></span>
+    <h2 class="doc-h2"><span class="num">08</span> Roles &amp; Access Control</h2>
+    <p>ProjectLens introduces four custom capabilities, managed entirely by <code>PL_Access</code>:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Capability</th><th>Controls</th></tr></thead>
+        <tbody>
+          <tr><td><code>pl_create_projects</code></td><td>Create new projects (publish/draft)</td></tr>
+          <tr><td><code>pl_edit_projects</code></td><td>Edit existing projects (including via the frontend editor)</td></tr>
+          <tr><td><code>pl_delete_projects</code></td><td>Trash or permanently delete projects</td></tr>
+          <tr><td><code>pl_manage_access</code></td><td>Access the "Manage Access" admin screen and change other users'/roles' PL capabilities</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Default Role Grants (on activation)</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>WordPress role</th><th>Granted capabilities</th></tr></thead>
+        <tbody>
+          <tr><td>Administrator</td><td>All four (create, edit, delete, manage access)</td></tr>
+          <tr><td>Editor</td><td>create, edit</td></tr>
+          <tr><td>Author</td><td>create</td></tr>
+          <tr><td>Contributor</td><td>none</td></tr>
+          <tr><td>Subscriber</td><td>none</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Manage Access Admin Page</h3>
+    <p>Located under <strong>Projects → Manage Access</strong>. It has two tabs:</p>
+    <ul>
+      <li><strong>Users tab</strong> — a table of every user who can edit posts, with checkboxes for each of the four PL capabilities. The currently logged-in user's own <code>pl_manage_access</code> checkbox is protected from accidental self-lockout.</li>
+      <li><strong>Role defaults tab</strong> — a matrix of every WordPress role &times; the four PL capabilities, for bulk grant/revoke at the role level.</li>
+    </ul>
+
+    <span class="section-anchor" id="global-settings"></span>
+    <h2 class="doc-h2"><span class="num">09</span> Global Settings Page</h2>
+    <p>Located at <strong>Projects → Global Settings</strong>, stored as a single option <code>pl_global</code> (array). These values act as fallbacks for any per-project setting that is left empty.</p>
+
+    <h3 class="doc-h3">Default Styling</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Option key</th><th>Label</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><code>default_accent</code></td><td>Default Accent Color</td><td><code>#2563eb</code></td></tr>
+          <tr><td><code>default_font_size</code></td><td>Default Font Size (px)</td><td><code>15</code></td></tr>
+          <tr><td><code>default_word_limit</code></td><td>Default Word Limit</td><td><code>60</code></td></tr>
+          <tr><td><code>default_border_radius</code></td><td>Default Border Radius (px)</td><td><code>8</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Archive / Listing Settings</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Option key</th><th>Label</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><code>per_page</code></td><td>Projects Per Page</td><td><code>12</code></td></tr>
+          <tr><td><code>show_cat_filter</code></td><td>Show Category Filter</td><td>On</td></tr>
+          <tr><td><code>show_status_filter</code></td><td>Show Status Filter</td><td>On</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Map Settings</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Option key</th><th>Label</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><code>map_tiles</code></td><td>Map Tile Provider</td><td><code>osm</code> (OpenStreetMap). Alternatives: <code>carto_light</code>, <code>carto_dark</code>.</td></tr>
+          <tr><td><code>map_zoom</code></td><td>Default Map Zoom</td><td><code>13</code> (1–20)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Data &amp; Uninstall</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Option key</th><th>Label</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><code>delete_on_uninstall</code></td><td>Delete all data on uninstall</td><td>Off</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box warn"><p><strong>Warning:</strong> enabling "Delete all data on uninstall" permanently removes all ProjectLens projects, taxonomy terms, and settings when the plugin is <em>deleted</em> (not just deactivated). This cannot be undone.</p></div>
+
+    <span class="section-anchor" id="nav-menus"></span>
+    <h2 class="doc-h2"><span class="num">10</span> Navigation Menus</h2>
+    <p>ProjectLens registers two custom nav menu locations via <code>register_nav_menus()</code>, managed in <strong>Appearance → Menus</strong> and assigned in <strong>Projects → Global Settings → Navigation Menus</strong>.</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Location key</th><th>Label</th><th>Renders on</th><th>Placement</th></tr></thead>
+        <tbody>
+          <tr><td><code>pl_single_nav</code></td><td>ProjectLens — Single Project Page</td><td>Every <code>pl_project</code> single page</td><td>Sticky horizontal strip directly below the project header (<code>.pl-nav-strip--single</code>)</td></tr>
+          <tr><td><code>pl_archive_nav</code></td><td>ProjectLens — Archive / Projects List Page</td><td>The projects archive page</td><td>Full-width strip at the very top of the content area (<code>.pl-nav-strip--archive</code>)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Each location supports one level of dropdown (<code>depth: 2</code>). If no menu is assigned to a location, nothing is rendered for that slot.</p>
+    <ol>
+      <li>Go to <strong>Appearance → Menus</strong> and create a menu with your desired links/dropdowns.</li>
+      <li>Go to <strong>Projects → Global Settings → Navigation Menus</strong>.</li>
+      <li>Choose the menu for each location from the dropdowns (or "— None (hidden) —" to disable).</li>
+      <li>Save Changes.</li>
+    </ol>
+
+    <span class="section-anchor" id="demo-data"></span>
+    <h2 class="doc-h2"><span class="num">11</span> Demo Data</h2>
+    <p>From <strong>Projects → Global Settings</strong>, administrators can install a single, fully-populated sample project that exercises every segment type and the full 70/30 layout — useful for previewing styling changes or training new editors.</p>
+    <ul>
+      <li><strong>Install Demo Project</strong> — creates one demo <code>pl_project</code> post with sample segments, settings, and styling. Its post ID is stored in an option so the plugin can find it later.</li>
+      <li><strong>Remove Demo Project</strong> — permanently deletes the demo project and all its data. Requires confirmation.</li>
+      <li>If a demo project already exists, the "Install" action is blocked with a warning notice.</li>
+      <li>Installing the demo links directly to "View it →" on success.</li>
+    </ul>
+    <div class="box tip"><p><strong>Tip:</strong> the demo project is a normal <code>pl_project</code> post — it can be edited, locked, or used as a starting template by duplicating its content with a page-duplication plugin.</p></div>
+
+    <span class="section-anchor" id="editor-overview"></span>
+    <h2 class="doc-h2"><span class="num">12</span> Editor Plugin Overview</h2>
+    <p>ProjectLens Project Editor (slug <code>pl-project-editor</code>, version 1.2) adds a single shortcode, <code>[pl_project_editor]</code>, that renders a complete project-editing interface on any frontend page. It is designed for users — typically field staff, content coordinators, or NGO partners — who need to update project content but should not have access to wp-admin.</p>
+
+    <h3 class="doc-h3">Capabilities of the Editor</h3>
+    <ul>
+      <li>Lists every <code>pl_project</code> post the current user is allowed to edit.</li>
+      <li>Renders a tabbed editor mirroring the wp-admin meta boxes.</li>
+      <li>Saves changes via AJAX (no page reload).</li>
+      <li>Provides a scoped media library: any eligible user can browse and use any attachment, but can only <strong>delete</strong> attachments they personally uploaded.</li>
+    </ul>
+
+    <h3 class="doc-h3">Explicit Limitations</h3>
+    <ul>
+      <li><strong>Cannot create new projects.</strong> The project dropdown only lists existing posts.</li>
+      <li><strong>Cannot delete projects.</strong> No delete action exists anywhere in the editor UI.</li>
+      <li><strong>Does not expose Styling controls.</strong> Colors, fonts, border radius, etc. remain admin-only.</li>
+      <li><strong>Non-administrators cannot add or remove segments</strong>, change the project title, edit Project Abstracts, or toggle document download/viewer flags — see <a href="#editor-permissions">Section 14</a>.</li>
+    </ul>
+
+    <h3 class="doc-h3">Compatibility Notes</h3>
+    <ul>
+      <li><strong>REST media upload fix</strong> — the plugin filters <code>user_has_cap</code> to grant <code>upload_files</code> at the REST layer specifically to users who already hold <code>pl_edit_projects</code>.</li>
+      <li><strong>WP-Optimize minifier fix</strong> — the plugin excludes its own script handle (<code>ple-editor</code>) from WP-Optimize's script concatenation via the <code>wpo_minify_exclude_handles</code> filter.</li>
+    </ul>
+
+    <span class="section-anchor" id="shortcode"></span>
+    <h2 class="doc-h2"><span class="num">13</span> Shortcode Reference</h2>
+    <h3 class="doc-h3"><code>[pl_project_editor]</code></h3>
+    <p>Place this shortcode on any page or post (e.g. a "My Projects" page in your site's navigation).</p>
+    <pre><code>[pl_project_editor]</code></pre>
+    <p>This shortcode currently accepts no attributes.</p>
+
+    <h3 class="doc-h3">Output States</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Visitor state</th><th>Rendered output</th></tr></thead>
+        <tbody>
+          <tr><td>Not logged in</td><td>Warning notice: "You must be logged in to edit projects."</td></tr>
+          <tr><td>Logged in, lacks <code>pl_edit_projects</code></td><td>Error notice: "You do not have permission to edit projects."</td></tr>
+          <tr><td>Logged in, has <code>pl_edit_projects</code>, but no editable projects exist</td><td>Project selector with a "No projects are available for you to edit." notice</td></tr>
+          <tr><td>Logged in, has <code>pl_edit_projects</code>, projects available</td><td>Full editor shell: project selector, tabs, and save bar</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Editor Shell Structure</h3>
+    <ul>
+      <li><strong>Project selector</strong> — a dropdown of all publish/draft/private projects, ordered by title. Locked projects are hidden from non-administrators entirely (shown to admins with a 🔒 icon).</li>
+      <li><strong>Preview button</strong> — opens the selected project's live page in a new tab.</li>
+      <li><strong>Project Title field</strong> — editable only by administrators; read-only for everyone else.</li>
+      <li><strong>Tabs</strong>: Project Segments (always visible); Project Abstracts (administrators only); Project Settings (always visible, contains the Feature Image control).</li>
+      <li><strong>Save Changes button</strong> — triggers the AJAX save (Section 15).</li>
+    </ul>
+    <div class="box info"><p>Assets are enqueued <strong>only</strong> on pages where the shortcode is present <em>and</em> the visitor is logged in with <code>pl_edit_projects</code> — keeping the footprint minimal elsewhere on the site.</p></div>
+
+    <span class="section-anchor" id="editor-permissions"></span>
+    <h2 class="doc-h2"><span class="num">14</span> Permission Model</h2>
+    <p>The frontend editor enforces a stricter, two-tier permission model on top of the base <code>pl_edit_projects</code> capability check:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Action</th><th>Administrator</th><th>Other users with <code>pl_edit_projects</code></th></tr></thead>
+        <tbody>
+          <tr><td>View/select any non-locked project</td><td>✅ (including locked, shown with 🔒)</td><td>✅ (locked projects hidden entirely)</td></tr>
+          <tr><td>Edit project title</td><td>✅</td><td>❌ (field is read-only; posted value ignored)</td></tr>
+          <tr><td>Add / remove segments</td><td>✅</td><td>❌ — if posted segment count differs from stored count, the entire segment save is discarded</td></tr>
+          <tr><td>Edit segment content</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Reorder segments</td><td>✅</td><td>UI present, but effectively not persisted unless segment count is unchanged</td></tr>
+          <tr><td>Edit Project Abstracts</td><td>✅</td><td>❌ — "Project Abstracts" tab not rendered for non-admins; posted data ignored server-side</td></tr>
+          <tr><td>Set / remove featured image</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Toggle download/viewer per document</td><td>✅</td><td>❌ — existing stored values are preserved automatically</td></tr>
+          <tr><td>Save a locked project</td><td>✅</td><td>❌ — AJAX save returns a 403 error</td></tr>
+          <tr><td>Delete own uploaded media</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Delete media uploaded by others</td><td>❌ <em>(by design — ownership checked for all users)</em></td><td>❌</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box info"><p><strong>Segment-count guard:</strong> because non-administrators cannot add/remove segments and the server rejects any save where the segment array's length changed, reordering segments as a non-admin will save individual segment edits but the order itself is only reliably persisted when performed by an administrator.</p></div>
+
+    <span class="section-anchor" id="editor-ajax"></span>
+    <h2 class="doc-h2"><span class="num">15</span> AJAX Endpoints</h2>
+    <p>All endpoints are registered for logged-in users only (<code>wp_ajax_*</code>) and require the <code>ple_nonce</code> nonce plus the <code>pl_edit_projects</code> capability.</p>
+
+    <h3 class="doc-h3">ple_get_project_data</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Loads all editable data for a selected project to populate the editor UI.</td></tr>
+          <tr><td>Method / params</td><td><code>POST</code> — <code>nonce</code>, <code>post_id</code></td></tr>
+          <tr><td>Response</td><td><code>post_title</code>, <code>segments</code> (enriched with preview URLs/file names), <code>settings</code>, <code>locked</code> (bool), <code>feature_image_id</code>, <code>feature_image_url</code></td></tr>
+          <tr><td>Errors</td><td>403 if not <code>pl_edit_projects</code>; generic error if <code>post_id</code> is not a valid <code>pl_project</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">ple_save_project</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Persists all editable fields for a project.</td></tr>
+          <tr><td>Method / params</td><td><code>POST</code> — <code>nonce</code>, <code>post_id</code>, <code>post_title</code>, <code>pl_segments[]</code>, <code>pl_settings[]</code> (admin only), <code>pl_feature_image_id</code></td></tr>
+          <tr><td>Processing order</td>
+            <td>
+              1. Validates capability, post existence/type, and lock status.<br>
+              2. Updates <code>post_title</code> — administrators only.<br>
+              3. Sanitises and saves <code>_pl_segments</code>; rejects update for non-admins if segment count changed.<br>
+              4. Sanitises and saves <code>_pl_project_settings</code> — administrators only.<br>
+              5. Updates or removes the featured image based on <code>pl_feature_image_id</code>.<br>
+              6. Re-runs <code>PL_Post_Type::sync_excerpt()</code>.
+            </td>
+          </tr>
+          <tr><td>Response</td><td><code>message</code>, <code>post_title</code></td></tr>
+          <tr><td>Errors</td><td>403 if not <code>pl_edit_projects</code>; 403 "This project is locked…" if locked and not an administrator; generic error if <code>post_id</code> invalid</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">ple_get_user_media</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Powers the in-editor media library browser.</td></tr>
+          <tr><td>Method / params</td><td><code>POST</code> — <code>nonce</code>, <code>paged</code> (default 1), <code>search</code> (optional), <code>type</code> (<code>image</code> | <code>application</code> | <code>video</code> | empty for all)</td></tr>
+          <tr><td>Scope</td><td>Returns attachments from <strong>all users</strong>, 24 per page (fetches 25 to detect a next page).</td></tr>
+          <tr><td>Response</td><td><code>items[]</code> — each with <code>id</code>, <code>url</code>, <code>thumb</code>, <code>filename</code>, <code>title</code>, <code>type</code>, <code>mime</code>, <code>uploaded_by</code>; plus <code>has_more</code> and <code>paged</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">ple_delete_media</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose</td><td>Permanently deletes a media attachment (bypasses trash).</td></tr>
+          <tr><td>Method / params</td><td><code>POST</code> — <code>nonce</code>, <code>attachment_id</code></td></tr>
+          <tr><td>Ownership rule</td><td>A user — <strong>including administrators</strong> — may only delete attachments where <code>post_author === current_user_id</code>. There is no administrator override for this endpoint.</td></tr>
+          <tr><td>Response</td><td>Success message, or an error if the attachment doesn't exist, isn't owned by the requester, or fails to delete</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-anchor" id="editor-media"></span>
+    <h2 class="doc-h2"><span class="num">16</span> Media Library Behaviour</h2>
+    <h3 class="doc-h3">Browsing</h3>
+    <p>Every user with <code>pl_edit_projects</code> sees the <strong>entire site's media library</strong> when picking images, videos, or documents — uploads are not filtered by author for browsing/selection purposes. This is intentional: it lets collaborators reuse images other team members have already uploaded for the same project.</p>
+
+    <h3 class="doc-h3">Uploading</h3>
+    <p>New uploads go through the standard WordPress media uploader (<code>wp.media</code>) and the REST media endpoint. The <code>user_has_cap</code> filter ensures users with only <code>pl_edit_projects</code> aren't blocked by the default <code>upload_files</code> requirement.</p>
+
+    <h3 class="doc-h3">Deleting</h3>
+    <p>Deletion is strictly self-service: the delete button/action is only effective for files the current user uploaded themselves (<code>post_author === current_user_id</code>), checked server-side on every request regardless of role. Deletion is permanent (<code>wp_delete_attachment(..., true)</code> — bypasses trash).</p>
+    <div class="box warn"><p><strong>Administrators cannot delete other users' uploads through this editor's media panel.</strong> To remove media uploaded by other users, use the standard wp-admin Media Library, where normal administrator capabilities apply.</p></div>
+
+    <span class="section-anchor" id="install"></span>
+    <h2 class="doc-h2"><span class="num">17</span> Installation &amp; Setup</h2>
+    <ol>
+      <li>Upload and activate <strong>ProjectLens</strong> first. On activation, the <code>pl_project</code> CPT and taxonomies are registered, rewrite rules are flushed, and default role capabilities are stamped (Section 8).</li>
+      <li>Upload and activate <strong>ProjectLens Project Editor</strong>. If ProjectLens is not active, you'll see an admin notice and the add-on will not initialise.</li>
+      <li>Go to <strong>Projects &rarr; Global Settings</strong> and configure: default styling, archive listing, map tile provider, navigation menus, and uninstall data-retention preference.</li>
+      <li>(Optional) Click <strong>Install Demo Project</strong> to preview the layout with sample content.</li>
+      <li>Create your first real project under <strong>Projects &rarr; Add New Project</strong> (Section 18).</li>
+      <li>(Optional) Create a frontend page containing the <code>[pl_project_editor]</code> shortcode and add it to your site navigation for non-admin editors.</li>
+      <li>Go to <strong>Projects &rarr; Manage Access</strong> to grant <code>pl_edit_projects</code> to staff who will use the frontend editor (Section 19).</li>
+    </ol>
+
+    <span class="section-anchor" id="admin-workflow"></span>
+    <h2 class="doc-h2"><span class="num">18</span> Day-to-Day Admin Workflow</h2>
+    <h3 class="doc-h3">Creating a New Project</h3>
+    <ol>
+      <li>Go to <strong>Projects &rarr; Add New Project</strong>.</li>
+      <li>Enter a title and set a featured image (used as the header background and archive card thumbnail).</li>
+      <li>Fill in <strong>Project Settings &amp; Funding Information</strong> — at minimum, Project Status, Short Description, and Location/Dates.</li>
+      <li>Add segments in <strong>Project Segments</strong>: choose a type, fill in the fields, drag to reorder, uncheck "Visible" to hide a segment without deleting it.</li>
+      <li>(Optional) Adjust <strong>Styling &amp; Appearance</strong> for this project, or leave blank to inherit Global Settings defaults.</li>
+      <li>Assign <code>pl_category</code>, <code>pl_status</code>, and <code>pl_tag</code> terms as needed for archive filtering.</li>
+      <li>Publish.</li>
+    </ol>
+
+    <h3 class="doc-h3">wp-admin vs. Frontend Editor</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Task</th><th>wp-admin</th><th>Frontend Editor</th></tr></thead>
+        <tbody>
+          <tr><td>Add/remove/reorder segments</td><td>✅</td><td>Admins only</td></tr>
+          <tr><td>Edit segment content</td><td>✅</td><td>✅ (all eligible users)</td></tr>
+          <tr><td>Edit funding/identity fields</td><td>✅</td><td>Admins only</td></tr>
+          <tr><td>Change colors/fonts/border radius</td><td>✅</td><td>❌ (not available)</td></tr>
+          <tr><td>Set featured image</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Lock/unlock a project</td><td>✅</td><td>❌ (not available)</td></tr>
+          <tr><td>Assign categories/tags/status terms</td><td>✅</td><td>❌ (not available)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-anchor" id="granting-access"></span>
+    <h2 class="doc-h2"><span class="num">19</span> Granting Editor Access</h2>
+    <p>To let a staff member use the <code>[pl_project_editor]</code> page on the frontend:</p>
+    <ol>
+      <li>Ensure the user has a WordPress account and can log in.</li>
+      <li>Go to <strong>Projects &rarr; Manage Access &rarr; Users</strong>.</li>
+      <li>Find the user and check <strong>Edit</strong> (<code>pl_edit_projects</code>). This is the minimum requirement to use the frontend editor at all.</li>
+      <li>Optionally check <strong>Create</strong> or <strong>Delete</strong> if they also need wp-admin abilities (these do not unlock additional frontend-editor abilities).</li>
+      <li>Save access settings.</li>
+      <li>Share the URL of the page containing the <code>[pl_project_editor]</code> shortcode with the user.</li>
+    </ol>
+    <div class="box tip"><p><strong>Tip:</strong> to grant access to an entire role at once (e.g. all "Contributors"), use the <strong>Role defaults</strong> tab instead of editing users individually.</p></div>
+
+    <h3 class="doc-h3">What a Non-Admin Editor Will See</h3>
+    <ul>
+      <li>A dropdown of all non-locked projects (published, draft, or private).</li>
+      <li>A read-only title field.</li>
+      <li>The "Project Segments" tab with full editing of existing segment content, but no add/remove/reorder controls.</li>
+      <li>No "Project Abstracts" tab.</li>
+      <li>A "Project Settings" tab with only the feature image control.</li>
+      <li>Document segments where the download/viewer toggle checkboxes are hidden (their saved state is preserved automatically).</li>
+    </ul>
+
+    <span class="section-anchor" id="locking"></span>
+    <h2 class="doc-h2"><span class="num">20</span> Locking Projects</h2>
+    <p>Each project has a <strong>Lock from Frontend Editing</strong> checkbox in the <em>Styling &amp; Appearance</em> meta box in wp-admin, stored as post meta <code>_pl_locked</code>.</p>
+
+    <h3 class="doc-h3">Effect of Locking a Project</h3>
+    <ul>
+      <li>The project disappears entirely from the frontend editor's project dropdown for everyone except administrators.</li>
+      <li>Administrators still see it in the dropdown, marked with a 🔒 icon, and can still save changes to it from the frontend editor.</li>
+      <li>If a non-administrator somehow attempts to save a locked project, the <code>ple_save_project</code> AJAX call returns a 403 error: "This project is locked and cannot be edited from the frontend."</li>
+      <li>wp-admin editing is <strong>not affected</strong> by this flag — administrators and editors with <code>pl_edit_projects</code> can always edit a project in wp-admin regardless of its lock status.</li>
+    </ul>
+
+    <h3 class="doc-h3">When to Use Locking</h3>
+    <p>Lock a project once its content is finalised and you want to prevent accidental edits from frontend collaborators, while still allowing administrators to make corrections through either wp-admin or the frontend editor.</p>
+
+    <span class="section-anchor" id="troubleshooting"></span>
+    <h2 class="doc-h2"><span class="num">21</span> Troubleshooting</h2>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Symptom</th><th>Likely cause / fix</th></tr></thead>
+        <tbody>
+          <tr><td>"ProjectLens Project Editor requires the ProjectLens plugin…" notice</td><td>ProjectLens core plugin is not active. Activate it, then reactivate the editor plugin (or simply reload — it hooks at <code>plugins_loaded</code> priority 25).</td></tr>
+          <tr><td><code>[pl_project_editor]</code> shortcode shows "You do not have permission to edit projects."</td><td>The logged-in user lacks <code>pl_edit_projects</code>. Grant it via <strong>Projects &rarr; Manage Access</strong>.</td></tr>
+          <tr><td>A project is missing from the frontend editor dropdown</td><td>Either the project is locked (<code>_pl_locked = 1</code>) and the user is not an administrator, or the project's post status is something other than publish/draft/private (e.g. trashed).</td></tr>
+          <tr><td>Non-admin user's segment reorder doesn't stick</td><td>Expected — non-admins cannot change segment structure. Reordering must be done by an administrator.</td></tr>
+          <tr><td>Image upload fails with 403 for a non-admin editor</td><td>Confirm the user has <code>pl_edit_projects</code> — the plugin's <code>user_has_cap</code> filter only grants <code>upload_files</code> to users who already hold that capability. Also check that no security plugin is independently blocking REST media uploads.</td></tr>
+          <tr><td>Administrator can't delete another user's uploaded image from the frontend editor's media browser</td><td>This is by design — the <code>ple_delete_media</code> endpoint always checks attachment ownership. Delete the file from wp-admin &rarr; Media instead.</td></tr>
+          <tr><td>Project page looks unstyled / uses wrong colors</td><td>Check the project's own <strong>Styling &amp; Appearance</strong> meta box; empty fields fall back to <strong>Projects &rarr; Global Settings &rarr; Default Styling</strong>. Clear any full-page cache after changing styling.</td></tr>
+          <tr><td>Sticky nav strip doesn't appear on single/archive pages</td><td>No menu is assigned in <strong>Projects &rarr; Global Settings &rarr; Navigation Menus</strong>, the assigned menu has no items, or the assigned menu was deleted.</td></tr>
+          <tr><td>Vimeo slide thumbnail not showing</td><td>The oEmbed lookup may have failed (network issue) and nothing was cached. It retries on the next page load. Confirm the Vimeo URL format includes a numeric video ID.</td></tr>
+          <tr><td>Query Loop block on homepage doesn't show projects</td><td>Ensure the Query Loop block's "Post Type" is explicitly set to "Projects" and it is not the page's main query.</td></tr>
+          <tr><td>Excerpt / short description not appearing in theme template parts</td><td><code>sync_excerpt()</code> copies <code>short_description</code> into <code>post_excerpt</code> on save. If the project was created before content was added, re-save the project once.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-anchor" id="faq"></span>
+    <h2 class="doc-h2"><span class="num">22</span> FAQ</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I use my theme's header and footer on project pages? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>No — both the single project template and the archive template are full, standalone HTML documents that call <code>wp_head()</code>/<code>wp_footer()</code> but do not load the theme's <code>header.php</code>/<code>footer.php</code>. Use the optional ProjectLens nav menus (Section 10) for top-level navigation instead.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I create a new project from the frontend? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>You can't — the <code>[pl_project_editor]</code> shortcode intentionally does not support creating or deleting projects, for any role. New projects must be created in wp-admin under <strong>Projects &rarr; Add New Project</strong> by a user with <code>pl_create_projects</code>.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between the <code>project_status</code> field and the <code>pl_status</code> taxonomy? <span class="arrow">›</span></div>
+      <div class="faq-a"><p><code>project_status</code> (in Project Settings) is a single value per project used for the colored status badge on the header and archive cards. <code>pl_status</code> is a separate, independent taxonomy used purely for the archive's status filter pills. They are not automatically synchronised — assign both if you want consistent filtering and badging.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can non-administrators change a project's colors or fonts? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>No. The Styling &amp; Appearance meta box is only available in wp-admin and is not exposed by the frontend editor for any role.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Why can't an administrator delete a colleague's uploaded photo from the frontend editor? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>The <code>ple_delete_media</code> AJAX handler enforces <code>post_author === current_user_id</code> for every request with no role-based override. This is a deliberate scoping decision to prevent any user from accidentally removing media another user or project may still depend on. Use wp-admin &rarr; Media for cross-user deletions.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How are word limits applied to descriptive segments? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>The summary view of a <code>descriptive</code> segment strips all HTML from <code>content</code> and truncates it to <code>word_limit</code> words (project-level setting, falling back to the Global Settings default of 60), appending "…" if truncated. The full <code>detail_content</code> is shown in full in the detail panel — it is never truncated.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens if I deactivate ProjectLens Project Editor but keep ProjectLens active? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>The <code>[pl_project_editor]</code> shortcode stops working and its AJAX endpoints become unavailable. All project data remains intact and fully editable via wp-admin, since it is stored entirely by the core ProjectLens plugin.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens if I deactivate ProjectLens but keep ProjectLens Project Editor active? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>On the next page load, <code>ple_check_dependency()</code> detects that <code>PL_VERSION</code> is undefined, shows the "requires ProjectLens" admin notice, and the editor plugin does not initialise — its shortcode and AJAX handlers are not registered.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will uninstalling the plugins delete my project content? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Only if <strong>Projects &rarr; Global Settings &rarr; Data &amp; Uninstall &rarr; "Delete all data on uninstall"</strong> is checked at the time ProjectLens is deleted (not merely deactivated). By default this is unchecked, so projects, taxonomy terms, and settings are preserved if you reinstall later.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I have different navigation menus on different project pages? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>No — the <code>pl_single_nav</code> and <code>pl_archive_nav</code> menu locations are each site-wide, assigned once in Global Settings. All single project pages share the same single-page menu, and the archive uses its own separate menu.</p></div>
+    </div>
+
+    <footer>
+      ProjectLens Suite Documentation — reference covering ProjectLens v2.1.0 and ProjectLens Project Editor v1.2.<br>
+      Shortcode references use single square brackets ([ ]) in actual WordPress content.
+    </footer>
+
+  </div>
+</div>
+
+<script>
+/**
+ * ProjectLens Native Dynamic Navigation Handler
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var navSelect = document.getElementById('nav-select');
+
+  if (navSelect) {
+    navSelect.addEventListener('change', function () {
+      var selectVal = this.value;
+      if (!selectVal) return;
+
+      var anchor = document.getElementById(selectVal);
+      if (anchor) {
+        // Find the visible heading tag right after the anchor span
+        var targetHeading = anchor.nextElementSibling;
+        var elementToScroll = (targetHeading && (targetHeading.tagName === 'H2' || targetHeading.tagName === 'H3')) 
+          ? targetHeading 
+          : anchor;
+
+        // Execute raw browser scrolling without complex math scripts
+        elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      
+      this.value = '';
+    });
+  }
+
+  // FAQ Accordion System
+  document.querySelectorAll('.faq-item .faq-q').forEach(function (q) {
+    q.addEventListener('click', function () {
+      var item = this.closest('.faq-item');
+      document.querySelectorAll('.faq-item.open').forEach(function (open) {
+        if (open !== item) open.classList.remove('open');
+      });
+      item.classList.toggle('open');
+    });
+  });
+});
+</script>
+</body>
+</html>

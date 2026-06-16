@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TransLit-Lab Documentation</title>
+  <style>
+    /* ── Theme Container Integration ── */
+    .tlab-standalone-viewport {
+      position: relative !important;
+      width: 100% !important;
+      min-height: auto !important;
+      background: #ffffff !important;
+      box-sizing: border-box;
+      clear: both;
+    }
+
+    /* ── Design System Tokens ─────────────────────────── */
+    .tlab-standalone-viewport {
+      --ink:       #0f172a;
+      --ink-muted: #475569;
+      --ink-faint: #94a3b8;
+      --paper:     #ffffff;
+      --surface:   #ffffff;
+      --border:    #e2e8f0;
+      --accent:    #0f766e;   /* teal — script/language feel */
+      --accent-2:  #0ea5e9;
+      --accent-3:  #7c3aed;   /* violet — for reverse direction / BPM */
+      --warn:      #f59e0b;
+      --danger:    #ef4444;
+      --topbar-h:  56px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+      font-family: var(--font-sans);
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .tlab-standalone-viewport *,
+    .tlab-standalone-viewport *::before,
+    .tlab-standalone-viewport *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tlab-standalone-viewport {
+      position: relative !important;
+      contain: layout;
+    }
+
+    /* ── Topbar ──────────────────────────────────────── */
+    .tlab-standalone-viewport #topbar {
+      position: -webkit-sticky !important;
+      position: sticky !important;
+      top: 0px !important;
+      left: 0;
+      right: 0;
+      padding-top: 60px !important;
+      background: #ffffff !important;
+      z-index: 9999 !important;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tlab-standalone-viewport h2.doc-h2,
+    .tlab-standalone-viewport h3.doc-h3,
+    .tlab-standalone-viewport .section-anchor {
+      scroll-margin-top: 126px !important;
+    }
+
+    .tlab-standalone-viewport #topbar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--topbar-h);
+      background: #ffffff !important;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 24px;
+      z-index: 90;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tlab-standalone-viewport #topbar .logo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tlab-standalone-viewport #topbar .logo h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .tlab-standalone-viewport #topbar .logo h1 span {
+      color: var(--accent);
+    }
+
+    .tlab-standalone-viewport #topbar .logo p {
+      font-size: 9px;
+      color: var(--ink-faint);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tlab-standalone-viewport #topbar .divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ── Navigation Select ────────────────────────────── */
+    .tlab-standalone-viewport #nav-select {
+      flex: 1;
+      min-width: 0;
+      height: 36px;
+      background: var(--paper);
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 28px 0 10px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .tlab-standalone-viewport #nav-select:focus {
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    /* ── Content Wrapper ─────────────────────────────── */
+    .tlab-standalone-viewport #main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      width: 100%;
+    }
+
+    .tlab-standalone-viewport .section-anchor {
+      display: block;
+      position: relative;
+      visibility: hidden;
+    }
+
+    /* ── Headings ────────────────────────────────────── */
+    .tlab-standalone-viewport h2.doc-h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      margin: 48px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      word-break: break-word;
+    }
+
+    .tlab-standalone-viewport h2.doc-h2 .num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      color: var(--accent);
+      background: #ccfbf1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .tlab-standalone-viewport h3.doc-h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 32px 0 12px;
+    }
+
+    .tlab-standalone-viewport h4.doc-h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin: 24px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ── Typography ──────────────────────────────────── */
+    .tlab-standalone-viewport p {
+      margin-bottom: 16px;
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+    }
+    .tlab-standalone-viewport p strong { color: var(--ink); }
+    .tlab-standalone-viewport ul { margin: 0 0 16px 24px; }
+    .tlab-standalone-viewport li { margin-bottom: 8px; font-size: 0.95rem; color: var(--ink-muted); }
+    .tlab-standalone-viewport li strong { color: var(--ink); }
+    .tlab-standalone-viewport a { color: var(--accent); text-decoration: none; }
+    .tlab-standalone-viewport a:hover { text-decoration: underline; }
+
+    /* ── Tables ──────────────────────────────────────── */
+    .tlab-standalone-viewport .doc-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--paper);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tlab-standalone-viewport table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 500px;
+    }
+
+    .tlab-standalone-viewport thead tr {
+      background: var(--ink);
+      color: #ffffff;
+    }
+
+    .tlab-standalone-viewport thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .tlab-standalone-viewport td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .tlab-standalone-viewport tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* ── Code ────────────────────────────────────────── */
+    .tlab-standalone-viewport code {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      background: #f1f5f9;
+      color: #be123c;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .tlab-standalone-viewport pre {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: var(--ink);
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      line-height: 1.5;
+    }
+
+    .tlab-standalone-viewport pre code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Cover ───────────────────────────────────────── */
+    .tlab-standalone-viewport .cover {
+      background: linear-gradient(135deg, var(--accent), #0369a1);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 36px 32px;
+      margin-bottom: 24px;
+    }
+
+    .tlab-standalone-viewport .cover h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .tlab-standalone-viewport .cover h1 em {
+      font-style: normal;
+      opacity: 0.7;
+    }
+
+    .tlab-standalone-viewport .cover p {
+      color: rgba(255,255,255,.85);
+      font-size: .95rem;
+      margin-bottom: 6px;
+    }
+
+    .tlab-standalone-viewport .cover .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tlab-standalone-viewport .cover .badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      color: #ffffff;
+      padding: 3px 11px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    /* ── Callout Boxes ───────────────────────────────── */
+    .tlab-standalone-viewport .box {
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin: 20px 0;
+      font-size: 0.92rem;
+      border-left: 4px solid;
+    }
+
+    .tlab-standalone-viewport .box p {
+      margin-bottom: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .tlab-standalone-viewport .box.info {
+      background: #eff6ff;
+      border-color: var(--accent-2);
+      color: #1e40af;
+    }
+
+    .tlab-standalone-viewport .box.warn {
+      background: #fffbeb;
+      border-color: var(--warn);
+      color: #b45309;
+    }
+
+    .tlab-standalone-viewport .box.tip {
+      background: #f0fdf4;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .tlab-standalone-viewport .box.note {
+      background: #faf5ff;
+      border-color: var(--accent-3);
+      color: #5b21b6;
+    }
+
+    /* ── Tab Pills (visual only) ─────────────────────── */
+    .tlab-standalone-viewport .tab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .tlab-standalone-viewport .tab-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: var(--paper);
+    }
+
+    .tlab-standalone-viewport .tab-card .tab-icon {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .tlab-standalone-viewport .tab-card .tab-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tlab-standalone-viewport .tab-card p {
+      font-size: 0.8rem;
+      margin-bottom: 0;
+      color: var(--ink-faint);
+    }
+
+    /* ── FAQ Accordion ───────────────────────────────── */
+    .tlab-standalone-viewport .faq-item {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .tlab-standalone-viewport .faq-q {
+      padding: 16px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .tlab-standalone-viewport .faq-q .arrow {
+      font-size: 1.15rem;
+      transform: rotate(90deg);
+      transition: transform 0.2s ease;
+      color: var(--ink-faint);
+      line-height: 1;
+    }
+
+    .tlab-standalone-viewport .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0,1,0,1);
+      background: #fafafa;
+    }
+
+    .tlab-standalone-viewport .faq-a p {
+      padding: 16px;
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-q {
+      border-bottom: 1px solid var(--border);
+      background: #fdfdfd;
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-q .arrow {
+      transform: rotate(270deg);
+      color: var(--accent);
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-a {
+      max-height: 1000px;
+      transition: all 0.25s cubic-bezier(1,0,1,0);
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    .tlab-standalone-viewport footer {
+      text-align: center;
+      color: var(--ink-faint);
+      font-size: 0.78rem;
+      margin-top: 64px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+<div class="tlab-standalone-viewport">
+
+  <div id="topbar">
+    <div class="logo">
+      <h1>TransLit<span>Lab</span> Docs</h1>
+      <p>v1.1.0 · BhoomiTech Heritage Foundation</p>
+    </div>
+    <div class="divider"></div>
+    <select id="nav-select" aria-label="Jump to section">
+      <option value="">☰ Jump to section…</option>
+      <optgroup label="Overview">
+        <option value="overview">1. Plugin Overview</option>
+        <option value="architecture">2. Architecture &amp; File Map</option>
+      </optgroup>
+      <optgroup label="Core Features">
+        <option value="tabs">3. Lab Tabs</option>
+        <option value="engine">4. Transliteration Engine</option>
+        <option value="maps">5. Lexicon Maps</option>
+        <option value="snippets">6. Snippets (Processing Rules)</option>
+        <option value="engine-settings">7. Engine Settings</option>
+      </optgroup>
+      <optgroup label="Access &amp; Roles">
+        <option value="roles">8. Roles &amp; Access Control</option>
+        <option value="tab-visibility">9. Tab Visibility Control</option>
+      </optgroup>
+      <optgroup label="Database &amp; Data">
+        <option value="database">10. Database Schema</option>
+        <option value="ajax">11. AJAX Endpoints</option>
+        <option value="defaults">12. Default Data &amp; Reset</option>
+      </optgroup>
+      <optgroup label="Admin Guide">
+        <option value="install">13. Installation &amp; Setup</option>
+        <option value="shortcode">14. Shortcode Reference</option>
+        <option value="uninstall">15. Uninstall Behaviour</option>
+        <option value="troubleshooting">16. Troubleshooting</option>
+      </optgroup>
+      <optgroup label="Reference">
+        <option value="faq">17. FAQ</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div id="main">
+
+    <div class="cover">
+      <h1>TransLit<em>Lab</em></h1>
+      <p>Technical Documentation &amp; Administrator Guide</p>
+      <p>Browser-based test and configuration lab for the <strong>CompLing-AI transliteration engine</strong> — dual JS/PHP testing, lexicon editing, snippet rules, and per-user access control.</p>
+      <div class="badges">
+        <span class="badge">TransLit-Lab v1.1.0</span>
+        <span class="badge">Requires WordPress 6.0+</span>
+        <span class="badge">Requires PHP 8.0+</span>
+        <span class="badge">Tested up to WP 6.7</span>
+        <span class="badge">License: GPLv2+</span>
+      </div>
+    </div>
+
+    <!-- ── 1. Overview ───────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="overview"></span>
+    <h2 class="doc-h2"><span class="num">1</span> Plugin Overview</h2>
+    <p>TransLit-Lab is a self-contained WordPress plugin that provides a browser-based lab for testing and configuring the <strong>CompLing-AI transliteration engine</strong>. It is primarily aimed at linguists, developers, and administrators working on Bengali/BPM (Bengali Phonetic Mapping) transliteration.</p>
+    <p>The lab is delivered entirely through a single frontend shortcode (<code>[translitlab]</code>) and communicates with the server exclusively via WordPress AJAX actions — there are no standalone API endpoints or direct file access required.</p>
+
+    <h3 class="doc-h3">Key Capabilities</h3>
+    <ul>
+      <li><strong>Dual-engine testing</strong> — run the same input through the JavaScript (browser) and PHP (server) engines side by side and compare output and step-by-step processing logs.</li>
+      <li><strong>Snippets editor</strong> — create, reorder, enable/disable, import, and export pre/loop/post processing rules (regex or literal) per direction.</li>
+      <li><strong>Lexicon map manager</strong> — view, search, add, edit, delete, and reorder forward (Roman → BPM) and reverse (BPM → Roman) transliteration map entries, organized into named sections.</li>
+      <li><strong>Engine settings</strong> — configure virama, ZWJ/ZWNJ, inherent vowel, non-linking consonants, and section ordering per engine independently.</li>
+      <li><strong>Debug panel</strong> — inspect the step-by-step processing log from the last run for each engine.</li>
+      <li><strong>Reset to defaults</strong> — restore maps, snippets, or engine settings to the plugin's bundled defaults at any time.</li>
+      <li><strong>Role-based access control</strong> — a dedicated "Transliterator" role, admin-managed approval list, and per-user (or global) tab visibility settings.</li>
+    </ul>
+
+    <!-- ── 2. Architecture ───────────────────────────────────────────────── -->
+    <span class="section-anchor" id="architecture"></span>
+    <h2 class="doc-h2"><span class="num">2</span> Architecture &amp; File Map</h2>
+    <p>The plugin follows a classic WordPress object-oriented structure. All business logic is split into focused classes under <code>includes/</code>; data defaults are JSON files under <code>data/</code>; frontend JS and CSS live in <code>assets/</code>.</p>
+
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>File / Directory</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>translitlab.php</code></td><td>Plugin header, constants, bootstrap — loads all includes, registers activation/deactivation hooks, boots classes on <code>plugins_loaded</code>.</td></tr>
+          <tr><td><code>uninstall.php</code></td><td>Runs on plugin deletion — drops all tables, removes options and user meta, removes the Transliterator role.</td></tr>
+          <tr><td><code>includes/class-engine.php</code></td><td><code>TranslitEngine</code> — pure PHP transliteration engine (no WordPress dependency). Mirrors <code>engine.js</code> exactly.</td></tr>
+          <tr><td><code>includes/class-db.php</code></td><td><code>TranslitLab_DB</code> — all database operations: schema install, CRUD for maps, snippets, and settings, seeding from defaults, reset.</td></tr>
+          <tr><td><code>includes/class-ajax.php</code></td><td><code>TranslitLab_Ajax</code> — registers all <code>wp_ajax_translitlab_*</code> actions and dispatches them to the DB/engine layer.</td></tr>
+          <tr><td><code>includes/class-frontend.php</code></td><td><code>TranslitLab_Frontend</code> — registers the <code>[translitlab]</code> shortcode, conditionally enqueues assets, renders the lab HTML.</td></tr>
+          <tr><td><code>includes/class-admin.php</code></td><td><code>TranslitLab_Admin</code> — Settings → TranslitLab admin page: user role assignment, lab access approval, per-user/global tab config.</td></tr>
+          <tr><td><code>includes/class-role.php</code></td><td><code>TranslitLab_Role</code> — creates/removes the Transliterator role; <code>user_can_access()</code> and <code>user_tab_config()</code> helpers.</td></tr>
+          <tr><td><code>assets/engine.js</code></td><td>JavaScript transliteration engine — runs in-browser, mirrors PHP engine logic.</td></tr>
+          <tr><td><code>assets/app.js</code></td><td>Main frontend application — tab switching, all AJAX calls, UI rendering for Test, Snippets, Maps, Engines, Debug tabs.</td></tr>
+          <tr><td><code>assets/style.css</code></td><td>Lab UI stylesheet.</td></tr>
+          <tr><td><code>data/forwardMap.json</code></td><td>Default forward transliteration map (Roman → BPM), seeded on activation.</td></tr>
+          <tr><td><code>data/reverseMap.json</code></td><td>Default reverse transliteration map (BPM → Roman), seeded on activation.</td></tr>
+          <tr><td><code>data/defaults.json</code></td><td>Default snippets, seeded on activation.</td></tr>
+          <tr><td><code>data/js-engine-settings.default.json</code></td><td>Default JS engine settings.</td></tr>
+          <tr><td><code>data/php-engine-settings.default.json</code></td><td>Default PHP engine settings.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Constants</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Constant</th><th>Value</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>TRANSLITLAB_VERSION</code></td><td><code>'1.1.0'</code></td><td>Current plugin version, used as asset cache-buster.</td></tr>
+          <tr><td><code>TRANSLITLAB_DIR</code></td><td><code>plugin_dir_path(__FILE__)</code></td><td>Absolute server path to the plugin root.</td></tr>
+          <tr><td><code>TRANSLITLAB_URL</code></td><td><code>plugin_dir_url(__FILE__)</code></td><td>Web URL to the plugin root (for asset URLs).</td></tr>
+          <tr><td><code>TRANSLITLAB_ROLE</code></td><td><code>'transliterator'</code></td><td>WordPress role slug used throughout the plugin.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 3. Lab Tabs ───────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="tabs"></span>
+    <h2 class="doc-h2"><span class="num">3</span> Lab Tabs</h2>
+    <p>The lab UI is organized into five tabs. Each tab can be shown or hidden per user from the admin settings page. The JS skips event binding for hidden tabs.</p>
+
+    <div class="tab-grid">
+      <div class="tab-card">
+        <span class="tab-icon">⚡</span>
+        <span class="tab-name">Test</span>
+        <p>Side-by-side JS and PHP engine output with step-by-step logs. The primary testing surface.</p>
+      </div>
+      <div class="tab-card">
+        <span class="tab-icon">✂️</span>
+        <span class="tab-name">Snippets</span>
+        <p>Create, edit, reorder, enable/disable, import and export pre/loop/post processing rules.</p>
+      </div>
+      <div class="tab-card">
+        <span class="tab-icon">🗺️</span>
+        <span class="tab-name">Maps</span>
+        <p>Lexicon viewer for forward and reverse maps — search, add, edit, delete, reorder entries by section.</p>
+      </div>
+      <div class="tab-card">
+        <span class="tab-icon">🧩</span>
+        <span class="tab-name">Engines</span>
+        <p>Configure virama, ZWJ/ZWNJ, inherent vowel, non-linking consonants, and section ordering per engine.</p>
+      </div>
+      <div class="tab-card">
+        <span class="tab-icon">🐛</span>
+        <span class="tab-name">Debug</span>
+        <p>Inspect the full step-by-step processing log from the last engine run for both JS and PHP.</p>
+      </div>
+    </div>
+
+    <div class="box info">
+      <p>Tab slugs used in settings and user meta: <code>test</code>, <code>snippets</code>, <code>maps</code>, <code>engines</code>, <code>debug</code>.</p>
+    </div>
+
+    <!-- ── 4. Engine ─────────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="engine"></span>
+    <h2 class="doc-h2"><span class="num">4</span> Transliteration Engine</h2>
+    <p>TransLit-Lab ships twin engines — a PHP class and a JavaScript module — designed to produce bit-identical output from the same inputs. The Test tab is the primary surface for cross-validating the two.</p>
+
+    <h3 class="doc-h3">PHP Engine (<code>TranslitEngine</code>)</h3>
+    <p>Defined in <code>includes/class-engine.php</code>. Has no WordPress dependency and can be instantiated standalone.</p>
+    <pre><code>$engine = new TranslitEngine( $forward_map, $reverse_map, $settings );
+$result = $engine->transliterate( $input, $direction, $snippets );
+// Returns: [ 'output' => string, 'log' => string[] ]</code></pre>
+
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>$forward_map</code></td><td><code>array</code></td><td>Associative array of sections → entry pairs (Roman → BPM).</td></tr>
+          <tr><td><code>$reverse_map</code></td><td><code>array</code></td><td>Associative array of sections → entry pairs (BPM → Roman).</td></tr>
+          <tr><td><code>$settings</code></td><td><code>array</code></td><td>Engine configuration (see Engine Settings section).</td></tr>
+          <tr><td><code>$input</code></td><td><code>string</code></td><td>Raw text to transliterate.</td></tr>
+          <tr><td><code>$direction</code></td><td><code>string</code></td><td><code>'forward'</code> (Roman → BPM) or <code>'reverse'</code> (BPM → Roman).</td></tr>
+          <tr><td><code>$snippets</code></td><td><code>array</code></td><td>Array of snippet objects applied as pre/loop/post hooks.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">JavaScript Engine (<code>engine.js</code>)</h3>
+    <p>The JS engine runs entirely in the browser with no server round-trip. It is enqueued as <code>translitlab-engine</code> and consumed by <code>app.js</code>. The JS engine is executed on the same map/snippet/settings data loaded from the server at page init.</p>
+
+    <div class="box tip">
+      <p>Both engines process snippets in the same pipeline: <strong>pre</strong> hooks → map substitution loop → <strong>loop</strong> hooks (per character/token) → <strong>post</strong> hooks. Differences in output between the two engines indicate either a parity bug or differing settings/map data.</p>
+    </div>
+
+    <!-- ── 5. Maps ────────────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="maps"></span>
+    <h2 class="doc-h2"><span class="num">5</span> Lexicon Maps</h2>
+    <p>The plugin maintains two maps — <strong>forward</strong> (Roman → BPM) and <strong>reverse</strong> (BPM → Roman) — stored in separate database tables. Each map is organized into named sections that also control substitution priority.</p>
+
+    <h3 class="doc-h3">Map Sections</h3>
+    <p>The default section order used by both engines is: <code>special</code> → <code>consonants</code> → <code>matras</code> → <code>independent_vowels</code> → <code>digits</code> → <code>punctuation</code>. This order can be overridden per engine in Engine Settings.</p>
+
+    <h3 class="doc-h3">Map Entry Structure</h3>
+    <p>Each entry is a tuple of <code>[key, value]</code> where both are strings. Entries within a section are ordered by <code>sort_order</code> (ascending), which directly controls substitution priority — earlier entries are tried first.</p>
+
+    <h3 class="doc-h3">Reordering Entries</h3>
+    <p>The Maps tab supports drag-and-drop reordering within a section. On save, the plugin performs a two-step update to avoid <code>UNIQUE</code> constraint collisions: it first shifts all <code>sort_order</code> values up by 1,000,000, then writes the new order. This ensures no transient duplicates during the update.</p>
+
+    <div class="box warn">
+      <p>Saving a map replaces the entire table for that direction (<code>DELETE</code> then re-insert). Export your map as JSON from the Maps tab before making bulk edits.</p>
+    </div>
+
+    <!-- ── 6. Snippets ────────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="snippets"></span>
+    <h2 class="doc-h2"><span class="num">6</span> Snippets (Processing Rules)</h2>
+    <p>Snippets are named processing rules injected into the engine pipeline at a specific direction and hook stage. Both JS and PHP bodies of a snippet are stored together, so each snippet runs identically on both engines.</p>
+
+    <h3 class="doc-h3">Snippet Fields</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>snippet_key</code></td><td><code>VARCHAR(100)</code></td><td>Unique identifier for the snippet. Used as the database primary key.</td></tr>
+          <tr><td><code>label</code></td><td><code>VARCHAR(255)</code></td><td>Human-readable name shown in the UI.</td></tr>
+          <tr><td><code>direction</code></td><td><code>VARCHAR(20)</code></td><td><code>forward</code> or <code>reverse</code>.</td></tr>
+          <tr><td><code>hook_stage</code></td><td><code>VARCHAR(20)</code></td><td><code>pre</code>, <code>loop</code>, or <code>post</code>. Controls when the snippet runs in the pipeline.</td></tr>
+          <tr><td><code>sort_order</code></td><td><code>INT</code></td><td>Execution order within the same direction + stage group.</td></tr>
+          <tr><td><code>is_active</code></td><td><code>TINYINT(1)</code></td><td><code>1</code> = active (runs during transliteration), <code>0</code> = disabled.</td></tr>
+          <tr><td><code>source</code></td><td><code>VARCHAR(100)</code></td><td><code>'custom'</code> for user-created, or another identifier for bundled snippets.</td></tr>
+          <tr><td><code>logic_description</code></td><td><code>TEXT</code></td><td>Plain-language explanation of what the snippet does. Not executed.</td></tr>
+          <tr><td><code>js_body</code></td><td><code>LONGTEXT</code></td><td>JavaScript function body executed by the JS engine.</td></tr>
+          <tr><td><code>php_body</code></td><td><code>LONGTEXT</code></td><td>PHP function body executed by the PHP engine.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Saving Snippets</h3>
+    <p>On save, the plugin performs an upsert: existing snippets with matching <code>snippet_key</code> are updated, snippets absent from the incoming payload are deleted. A sort_order bump (+1,000,000) prevents <code>UNIQUE</code> collisions during the reorder phase, identical to the map reorder strategy.</p>
+
+    <!-- ── 7. Engine Settings ──────────────────────────────────────────────── -->
+    <span class="section-anchor" id="engine-settings"></span>
+    <h2 class="doc-h2"><span class="num">7</span> Engine Settings</h2>
+    <p>Each engine (JS and PHP) has its own independent set of settings, stored in the <code>wp_translit_settings</code> table keyed by <code>engine</code> (<code>'js'</code> or <code>'php'</code>).</p>
+
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Setting Key</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>virama</code></td><td><code>U+09CD</code></td><td>Unicode virama (halanta) character appended to consonants to suppress the inherent vowel.</td></tr>
+          <tr><td><code>zwj</code></td><td><code>U+200D</code></td><td>Zero-width joiner — used to force ligature formation between characters.</td></tr>
+          <tr><td><code>zwnj</code></td><td><code>U+200C</code></td><td>Zero-width non-joiner — used to explicitly break ligature formation.</td></tr>
+          <tr><td><code>inherent_vowel</code></td><td><code>'o'</code></td><td>The Roman character representing the inherent vowel of a consonant (e.g. "k" → "ko").</td></tr>
+          <tr><td><code>non_linking_consonants</code></td><td><code>["r","R","ng","M","NG","Ng",":","H","^","~"]</code></td><td>Consonants that never form clusters with a following consonant.</td></tr>
+          <tr><td><code>hardcode_independent_vowel</code></td><td><code>true</code></td><td>When true, independent vowel forms are emitted at word-start and after non-linking consonants.</td></tr>
+          <tr><td><code>hardcode_explicit_zwnj</code></td><td><code>true</code></td><td>When true, an explicit ZWNJ in the input forces the engine to break a cluster.</td></tr>
+          <tr><td><code>hardcode_consonant_matra</code></td><td><code>true</code></td><td>When true, the engine applies consonant-matra rules for vowel diacritics.</td></tr>
+          <tr><td><code>hardcode_consonant_cluster</code></td><td><code>true</code></td><td>When true, the engine applies consonant cluster (hasanta) rules.</td></tr>
+          <tr><td><code>section_order</code></td><td><code>["special","consonants","matras","independent_vowels","digits","punctuation"]</code></td><td>Order in which map sections are applied during substitution. Earlier sections take priority.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 8. Roles ───────────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="roles"></span>
+    <h2 class="doc-h2"><span class="num">8</span> Roles &amp; Access Control</h2>
+    <p>Access to the lab follows a two-gate model: a user must first hold the <strong>Transliterator role</strong>, and must additionally be on the <strong>approved-users list</strong>. Administrators bypass both gates.</p>
+
+    <h3 class="doc-h3">Access Decision (<code>TranslitLab_Role::user_can_access()</code>)</h3>
+    <ul>
+      <li>User is <strong>not logged in</strong> → lab shows a login prompt.</li>
+      <li>User has <strong><code>manage_options</code></strong> capability (administrator) → always has access.</li>
+      <li>User holds the <strong>Transliterator role</strong> AND is in <strong><code>translitlab_approved_users</code></strong> option → has access.</li>
+      <li>Any other case → lab shows a permission notice.</li>
+    </ul>
+
+    <h3 class="doc-h3">Transliterator Role</h3>
+    <p>The role (slug: <code>transliterator</code>, display: "Transliterator") is registered on plugin activation via <code>register_activation_hook</code> → <code>TranslitLab_Role::create_role()</code>. It grants only the <code>read</code> capability so users can log into WordPress. The role is removed permanently on plugin deletion (<code>uninstall.php</code>).</p>
+
+    <div class="box warn">
+      <p>On <strong>deactivation</strong> (not deletion), the role is intentionally <em>not</em> removed — user accounts remain intact so reactivating the plugin restores access immediately.</p>
+    </div>
+
+    <h3 class="doc-h3">Granting Access</h3>
+    <p>Go to <strong>Settings → TranslitLab</strong>. For each non-admin user, check <strong>Transliterator Role</strong> to assign the role, then check <strong>Lab Access</strong> to add them to the approved list. Both checkboxes must be active for access to be granted. The Lab Access checkbox is disabled unless the user has the role.</p>
+
+    <!-- ── 9. Tab Visibility ───────────────────────────────────────────────── -->
+    <span class="section-anchor" id="tab-visibility"></span>
+    <h2 class="doc-h2"><span class="num">9</span> Tab Visibility Control</h2>
+    <p>Administrators can control which of the five tabs are shown in the lab, both globally and per individual user.</p>
+
+    <h3 class="doc-h3">Global Default Tabs</h3>
+    <p>Stored as the <strong><code>translitlab_default_tabs</code></strong> WordPress option — an array of tab slugs (e.g. <code>["test","snippets","maps"]</code>). Configured from the "Default Tab Visibility" card in Settings → TranslitLab. Affects all Transliterator users who do not have a per-user override.</p>
+
+    <h3 class="doc-h3">Per-User Override</h3>
+    <p>Each user can have a custom tab list stored in user meta under the key <strong><code>translitlab_tabs</code></strong>. Enable the "Override defaults" checkbox for a user in the settings table and select their allowed tabs. If the checkbox is unchecked, any previously saved user meta is deleted and the global default applies.</p>
+
+    <h3 class="doc-h3">Resolution Order (<code>TranslitLab_Role::user_tab_config()</code>)</h3>
+    <ul>
+      <li>Per-user meta (<code>translitlab_tabs</code>) is checked first.</li>
+      <li>Falls back to the <code>translitlab_default_tabs</code> option.</li>
+      <li>Falls back to all five tabs enabled if neither is set.</li>
+    </ul>
+    <p>The resolved tab list is passed to the frontend as <code>TranslitLabConfig.enabledTabs</code> via <code>wp_localize_script</code>, and the lab JS uses this to skip event binding on hidden tabs.</p>
+
+    <!-- ── 10. Database ───────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="database"></span>
+    <h2 class="doc-h2"><span class="num">10</span> Database Schema</h2>
+    <p>All data is stored in four custom tables, created on activation via <code>dbDelta()</code>. All tables use the site's configured character set and collation.</p>
+
+    <h3 class="doc-h3"><code>wp_translit_forward_map</code></h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>BIGINT UNSIGNED PK AUTO_INCREMENT</code></td><td>Row identifier.</td></tr>
+          <tr><td><code>section</code></td><td><code>VARCHAR(100)</code> default <code>'general'</code></td><td>Map section (e.g. <code>consonants</code>, <code>matras</code>).</td></tr>
+          <tr><td><code>map_key</code></td><td><code>VARCHAR(100)</code></td><td>Roman input string to match.</td></tr>
+          <tr><td><code>map_val</code></td><td><code>VARCHAR(500)</code></td><td>BPM output string to substitute.</td></tr>
+          <tr><td><code>sort_order</code></td><td><code>INT</code></td><td>Substitution priority within section (lower = higher priority).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The same schema applies to <strong><code>wp_translit_reverse_map</code></strong> (BPM → Roman). Both tables have a <code>UNIQUE KEY (section, sort_order)</code>.</p>
+
+    <h3 class="doc-h3"><code>wp_translit_snippets</code></h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>BIGINT UNSIGNED PK</code></td><td></td></tr>
+          <tr><td><code>snippet_key</code></td><td><code>VARCHAR(100) UNIQUE</code></td><td>Unique slug — used as upsert key.</td></tr>
+          <tr><td><code>label</code></td><td><code>VARCHAR(255)</code></td><td>Display name.</td></tr>
+          <tr><td><code>direction</code></td><td><code>VARCHAR(20)</code></td><td><code>forward</code> or <code>reverse</code>.</td></tr>
+          <tr><td><code>hook_stage</code></td><td><code>VARCHAR(20)</code></td><td><code>pre</code>, <code>loop</code>, or <code>post</code>.</td></tr>
+          <tr><td><code>sort_order</code></td><td><code>INT</code></td><td>Execution order within direction+stage.</td></tr>
+          <tr><td><code>is_active</code></td><td><code>TINYINT(1)</code></td><td><code>1</code> = runs; <code>0</code> = skipped.</td></tr>
+          <tr><td><code>source</code></td><td><code>VARCHAR(100)</code></td><td><code>'custom'</code> or bundled identifier.</td></tr>
+          <tr><td><code>logic_description</code></td><td><code>TEXT</code></td><td>Human description — not executed.</td></tr>
+          <tr><td><code>js_body</code></td><td><code>LONGTEXT</code></td><td>JS function body.</td></tr>
+          <tr><td><code>php_body</code></td><td><code>LONGTEXT</code></td><td>PHP function body.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3"><code>wp_translit_settings</code></h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>BIGINT UNSIGNED PK</code></td><td></td></tr>
+          <tr><td><code>engine</code></td><td><code>VARCHAR(10)</code></td><td><code>'js'</code> or <code>'php'</code>.</td></tr>
+          <tr><td><code>setting_key</code></td><td><code>VARCHAR(100)</code></td><td>Setting name.</td></tr>
+          <tr><td><code>setting_val</code></td><td><code>LONGTEXT</code></td><td>JSON-encoded value for arrays/objects; plain string otherwise.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><code>(engine, setting_key)</code> has a <code>UNIQUE KEY</code> — saves use <code>INSERT … ON DUPLICATE KEY UPDATE</code>.</p>
+
+    <!-- ── 11. AJAX Endpoints ─────────────────────────────────────────────── -->
+    <span class="section-anchor" id="ajax"></span>
+    <h2 class="doc-h2"><span class="num">11</span> AJAX Endpoints</h2>
+    <p>All frontend communication uses WordPress AJAX (<code>admin-ajax.php</code>). Every action requires a logged-in, authorized user and a valid <code>translitlab_nonce</code> nonce. There are no <code>nopriv</code> variants — all actions require login.</p>
+    <p>The JS sends a JSON payload as a <code>payload</code> FormData field (URL-encoded JSON string). The PHP AJAX handler decodes this field; a raw JSON body fallback also exists for direct API use.</p>
+
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Action Name</th><th>Method</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>translitlab_load</code></td><td>GET-style POST</td><td>Returns all snippets, forward map, reverse map, PHP settings, and JS settings in one payload. Called on lab init.</td></tr>
+          <tr><td><code>translitlab_run_php</code></td><td>POST</td><td>Runs the PHP engine with the provided input, direction, snippets, maps, and settings. Returns <code>output</code> and <code>log</code>.</td></tr>
+          <tr><td><code>translitlab_get_engine_source</code></td><td>GET-style POST</td><td>Returns the raw source of <code>engine.js</code> and <code>class-engine.php</code> as strings (for the Debug tab source viewer).</td></tr>
+          <tr><td><code>translitlab_save_snippets</code></td><td>POST</td><td>Replaces the entire snippets table with the submitted array (upsert + delete orphans).</td></tr>
+          <tr><td><code>translitlab_save_map</code></td><td>POST</td><td>Replaces the entire specified map (<code>forward</code> or <code>reverse</code>) with the submitted data.</td></tr>
+          <tr><td><code>translitlab_save_engine_settings</code></td><td>POST</td><td>Upserts settings for the specified engine (<code>js</code> or <code>php</code>).</td></tr>
+          <tr><td><code>translitlab_reset_defaults</code></td><td>POST</td><td>Resets the specified component (<code>forward</code>, <code>reverse</code>, <code>snippets</code>, <code>js_settings</code>, <code>php_settings</code>, or <code>all</code>) to bundled defaults. Returns updated data when resetting settings.</td></tr>
+          <tr><td><code>translitlab_reorder_map_section</code></td><td>POST</td><td>Reorders entries within a single section of a map. Accepts <code>type</code>, <code>section</code>, and <code>ids</code> (ordered array of row IDs).</td></tr>
+          <tr><td><code>translitlab_check_sort_order_conflicts</code></td><td>POST</td><td>Checks for sort order conflicts in a map (currently returns empty conflicts — reserved for future use).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Auth Guard</h3>
+    <p>Every AJAX handler calls <code>TranslitLab_Ajax::guard()</code> first, which verifies <code>is_user_logged_in()</code>, <code>TranslitLab_Role::user_can_access()</code>, and <code>check_ajax_referer('translitlab_nonce', 'nonce')</code>. A failure returns a <code>403</code> JSON error response and halts execution.</p>
+
+    <!-- ── 12. Defaults & Reset ────────────────────────────────────────────── -->
+    <span class="section-anchor" id="defaults"></span>
+    <h2 class="doc-h2"><span class="num">12</span> Default Data &amp; Reset</h2>
+    <p>All default data is bundled as JSON files in the <code>data/</code> directory and seeded into the database on plugin activation — but only if the snippets table is empty. This prevents activation from overwriting existing data.</p>
+
+    <h3 class="doc-h3">Activation Seeding</h3>
+    <p>On activation, <code>TranslitLab_DB::install()</code> creates the tables then calls <code>maybe_seed()</code>. If <code>wp_translit_snippets</code> has zero rows, all five data files are imported.</p>
+
+    <h3 class="doc-h3">Reset Options</h3>
+    <p>The <code>translitlab_reset_defaults</code> AJAX action accepts a <code>which</code> parameter:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th><code>which</code> value</th><th>What is reset</th></tr></thead>
+        <tbody>
+          <tr><td><code>forward</code></td><td>Forward map only (from <code>data/forwardMap.json</code>).</td></tr>
+          <tr><td><code>reverse</code></td><td>Reverse map only (from <code>data/reverseMap.json</code>).</td></tr>
+          <tr><td><code>snippets</code></td><td>All snippets (from <code>data/defaults.json</code>).</td></tr>
+          <tr><td><code>js_settings</code></td><td>JS engine settings (from <code>data/js-engine-settings.default.json</code>).</td></tr>
+          <tr><td><code>php_settings</code></td><td>PHP engine settings (from <code>data/php-engine-settings.default.json</code>).</td></tr>
+          <tr><td><code>all</code></td><td>Everything above.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box warn">
+      <p>Reset is <strong>destructive and immediate</strong> — existing customizations are replaced. Export your maps and snippets as JSON before using reset.</p>
+    </div>
+
+    <!-- ── 13. Installation ───────────────────────────────────────────────── -->
+    <span class="section-anchor" id="install"></span>
+    <h2 class="doc-h2"><span class="num">13</span> Installation &amp; Setup</h2>
+
+    <h3 class="doc-h3">Installation</h3>
+    <ul>
+      <li>Upload the <code>translitlab</code> folder to <code>/wp-content/plugins/</code>, <strong>or</strong> install the plugin ZIP through <strong>Plugins → Add New → Upload Plugin</strong>.</li>
+      <li>Activate the plugin through the <strong>Plugins</strong> menu in WordPress.</li>
+    </ul>
+
+    <h3 class="doc-h3">What Activation Does</h3>
+    <ul>
+      <li>Registers the <strong>Transliterator</strong> custom role (if it doesn't already exist).</li>
+      <li>Creates four database tables via <code>dbDelta()</code>.</li>
+      <li>Seeds the tables with bundled defaults if they are empty.</li>
+    </ul>
+
+    <h3 class="doc-h3">Initial Configuration</h3>
+    <ul>
+      <li>Go to <strong>Settings → TranslitLab</strong> to grant users the Transliterator role and lab access.</li>
+      <li>Optionally configure the global default tab visibility.</li>
+      <li>Add the <code>[translitlab]</code> shortcode to any page or post to display the lab to authorized users.</li>
+    </ul>
+
+    <div class="box tip">
+      <p>Create a dedicated private page (e.g. "Transliteration Lab") and restrict it to logged-in users via your theme or a membership plugin for the cleanest access experience.</p>
+    </div>
+
+    <!-- ── 14. Shortcode ──────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="shortcode"></span>
+    <h2 class="doc-h2"><span class="num">14</span> Shortcode Reference</h2>
+    <p>The plugin registers a single shortcode:</p>
+    <pre><code>[translitlab]</code></pre>
+    <p>The shortcode accepts no attributes. Behavior depends on the current user's state:</p>
+
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>User State</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>Not logged in</td><td>A <code>&lt;p class="translitlab-notice"&gt;</code> message: "Please log in to access the Transliteration Lab."</td></tr>
+          <tr><td>Logged in, no access</td><td>A <code>&lt;p class="translitlab-notice"&gt;</code> message: "You do not have permission to access the Transliteration Lab."</td></tr>
+          <tr><td>Logged in, has access</td><td>The full lab UI HTML with all permitted tabs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Assets (<code>style.css</code>, <code>engine.js</code>, <code>app.js</code>, JSZip CDN) are conditionally enqueued only on pages that contain the shortcode, detected via <code>has_shortcode()</code> on <code>wp_enqueue_scripts</code>. The lab config (<code>TranslitLabConfig</code>) is injected via <code>wp_localize_script</code> with the AJAX URL, nonce, and enabled tabs.</p>
+
+    <!-- ── 15. Uninstall ──────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="uninstall"></span>
+    <h2 class="doc-h2"><span class="num">15</span> Uninstall Behaviour</h2>
+    <p>Deactivating the plugin leaves all data intact — the shortcode stops working, but tables, options, user meta, and the role are preserved. Reactivating restores full functionality immediately.</p>
+
+    <h3 class="doc-h3">On Deletion</h3>
+    <p>When the plugin is <strong>deleted</strong> (not just deactivated) through wp-admin, <code>uninstall.php</code> runs and performs the following actions permanently:</p>
+    <ul>
+      <li>Drops all four plugin tables: <code>wp_translit_forward_map</code>, <code>wp_translit_reverse_map</code>, <code>wp_translit_snippets</code>, <code>wp_translit_settings</code>.</li>
+      <li>Deletes the <code>translitlab_approved_users</code> option.</li>
+      <li>Deletes the <code>translitlab_default_tabs</code> option.</li>
+      <li>Removes <code>translitlab_tabs</code> user meta from all users.</li>
+      <li>Removes the <code>transliterator</code> custom role from WordPress.</li>
+    </ul>
+
+    <div class="box warn">
+      <p>Deletion is <strong>irreversible</strong>. Export your maps and snippets as JSON from the lab before deleting the plugin if you intend to reinstall later.</p>
+    </div>
+
+    <!-- ── 16. Troubleshooting ────────────────────────────────────────────── -->
+    <span class="section-anchor" id="troubleshooting"></span>
+    <h2 class="doc-h2"><span class="num">16</span> Troubleshooting</h2>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Symptom</th><th>Likely cause / fix</th></tr></thead>
+        <tbody>
+          <tr><td>Shortcode shows "Please log in…"</td><td>The visitor is not logged in. The lab requires an authenticated session.</td></tr>
+          <tr><td>Shortcode shows "You do not have permission…"</td><td>The user lacks the Transliterator role, is not on the approved-users list, or both. Check Settings → TranslitLab and ensure both the Role and Lab Access checkboxes are checked for the user.</td></tr>
+          <tr><td>AJAX call returns 403</td><td>Nonce mismatch (page cached without the nonce?), or user lost access between page load and request. Refresh the page. If caching is the culprit, exclude the lab page from your cache plugin.</td></tr>
+          <tr><td>JS and PHP engines produce different output</td><td>Engine settings or map data may differ between engines. Open the Engines tab and compare the two settings panels. Use Reset → all to bring both back to defaults, then re-apply changes.</td></tr>
+          <tr><td>Tables not created / lab throws DB errors</td><td>The activation hook may not have run (e.g., plugin was copied manually without activating). Deactivate and reactivate the plugin through wp-admin to trigger <code>dbDelta()</code>.</td></tr>
+          <tr><td>Saving map returns no error but data doesn't update</td><td>The <code>save_map</code> action replaces the entire table — confirm you're submitting the full map payload, not just a diff. Check the browser Network tab for the AJAX response.</td></tr>
+          <tr><td>Snippet reorder doesn't stick</td><td>A <code>UNIQUE KEY (direction, hook_stage, sort_order)</code> conflict during the save. The two-step bump should prevent this, but if it occurs, try resetting snippets to defaults and re-applying your changes.</td></tr>
+          <tr><td>Lab page shows no tabs</td><td>All tabs may be disabled in the global default or per-user override. Check Settings → TranslitLab → Default Tab Visibility and confirm at least one tab is checked.</td></tr>
+          <tr><td>User meta tab override not taking effect</td><td>Confirm the "Override defaults" checkbox is checked and saved for that user. If the checkbox is unchecked on save, any previous meta is deleted and the global default applies.</td></tr>
+          <tr><td>JSZip not loading (import/export broken)</td><td>The lab loads JSZip from <code>cdnjs.cloudflare.com</code>. Check if a firewall or CSP policy is blocking the CDN. If so, self-host <code>jszip.min.js</code> and update the enqueue URL in <code>class-frontend.php</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 17. FAQ ────────────────────────────────────────────────────────── -->
+    <span class="section-anchor" id="faq"></span>
+    <h2 class="doc-h2"><span class="num">17</span> FAQ</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Who can access the lab on the frontend? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Logged-out visitors see a login prompt. Logged-in users without the Transliterator role and explicit Lab Access approval see a permission notice. Users with <code>manage_options</code> (administrators) always have full access regardless of the approved list.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Do both engines always produce the same output? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>They are designed to — the PHP engine is written to mirror the JS engine exactly. However, if their settings or map data have diverged (e.g. settings were saved for one engine but not the other), output will differ. The Test tab exists precisely to surface these differences. Use Reset → all to resync both to defaults.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I add the shortcode to multiple pages? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Yes. The shortcode can be placed on any number of pages or posts. Assets are conditionally enqueued only on pages where <code>has_shortcode()</code> returns true, so there's no performance impact on other pages.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens to my custom maps and snippets if I reset to defaults? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>They are permanently replaced. The reset AJAX action calls <code>TranslitLab_DB::reset_defaults()</code>, which re-imports from the bundled JSON files — any customizations in the database are overwritten. Always export your maps and snippets as JSON from the Maps and Snippets tabs before resetting.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens when I deactivate the plugin? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Deactivation removes the Transliterator role from WordPress (so it no longer appears in user-role dropdowns) but leaves all table data, options, and user meta fully intact. The shortcode stops rendering the lab. Reactivating the plugin re-registers the role — users who held it will have it reassigned automatically by WordPress on their next login, and approved-user settings are preserved.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will deleting the plugin lose my transliteration maps? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Yes — <code>uninstall.php</code> drops all four plugin tables. If you plan to reinstall, export your forward map, reverse map, and snippets as JSON from the lab before deleting. The exported JSON files can be re-imported into a fresh install.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I use this plugin without the CompLing-AI plugin? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Yes. TransLit-Lab is a standalone WordPress plugin with no dependency on any other plugin. It bundles its own PHP and JS engines and manages its own database tables independently.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I give a user access to only some tabs? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Go to Settings → TranslitLab, find the user in the table, check "Override defaults," and select only the tabs you want them to see. Save. Their per-user tab config is stored in <code>translitlab_tabs</code> user meta and takes precedence over the global default.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is the map/snippet data safe from other plugins or theme code? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>All data is stored in dedicated custom tables (not <code>wp_options</code> or <code>wp_postmeta</code>), and all write operations go through authenticated AJAX handlers with nonce validation. Other plugins cannot write to these tables unless they directly call <code>$wpdb</code> — which would be unusual outside of a hostile plugin scenario.</p></div>
+    </div>
+
+    <footer>
+      TransLit-Lab Documentation — reference covering TransLit-Lab v1.1.0.<br>
+      Plugin by BhoomiTech Heritage and Development Foundation. License: GPLv2 or later.
+    </footer>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var navSelect = document.getElementById('nav-select');
+
+  if (navSelect) {
+    navSelect.addEventListener('change', function () {
+      var selectVal = this.value;
+      if (!selectVal) return;
+
+      var anchor = document.getElementById(selectVal);
+      if (anchor) {
+        var targetHeading = anchor.nextElementSibling;
+        var elementToScroll = (targetHeading && (targetHeading.tagName === 'H2' || targetHeading.tagName === 'H3'))
+          ? targetHeading
+          : anchor;
+
+        elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      this.value = '';
+    });
+  }
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-item .faq-q').forEach(function (q) {
+    q.addEventListener('click', function () {
+      var item = this.closest('.faq-item');
+      document.querySelectorAll('.faq-item.open').forEach(function (open) {
+        if (open !== item) open.classList.remove('open');
+      });
+      item.classList.toggle('open');
+    });
+  });
+});
+</script>
+</body>
+</html>

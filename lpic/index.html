@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiPic Documentation</title>
+  <style>
+    /* ── Theme Container Integration (Fixed Overlap Bug) ── */
+    .tlab-standalone-viewport {
+      position: relative !important;
+      width: 100% !important;
+      min-height: auto !important;
+      background: #ffffff !important; /* Forces your crisp white layout background */
+      box-sizing: border-box;
+      clear: both;
+    }
+
+    /* ── Design System Tokens ─────────────────────────── */
+    .tlab-standalone-viewport {
+      --ink:       #0f172a; /* Sharp Dark Slate text */
+      --ink-muted: #475569;
+      --ink-faint: #94a3b8;
+      --paper:     #ffffff;
+      --surface:   #ffffff;
+      --border:    #e2e8f0; /* Soft crisp separator borders */
+      --accent:    #4f46e5;
+      --accent-2:  #0ea5e9;
+      --accent-3:  #10b981;
+      --warn:      #f59e0b;
+      --danger:    #ef4444;
+      --topbar-h:  56px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+      font-family: var(--font-sans);
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .tlab-standalone-viewport *,
+    .tlab-standalone-viewport *::before,
+    .tlab-standalone-viewport *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tlab-standalone-viewport {
+      position: relative !important;
+      contain: layout;
+    }
+
+    .tlab-standalone-viewport #topbar {
+      position: -webkit-sticky !important;
+      position: sticky !important;
+      top: 0px !important;
+      left: 0;
+      right: 0;
+      padding-top: 60px !important;
+      background: #ffffff !important;
+      z-index: 9999 !important;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tlab-standalone-viewport h2.doc-h2,
+    .tlab-standalone-viewport h3.doc-h3,
+    .tlab-standalone-viewport .section-anchor {
+      scroll-margin-top: 126px !important;
+    }
+
+    /* ── Navigation Top Bar (Sticky) ────────────────── */
+    .tlab-standalone-viewport #topbar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--topbar-h);
+      background: #ffffff !important;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 24px;
+      z-index: 90;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tlab-standalone-viewport #topbar .logo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tlab-standalone-viewport #topbar .logo h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .tlab-standalone-viewport #topbar .logo h1 span {
+      color: var(--accent);
+    }
+
+    .tlab-standalone-viewport #topbar .logo p {
+      font-size: 9px;
+      color: var(--ink-faint);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tlab-standalone-viewport #topbar .divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ── Navigation Select Dropdown ─────────────────── */
+    .tlab-standalone-viewport #nav-select {
+      flex: 1;
+      min-width: 0;
+      height: 36px;
+      background: var(--paper);
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 28px 0 10px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .tlab-standalone-viewport #nav-select:focus {
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    /* ── Content Wrapper Shell ───────────────────────── */
+    .tlab-standalone-viewport #main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      width: 100%;
+    }
+
+    .tlab-standalone-viewport .section-anchor {
+      display: block;
+      position: relative;
+      visibility: hidden;
+    }
+
+    /* ── Headings ────────────────────────────────────── */
+    .tlab-standalone-viewport h2.doc-h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      margin: 48px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      word-break: break-word;
+    }
+
+    .tlab-standalone-viewport h2.doc-h2 .num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      color: var(--accent);
+      background: #ede9fe;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .tlab-standalone-viewport h3.doc-h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 32px 0 12px;
+    }
+
+    .tlab-standalone-viewport h4.doc-h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin: 24px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ── Typography ───────────────────────────────────── */
+    .tlab-standalone-viewport p {
+      margin-bottom: 16px;
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+    }
+    .tlab-standalone-viewport p strong { color: var(--ink); }
+    .tlab-standalone-viewport ul { margin: 0 0 16px 24px; }
+    .tlab-standalone-viewport li { margin-bottom: 8px; font-size: 0.95rem; color: var(--ink-muted); }
+    .tlab-standalone-viewport li strong { color: var(--ink); }
+    .tlab-standalone-viewport a { color: var(--accent); text-decoration: none; }
+    .tlab-standalone-viewport a:hover { text-decoration: underline; }
+
+    /* ── Data Tables ──────────────────────────────────── */
+    .tlab-standalone-viewport .doc-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--paper);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tlab-standalone-viewport table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 550px;
+    }
+
+    .tlab-standalone-viewport thead tr {
+      background: var(--ink);
+      color: #ffffff;
+    }
+
+    .tlab-standalone-viewport thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .tlab-standalone-viewport td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .tlab-standalone-viewport tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* ── Code Display ─────────────────────────────────── */
+    .tlab-standalone-viewport code {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      background: #f1f5f9;
+      color: #be123c;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .tlab-standalone-viewport pre {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: var(--ink);
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      line-height: 1.5;
+    }
+
+    .tlab-standalone-viewport pre code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Cover Header Block ───────────────────────────── */
+    .tlab-standalone-viewport .cover {
+      background: linear-gradient(135deg, var(--accent), #0ea5e9);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 36px 32px;
+      margin-bottom: 24px;
+    }
+
+    .tlab-standalone-viewport .cover h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .tlab-standalone-viewport .cover p {
+      color: rgba(255,255,255,.85);
+      font-size: .95rem;
+      margin-bottom: 6px;
+    }
+
+    .tlab-standalone-viewport .cover .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tlab-standalone-viewport .cover .badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      color: #ffffff;
+      padding: 3px 11px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    /* ── Callout Box ──────────────────────────────────── */
+    .tlab-standalone-viewport .box {
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin: 20px 0;
+      font-size: 0.92rem;
+      border-left: 4px solid;
+    }
+
+    .tlab-standalone-viewport .box p {
+      margin-bottom: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .tlab-standalone-viewport .box.info {
+      background: #eff6ff;
+      border-color: var(--accent-2);
+      color: #1e40af;
+    }
+
+    .tlab-standalone-viewport .box.warn {
+      background: #fffbeb;
+      border-color: var(--warn);
+      color: #b45309;
+    }
+
+    .tlab-standalone-viewport .box.tip {
+      background: #ecfdf5;
+      border-color: var(--accent-3);
+      color: #065f46;
+    }
+
+    .tlab-standalone-viewport .box.danger {
+      background: #fef2f2;
+      border-color: var(--danger);
+      color: #991b1b;
+    }
+
+    /* ── FAQ Accordion ────────────────────────────────── */
+    .tlab-standalone-viewport .faq-item {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .tlab-standalone-viewport .faq-q {
+      padding: 16px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .tlab-standalone-viewport .faq-q .arrow {
+      font-size: 1.15rem;
+      transform: rotate(90deg);
+      transition: transform 0.2s ease;
+      color: var(--ink-faint);
+      line-height: 1;
+    }
+
+    .tlab-standalone-viewport .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0,1,0,1);
+      background: #fafafa;
+    }
+
+    .tlab-standalone-viewport .faq-a p {
+      padding: 16px;
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-q {
+      border-bottom: 1px solid var(--border);
+      background: #fdfdfd;
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-q .arrow {
+      transform: rotate(270deg);
+      color: var(--accent);
+    }
+
+    .tlab-standalone-viewport .faq-item.open .faq-a {
+      max-height: 1000px;
+      transition: all 0.25s cubic-bezier(1,0,1,0);
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .tlab-standalone-viewport footer {
+      text-align: center;
+      color: var(--ink-faint);
+      font-size: 0.78rem;
+      margin-top: 64px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+<div class="tlab-standalone-viewport">
+
+  <div id="topbar">
+    <div class="logo">
+      <h1>LexiPic <span>Docs</span></h1>
+      <p>v1.2.2</p>
+    </div>
+    <div class="divider"></div>
+    <select id="nav-select" aria-label="Jump to section">
+      <option value="">☰ Jump to section…</option>
+      <optgroup label="Overview">
+        <option value="overview">1. Plugin Overview</option>
+        <option value="architecture">2. Architecture &amp; File Map</option>
+      </optgroup>
+      <optgroup label="Data Layer">
+        <option value="data-model">3. Data Model</option>
+        <option value="rest-api">4. REST API Reference</option>
+        <option value="permissions">5. Permissions &amp; Access Control</option>
+      </optgroup>
+      <optgroup label="Media Pipeline">
+        <option value="image-pipeline">6. Image Capture &amp; Storage</option>
+        <option value="audio-pipeline">7. Audio Capture &amp; Conversion</option>
+      </optgroup>
+      <optgroup label="IME Engine">
+        <option value="ime-overview">8. IME Engine Overview</option>
+        <option value="ime-files">9. The Four Engine Files</option>
+        <option value="ime-manager">10. Language &amp; File Management</option>
+        <option value="ime-hooks">11. Snippet Hooks</option>
+      </optgroup>
+      <optgroup label="Frontend">
+        <option value="shortcode">12. Shortcode &amp; Tabs</option>
+        <option value="frontend-flow">13. Frontend Entry Flow</option>
+      </optgroup>
+      <optgroup label="Admin Guide">
+        <option value="settings">14. Settings Page</option>
+        <option value="import-export">15. Import / Export</option>
+        <option value="install">16. Installation &amp; Setup</option>
+        <option value="uninstall">17. Uninstall Behaviour</option>
+      </optgroup>
+      <optgroup label="Reference">
+        <option value="troubleshooting">18. Troubleshooting</option>
+        <option value="faq">19. FAQ</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div id="main">
+
+    <div class="cover">
+      <h1>LexiPic</h1>
+      <p>Heritage Language Archive — Technical Documentation</p>
+      <p>Record, archive, and share heritage language word sets with photo, audio, native script, and Roman transliteration.</p>
+      <div class="badges">
+        <span class="badge">LexiPic v1.2.2</span>
+        <span class="badge">Requires WordPress (REST API)</span>
+        <span class="badge">Requires PHP 8.0+</span>
+        <span class="badge">FFmpeg optional</span>
+      </div>
+    </div>
+
+    <span class="section-anchor" id="overview"></span>
+    <h2 class="doc-h2"><span class="num">01</span> Plugin Overview</h2>
+    <p>LexiPic is a WordPress plugin for capturing and archiving heritage-language vocabulary: each entry pairs a photo with a spoken recording, a native-script word, and a Roman transliteration. Entries are grouped into <strong>sets</strong> (e.g. "Domestic Animals", "Kitchen Items") and rendered on the front end through a single shortcode.</p>
+    <p>The plugin was adapted from a standalone IndexedDB-based progressive web app — the REST API and import/export formats still carry traces of that lineage (see <a href="#troubleshooting">Troubleshooting</a> and the legacy key-mapping in <code>Lexipic_File_Handler::import_json()</code>).</p>
+    <p>Three building blocks make up the system:</p>
+    <ul>
+      <li><strong>A custom database layer</strong> — two tables (<code>sets</code>, <code>entries</code>) storing images as binary BLOBs directly in MySQL rather than as Media Library attachments.</li>
+      <li><strong>A REST API</strong> under the <code>lexipic/v1</code> namespace that the front-end JavaScript app talks to exclusively — there is no page-reload form submission anywhere in the plugin.</li>
+      <li><strong>A bundled third-party IME engine</strong> ("CompLing AI") that transliterates between Roman text and native script live as the user types, driven by four JSON data files per language.</li>
+    </ul>
+
+    <div class="box info">
+      <p><strong>Third-party engine.</strong> The transliteration engine itself (<code>public/js/ime/engine.js</code>, exposing the global <code>CPLAI_ENGINE</code>) ships as a black-box asset. LexiPic's job is to supply it with the right JSON maps and settings per language — it does not modify the engine's internals.</p>
+    </div>
+
+    <span class="section-anchor" id="architecture"></span>
+    <h2 class="doc-h2"><span class="num">02</span> Architecture &amp; File Map</h2>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Path</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td><code>lexipic.php</code></td><td>Bootstraps constants, includes, activation/deactivation hooks, the <code>[lexipic]</code> shortcode, and asset enqueueing.</td></tr>
+          <tr><td><code>uninstall.php</code></td><td>Drops both custom tables, deletes plugin options/transients, removes the uploads folder, and clears the audio-conversion cron hook.</td></tr>
+          <tr><td><code>includes/class-db.php</code></td><td><code>Lexipic_DB</code> — all direct <code>$wpdb</code> queries for sets and entries; schema creation via <code>dbDelta()</code>.</td></tr>
+          <tr><td><code>includes/class-file-handler.php</code></td><td><code>Lexipic_File_Handler</code> — base64 ⇄ binary conversion for images/audio, and the JSON export/import format.</td></tr>
+          <tr><td><code>includes/class-audio-converter.php</code></td><td><code>Lexipic_Audio_Converter</code> — detects FFmpeg, schedules a WP-Cron job to transcode .webm recordings to .mp3.</td></tr>
+          <tr><td><code>includes/class-rest-api.php</code></td><td><code>Lexipic_REST_API</code> — registers every route under <code>lexipic/v1</code> and streams images/audio with range support.</td></tr>
+          <tr><td><code>includes/class-ime-manager.php</code></td><td><code>Lexipic_IME_Manager</code> — language registry, per-language engine file storage, validation, backup/restore, zip export.</td></tr>
+          <tr><td><code>admin/settings-page.php</code></td><td>Top-level <strong>LexiPic</strong> admin menu: default language, public archive toggle, per-tab access control.</td></tr>
+          <tr><td><code>admin/import-export.php</code></td><td>Admin sub-page for uploading a JSON backup or downloading per-set exports.</td></tr>
+          <tr><td><code>admin/ime-manager-page.php</code></td><td>Admin sub-page ("IME Engine") for managing languages and replacing/backing up/restoring the four engine files.</td></tr>
+          <tr><td><code>public/partials/app.php</code></td><td>The shortcode's HTML shell — header, set selector, tab buttons, and the three tab panels (Archive / Add Entry / Sets).</td></tr>
+          <tr><td><code>public/js/lexipic-app.js</code></td><td>All front-end behaviour: REST calls, tab switching, image downscaling, MediaRecorder capture, IME wiring, card rendering.</td></tr>
+          <tr><td><code>public/js/ime/engine.js</code></td><td>The bundled CompLing AI transliteration engine, exposing <code>window.CPLAI_ENGINE.bpmTransliterate()</code>.</td></tr>
+          <tr><td><code>public/js/ime/*.json</code></td><td>Bundled BPM-language defaults — forward map, reverse map, hook definitions, engine settings — used as the fallback for any language without a saved override.</td></tr>
+          <tr><td><code>public/css/style.css</code></td><td>Front-end styling for the shortcode app (cards, tabs, slider, forms).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-anchor" id="data-model"></span>
+    <h2 class="doc-h2"><span class="num">03</span> Data Model</h2>
+    <p>LexiPic creates two custom tables on activation (<code>Lexipic_DB::create_tables()</code>, run via <code>dbDelta()</code>) rather than using WordPress posts or the Media Library.</p>
+
+    <h3 class="doc-h3">wp_lexipic_sets</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>BIGINT, PK</td><td>Auto-increment.</td></tr>
+          <tr><td><code>name</code></td><td>VARCHAR(255)</td><td>Display name, e.g. "Domestic Animals".</td></tr>
+          <tr><td><code>slug</code></td><td>VARCHAR(255), UNIQUE</td><td>Generated with <code>sanitize_title()</code>; collisions get a numeric suffix via <code>unique_slug()</code>.</td></tr>
+          <tr><td><code>language</code></td><td>VARCHAR(10)</td><td>Language code from the registry (e.g. <code>bpm</code>, <code>as</code>, <code>bn</code>); default <code>bpm</code>.</td></tr>
+          <tr><td><code>created_by</code></td><td>BIGINT</td><td>WordPress user ID of the creator; used for ownership checks.</td></tr>
+          <tr><td><code>created_at</code></td><td>DATETIME</td><td>Defaults to <code>CURRENT_TIMESTAMP</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">wp_lexipic_entries</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>BIGINT, PK</td><td>Auto-increment.</td></tr>
+          <tr><td><code>set_id</code></td><td>BIGINT, indexed</td><td>Foreign key to <code>sets.id</code> (no DB-level constraint — enforced in PHP).</td></tr>
+          <tr><td><code>word_script</code></td><td>VARCHAR(500)</td><td>The heritage-language word in native script.</td></tr>
+          <tr><td><code>word_roman</code></td><td>VARCHAR(500)</td><td>Roman transliteration.</td></tr>
+          <tr><td><code>description</code></td><td>TEXT</td><td>Optional free-text note.</td></tr>
+          <tr><td><code>image_data</code></td><td>MEDIUMBLOB</td><td>Raw image binary, stored directly in the row (up to ~16MB).</td></tr>
+          <tr><td><code>image_mime</code></td><td>VARCHAR(50)</td><td>e.g. <code>image/jpeg</code>.</td></tr>
+          <tr><td><code>audio_path</code></td><td>VARCHAR(500)</td><td>Absolute filesystem path under <code>wp-content/uploads/lexipic/</code> — not a URL.</td></tr>
+          <tr><td><code>audio_mime</code></td><td>VARCHAR(50)</td><td><code>audio/webm</code> initially; becomes <code>audio/mpeg</code> after background conversion.</td></tr>
+          <tr><td><code>created_at</code></td><td>DATETIME</td><td>Defaults to <code>CURRENT_TIMESTAMP</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box warn">
+      <p><strong>Images live in the database, not the Media Library.</strong> <code>Lexipic_DB::get_entries()</code> deliberately excludes the <code>image_data</code> column to keep list queries fast; the blob is only fetched by <code>get_entry()</code> when an image is actually being served or exported. Large archives with many high-resolution images will grow your database, not your uploads folder.</p>
+    </div>
+
+    <span class="section-anchor" id="rest-api"></span>
+    <h2 class="doc-h2"><span class="num">04</span> REST API Reference</h2>
+    <p>All routes live under the namespace <code>lexipic/v1</code>, registered in <code>Lexipic_REST_API::register_routes()</code>. The front-end script is the only consumer in practice, but routes are usable by any authenticated client.</p>
+
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>Route</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>GET</td><td><code>/sets</code></td><td>List all sets with an attached <code>entry_count</code> per set.</td></tr>
+          <tr><td>POST</td><td><code>/sets</code></td><td>Create a set. Body: <code>name</code> (required), <code>language</code> (default <code>bpm</code>).</td></tr>
+          <tr><td>GET</td><td><code>/sets/{id}</code></td><td>Get one set's metadata.</td></tr>
+          <tr><td>DELETE</td><td><code>/sets/{id}</code></td><td>Delete a set, its entries, and their audio files. Owner or admin only.</td></tr>
+          <tr><td>GET</td><td><code>/sets/{set_id}/entries</code></td><td>List entries for a set (image/audio served via separate URLs, blob excluded).</td></tr>
+          <tr><td>POST</td><td><code>/sets/{set_id}/entries</code></td><td>Create an entry. Body: <code>word_script</code>, <code>word_roman</code>, <code>description</code>, <code>image</code> (data-URI), <code>audio</code> (data-URI).</td></tr>
+          <tr><td>DELETE</td><td><code>/entries/{id}</code></td><td>Delete one entry and its audio file.</td></tr>
+          <tr><td>GET</td><td><code>/entries/{id}/image</code></td><td>Stream the stored image blob with its MIME type.</td></tr>
+          <tr><td>GET</td><td><code>/entries/{id}/audio</code></td><td>Stream the audio file with byte-range support (seekable <code>&lt;audio&gt;</code> playback).</td></tr>
+          <tr><td>GET</td><td><code>/sets/{id}/export</code></td><td>Download a self-contained JSON export (base64 image + audio embedded). Gzipped when the client accepts it.</td></tr>
+          <tr><td>POST</td><td><code>/import</code></td><td>Import a JSON export (or legacy PWA array) as a new set.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Why Audio Has Its Own Streaming Endpoint</h3>
+    <p>Audio is served through a stable per-entry URL rather than a direct link to the on-disk filename. This matters because the background FFmpeg job (see <a href="#audio-pipeline">Section 7</a>) renames the file from <code>.webm</code> to <code>.mp3</code> and deletes the original once conversion succeeds — a player that already loaded the REST URL keeps working without the entry list needing to be refreshed.</p>
+
+    <span class="section-anchor" id="permissions"></span>
+    <h2 class="doc-h2"><span class="num">05</span> Permissions &amp; Access Control</h2>
+    <p>LexiPic does not introduce custom WordPress capabilities. Access is governed by login state plus a single plugin setting, checked at two separate layers.</p>
+
+    <h3 class="doc-h3">REST Layer</h3>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Callback</th><th>Logic</th></tr></thead>
+        <tbody>
+          <tr><td><code>can_read</code></td><td>True if <code>lexipic_settings['public_view']</code> is enabled, otherwise requires <code>is_user_logged_in()</code>.</td></tr>
+          <tr><td><code>can_write</code></td><td>Requires <code>is_user_logged_in()</code> — any logged-in user can create entries and sets via the API.</td></tr>
+          <tr><td>Set deletion</td><td>Additionally requires <code>current_user_can('manage_options')</code> <em>or</em> that the requester's user ID matches the set's <code>created_by</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="doc-h3">Frontend Tab Layer</h3>
+    <p>Independently of the REST permissions above, <code>public/partials/app.php</code> decides which tabs to even render, based on <code>lexipic_settings['tab_access']</code> — a setting holding two arrays of WordPress user IDs, one per restricted tab:</p>
+    <ul>
+      <li><strong>Archive</strong> — always shown to anyone who passes <code>can_view_archive</code> (logged in, or public view is on).</li>
+      <li><strong>Add Entry</strong> — shown only to administrators or users whose ID appears in <code>tab_access.add_entry</code>.</li>
+      <li><strong>Sets</strong> — shown only to administrators or users whose ID appears in <code>tab_access.sets</code>.</li>
+    </ul>
+    <p>The tab bar itself (<code>$show_tab_nav</code>) only renders at all once more than one tab is visible — a user with no special access simply sees the Archive panel with no tab buttons.</p>
+
+    <div class="box danger">
+      <p><strong>UI restriction, not a security boundary.</strong> Hiding the Add Entry / Sets tabs only controls what renders in <code>app.php</code>. The REST <code>can_write</code> callback grants entry/set creation to <em>any logged-in user</em> regardless of tab access — a user without the Add Entry tab visible could still POST to <code>/sets/{id}/entries</code> directly if they construct the request themselves. Tab access is a convenience UI gate, not an authorization layer.</p>
+    </div>
+
+    <span class="section-anchor" id="image-pipeline"></span>
+    <h2 class="doc-h2"><span class="num">06</span> Image Capture &amp; Storage</h2>
+    <p>Images never touch the server as raw file uploads — they are downscaled in the browser and submitted as base64 data-URIs inside the entry-creation JSON body.</p>
+    <ol style="margin:0 0 16px 24px; color:var(--ink-muted); font-size:0.95rem;">
+      <li style="margin-bottom:8px;">The user selects a file via <code>#lp-image-input</code>; <code>lexipic-app.js</code> reads it with <code>FileReader</code>.</li>
+      <li style="margin-bottom:8px;">An offscreen <code>&lt;canvas&gt;</code> redraws the image scaled down so neither dimension exceeds <code>MAX_IMAGE_DIM</code> (400px), preserving aspect ratio and never scaling up.</li>
+      <li style="margin-bottom:8px;">The canvas is exported as a JPEG data-URI at quality 0.7 via <code>canvas.toDataURL('image/jpeg', 0.7)</code> and shown in the preview.</li>
+      <li style="margin-bottom:8px;">On save, that data-URI is sent as the <code>image</code> field; <code>Lexipic_File_Handler::decode_image()</code> strips the <code>data:&lt;mime&gt;;base64,</code> header and stores the raw binary in <code>image_data</code>.</li>
+      <li>The image is served back through <code>GET /entries/{id}/image</code>, which streams the blob with the stored MIME type and a 24-hour <code>Cache-Control</code> header.</li>
+    </ol>
+
+    <span class="section-anchor" id="audio-pipeline"></span>
+    <h2 class="doc-h2"><span class="num">07</span> Audio Capture &amp; Conversion</h2>
+    <p>Audio capture uses the browser's <code>MediaRecorder</code> API (always <code>audio/webm</code>) running in parallel with the Web Speech API for transcription — both are started together when the user presses Speak.</p>
+
+    <h3 class="doc-h3">Capture-Time Flow</h3>
+    <p><code>SpeechRecognition</code> drives the live text result (locale from <code>lexipicConfig.speechLocale</code>), while <code>MediaRecorder</code> independently captures the same microphone stream as a <code>.webm</code> blob. When <code>recognition.onresult</code> fires, the transcript fills the script-word input and the recorder is stopped — the recognized text and the recorded clip are two separate artifacts from the same utterance, not derived from each other.</p>
+
+    <h3 class="doc-h3">Server-Side Conversion (FFmpeg)</h3>
+    <p><code>Lexipic_Audio_Converter</code> detects FFmpeg by running <code>ffmpeg -version</code> and caching the result in a one-hour transient. If available, every newly saved or imported entry's audio is scheduled for background conversion via <code>wp_schedule_single_event()</code>, firing 5 seconds later on the <code>lexipic_convert_audio</code> cron hook.</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Command</td><td><code>ffmpeg -i {webm} -vn -ar 44100 -ac 1 -b:a 64k {mp3}</code> — mono, 44.1kHz, 64kbps.</td></tr>
+          <tr><td>On success</td><td><code>Lexipic_DB::update_audio()</code> points the entry at the new <code>.mp3</code> path with MIME <code>audio/mpeg</code>; the original <code>.webm</code> is deleted.</td></tr>
+          <tr><td>On failure</td><td>Silently leaves the original <code>.webm</code> in place — playback still works, just without the format normalization.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box info">
+      <p><strong>WP-Cron caveat.</strong> The conversion job relies on WordPress's pseudo-cron, which only fires on a site visit after the scheduled time. Low-traffic sites without a real system cron configured may see a short delay before the <code>.webm</code> → <code>.mp3</code> swap happens, even though the file is already usable in the meantime.</p>
+    </div>
+
+    <span class="section-anchor" id="ime-overview"></span>
+    <h2 class="doc-h2"><span class="num">08</span> IME Engine Overview</h2>
+    <p>LexiPic bundles a third-party transliteration engine, internally referred to as "CompLing AI", exposed on the page as the global <code>window.CPLAI_ENGINE</code> with a single entry point: <code>bpmTransliterate(text, direction, maps, preHooks, loopHooks, postHooks, opts, settings)</code>.</p>
+    <p>The engine itself ships unmodified in <code>public/js/ime/engine.js</code>. What LexiPic actually manages is the <strong>data</strong> fed into it — four JSON files per language, resolvable per language code, with admin tooling to replace, validate, back up, and restore them.</p>
+
+    <h3 class="doc-h3">Resolution Order</h3>
+    <p>For any language code and file key, <code>Lexipic_IME_Manager::active_file_path()</code> checks a saved override first:</p>
+    <pre><code>wp-content/uploads/lexipic/ime/{lang_code}/{filename}.json   ← checked first
+public/js/ime/{filename}.json                                 ← fallback (bundled BPM defaults)</code></pre>
+    <p>This means every newly added language works immediately using the bundled BPM engine data, even before an administrator uploads anything custom for it — only languages with an explicit override saved diverge from that shared baseline.</p>
+
+    <span class="section-anchor" id="ime-files"></span>
+    <h2 class="doc-h2"><span class="num">09</span> The Four Engine Files</h2>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Key</th><th>Filename</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>forward</code></td><td><code>forwardMap.json</code></td><td>Roman → Script character/sequence mapping, used while typing in the Roman input.</td></tr>
+          <tr><td><code>reverse</code></td><td><code>reverseMap.json</code></td><td>Script → Roman mapping, used while typing in the script input (and after speech recognition fills it).</td></tr>
+          <tr><td><code>hooks</code></td><td><code>defaults.json</code></td><td>Array of "snippet hook" objects — small JS functions injected into the engine's pre/loop/post processing stages.</td></tr>
+          <tr><td><code>settings</code></td><td><code>js-engine-settings.default.json</code></td><td>Engine-wide behaviour: virama character, ZWJ/ZWNJ handling, inherent vowel, section processing order.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Map files (<code>forward</code> / <code>reverse</code>) are expected to contain six sections, checked non-strictly on upload:</p>
+    <ul>
+      <li><code>independent_vowels</code>, <code>consonants</code>, <code>matras</code>, <code>special</code>, <code>digits</code>, <code>punctuation</code></li>
+    </ul>
+    <p>Settings files are expected to define <code>virama</code>, <code>zwj</code>, <code>zwnj</code>, <code>inherent_vowel</code>, and <code>section_order</code>.</p>
+
+    <div class="box tip">
+      <p><strong>Missing sections don't break anything.</strong> <code>Lexipic_IME_Manager::validate_structure()</code> only produces non-blocking warnings — the engine tolerates absent sections by skipping them, and the upload still saves. Use the warnings as a guide for what transliteration behaviour will simply not work, not as a hard validation gate.</p>
+    </div>
+
+    <span class="section-anchor" id="ime-manager"></span>
+    <h2 class="doc-h2"><span class="num">10</span> Language &amp; File Management</h2>
+    <p>The <strong>IME Engine</strong> admin page (<code>admin/ime-manager-page.php</code>, under <strong>LexiPic → IME Engine</strong>) is the control surface for everything in <code>Lexipic_IME_Manager</code>.</p>
+
+    <h3 class="doc-h3">Language Registry</h3>
+    <p>Languages are stored in the <code>lexipic_languages</code> option, seeded on first access with three built-ins:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Code</th><th>Label</th><th>Speech Locale</th></tr></thead>
+        <tbody>
+          <tr><td><code>bpm</code></td><td>Bishnupriya Manipuri (ইমার ঠার)</td><td><code>bn-IN</code></td></tr>
+          <tr><td><code>as</code></td><td>Assamese (অসমীয়া)</td><td><code>as-IN</code></td></tr>
+          <tr><td><code>bn</code></td><td>Bengali (বাংলা)</td><td><code>bn-IN</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>New languages require a code (2–20 lowercase letters/digits/underscores, starting with a letter), a display label, an optional BCP-47 speech locale (defaults to <code>bn-IN</code>), and an optional source language to clone the four active files from. Built-in languages cannot be deleted, though their engine files can still be replaced.</p>
+
+    <h3 class="doc-h3">Replacing a File</h3>
+    <p>Uploading a new JSON file for a language/key (<code>Lexipic_IME_Manager::replace_file()</code>) runs through several checks before saving:</p>
+    <ol style="margin:0 0 16px 24px; color:var(--ink-muted); font-size:0.95rem;">
+      <li style="margin-bottom:8px;">5MB size limit; <code>.json</code> extension required if one is present on the uploaded filename.</li>
+      <li style="margin-bottom:8px;">The file must parse as valid JSON — invalid JSON is rejected outright with the decode error.</li>
+      <li style="margin-bottom:8px;">Structural validation (Section 9) runs and produces warnings, but does not block the save.</li>
+      <li style="margin-bottom:8px;">Whatever was previously active (override or bundled fallback) is snapshotted to the backups folder.</li>
+      <li>The uploaded JSON is re-encoded with <code>JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT</code> — not written byte-for-byte — which normalizes formatting and strips stray BOM/control characters.</li>
+    </ol>
+
+    <h3 class="doc-h3">Backups</h3>
+    <p>Every replace, revert, or restore action calls <code>backup_current()</code> first, snapshotting to <code>uploads/lexipic/ime/{lang}/backups/{key}_{timestamp}.json</code>. Backups are capped at 20 per file key per language (<code>MAX_BACKUPS_PER_FILE</code>); the oldest are pruned automatically once the cap is exceeded. The admin page lists the 15 most recent backups across all four keys, each restorable with one click — restoring itself snapshots the current state first, so a restore can always be undone.</p>
+
+    <h3 class="doc-h3">Downloads</h3>
+    <p>Each file can be downloaded individually, or all four active files for a language can be bundled into a single zip via <code>stream_zip_download()</code> — this requires the PHP <code>ZipArchive</code> extension; if it's unavailable, the plugin reports this clearly rather than failing silently, and individual downloads remain unaffected.</p>
+
+    <span class="section-anchor" id="ime-hooks"></span>
+    <h2 class="doc-h2"><span class="num">11</span> Snippet Hooks</h2>
+    <p>The <code>hooks</code> file (<code>defaults.json</code>) is a JSON array of objects, each describing one JavaScript function the engine should run at a specific processing stage:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>snippet_key</code></td><td>Identifier for the hook (for display/debugging).</td></tr>
+          <tr><td><code>hook_stage</code></td><td>One of <code>pre</code>, <code>loop</code>, or <code>post</code> — when in the transliteration pass the function runs.</td></tr>
+          <tr><td><code>direction</code></td><td><code>forward</code> or <code>reverse</code> — which transliteration direction the hook applies to.</td></tr>
+          <tr><td><code>js_body</code></td><td>A full named JavaScript function declaration as a string, e.g. <code>function myHook(...) {...}</code>.</td></tr>
+          <tr><td><code>is_active</code></td><td>Hooks with a falsy value here are skipped entirely.</td></tr>
+          <tr><td><code>sort_order</code></td><td>Determines execution order within the same stage.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>On page load, <code>lexipic-app.js</code> partitions <code>imeHooks</code> by direction and stage (<code>getHooksForDirection()</code>), then compiles each <code>js_body</code> string into a callable function using the <code>Function</code> constructor, extracting the function name by regex to invoke it. Compilation failures for an individual hook are caught and logged to the console without affecting the others.</p>
+
+    <div class="box warn">
+      <p><strong>Hooks execute arbitrary JavaScript.</strong> Because <code>js_body</code> is compiled with <code>new Function()</code> and run directly in the visitor's browser, anyone with edit access to a language's hooks file (administrators, via the IME Engine page) can run arbitrary client-side JavaScript on every page where the shortcode appears. Treat the hooks file the same way you would treat direct theme/plugin-file edit access.</p>
+    </div>
+
+    <span class="section-anchor" id="shortcode"></span>
+    <h2 class="doc-h2"><span class="num">12</span> Shortcode &amp; Tabs</h2>
+    <p>The single shortcode <code>[lexipic]</code> renders the entire app. It accepts one optional attribute:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Attribute</th><th>Default</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td><code>set</code></td><td><em>(empty)</em></td><td>A set <em>slug</em> to pre-select in the set dropdown and load on page load, e.g. <code>[lexipic set="domestic-animals"]</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The shortcode callback enqueues <code>style.css</code>, the IME engine script, and <code>lexipic-app.js</code> (in that dependency order — the engine must load before the app script that calls it), then localizes a <code>lexipicConfig</code> object onto the page containing the REST URL, nonce, speech locale, active language, FFmpeg availability flag, the write-permission flag, and the resolved IME maps/hooks/settings for the active language.</p>
+
+    <h3 class="doc-h3">Tab Visibility</h3>
+    <p>Three tabs exist — <strong>Archive</strong>, <strong>Add Entry</strong>, <strong>Sets</strong> — but which ones render depends on the access rules in <a href="#permissions">Section 5</a>. The tab bar itself only appears once more than one tab qualifies; otherwise the page is just the Archive panel with no chrome around it.</p>
+
+    <span class="section-anchor" id="frontend-flow"></span>
+    <h2 class="doc-h2"><span class="num">13</span> Frontend Entry Flow</h2>
+    <p>End-to-end, adding an entry from the Add Entry tab follows this sequence:</p>
+    <ol style="margin:0 0 16px 24px; color:var(--ink-muted); font-size:0.95rem;">
+      <li style="margin-bottom:8px;">User selects/takes a photo → downscaled and previewed as a JPEG data-URI (Section 6).</li>
+      <li style="margin-bottom:8px;">User presses Speak → <code>SpeechRecognition</code> and <code>MediaRecorder</code> start together against the same microphone stream.</li>
+      <li style="margin-bottom:8px;">On recognized speech, the transcript fills the script-word field and fires an <code>input</code> event, triggering reverse transliteration (script → Roman) to auto-fill the Roman field via the IME engine.</li>
+      <li style="margin-bottom:8px;">The user may instead type directly into either field — typing in the Roman field runs forward transliteration live and mirrors the script-equivalent into the script field; typing in the script field runs reverse transliteration into the Roman field.</li>
+      <li style="margin-bottom:8px;">On save, the recorded audio blob is converted to a base64 data-URI and POSTed alongside the image data-URI and both text fields to <code>POST /sets/{set_id}/entries</code>.</li>
+      <li>The archive card list (<code>#lp-archive-slider</code>) refreshes immediately from <code>GET /sets/{set_id}/entries</code>, and the audio-conversion cron job is scheduled in the background if FFmpeg is available.</li>
+    </ol>
+
+    <span class="section-anchor" id="settings"></span>
+    <h2 class="doc-h2"><span class="num">14</span> Settings Page</h2>
+    <p>Found under <strong>LexiPic → Settings</strong> (<code>admin/settings-page.php</code>), backed by the <code>lexipic_settings</code> option:</p>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Stored as</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td>Default Language</td><td><code>language</code></td><td>Drives the speech-recognition locale and the IME maps loaded for the shortcode by default.</td></tr>
+          <tr><td>Public Archive</td><td><code>public_view</code> (0/1)</td><td>When enabled, logged-out visitors can view the Archive tab; REST reads no longer require login.</td></tr>
+          <tr><td>"Add Entry" tab access</td><td><code>tab_access.add_entry</code> (user IDs)</td><td>Comma-separated <em>usernames</em> entered in the form are resolved to numeric WordPress user IDs on save.</td></tr>
+          <tr><td>"Sets" tab access</td><td><code>tab_access.sets</code> (user IDs)</td><td>Same resolution as above, for the Sets tab.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The settings page also surfaces plugin status: whether the upload directory exists and is writable, whether FFmpeg was detected, and the resolved REST API base URL — useful for quickly confirming the server environment without checking PHP error logs.</p>
+
+    <div class="box info">
+      <p><strong>Usernames, not display names.</strong> The tab-access fields take WordPress login names. <code>lexipic_sanitize_settings()</code> looks up each comma-separated token with <code>get_user_by('login', …)</code>, falling back to a numeric-ID lookup for values saved by older versions. Any token that resolves to no user produces an admin notice listing the unmatched name(s), and that entry is dropped rather than silently saved as garbage.</p>
+    </div>
+
+    <span class="section-anchor" id="import-export"></span>
+    <h2 class="doc-h2"><span class="num">15</span> Import / Export</h2>
+    <p>Found under <strong>LexiPic → Import / Export</strong> (<code>admin/import-export.php</code>), this page provides a simple form-based alternative to the REST <code>/import</code> and <code>/sets/{id}/export</code> endpoints — useful for administrators who prefer a GUI over constructing API calls.</p>
+
+    <h3 class="doc-h3">Export Format</h3>
+    <p>Each export is a single self-contained JSON file — image and audio are embedded as base64 data-URIs, so the file has no external dependencies and can be archived or emailed as-is:</p>
+    <pre><code>{
+  "lexipic_version": "1.2.2",
+  "set": { "name": "...", "slug": "...", "language": "bpm" },
+  "entries": [
+    {
+      "id": 1,
+      "word_script": "...",
+      "word_roman": "...",
+      "description": "...",
+      "image": "data:image/jpeg;base64,...",
+      "audio": "data:audio/mpeg;base64,...",
+      "image_mime": "image/jpeg",
+      "audio_mime": "audio/mpeg"
+    }
+  ]
+}</code></pre>
+
+    <h3 class="doc-h3">Legacy Format Support</h3>
+    <p>Because LexiPic descends from a standalone PWA, <code>import_json()</code> also accepts the old flat-array format (no top-level <code>set</code> key) and maps its legacy field names (<code>heritage</code>, <code>transliteration</code>) onto the current schema automatically — older exports continue to import without modification.</p>
+
+    <div class="box tip">
+      <p><strong>Imports create a new set.</strong> Entry IDs from the source file are never reused — every import inserts a fresh set and fresh entry rows. Importing the same file twice will produce two duplicate sets, not an update to the first.</p>
+    </div>
+
+    <span class="section-anchor" id="install"></span>
+    <h2 class="doc-h2"><span class="num">16</span> Installation &amp; Setup</h2>
+    <ol style="margin:0 0 16px 24px; color:var(--ink-muted); font-size:0.95rem;">
+      <li style="margin-bottom:8px;">Upload and activate the plugin. Activation runs <code>Lexipic_DB::create_tables()</code>, creates <code>wp-content/uploads/lexipic/</code> (with an <code>.htaccess</code> blocking directory listing) and its <code>ime/</code> subfolder, and flushes rewrite rules so REST routes resolve.</li>
+      <li style="margin-bottom:8px;">Visit <strong>LexiPic → Settings</strong> to confirm the upload directory is writable and check the FFmpeg status badge.</li>
+      <li style="margin-bottom:8px;">Add the <code>[lexipic]</code> shortcode to any page or post.</li>
+      <li style="margin-bottom:8px;">As an administrator, open the page, switch to the <strong>Sets</strong> tab (visible to admins by default), and create your first set, choosing a language.</li>
+      <li>Grant other contributors access to <strong>Add Entry</strong> and/or <strong>Sets</strong> via their usernames in <strong>LexiPic → Settings</strong> if you want collaborators who aren't administrators.</li>
+    </ol>
+
+    <h3 class="doc-h3">Server Requirements</h3>
+    <ul>
+      <li>PHP 8.0+, with the <code>exec()</code> function available if you want server-side MP3 conversion (some managed hosts disable it).</li>
+      <li>FFmpeg installed and on the system <code>PATH</code> — optional; without it, audio stays as <code>.webm</code>, which Safari/iOS may not play.</li>
+      <li>The <code>ZipArchive</code> PHP extension — optional, only needed for the "download all four files as zip" convenience in the IME Engine page.</li>
+      <li>HTTPS — both <code>getUserMedia()</code> (microphone) and <code>SpeechRecognition</code> require a secure context in modern browsers; the plugin's microphone-access error message reminds the user of this directly.</li>
+    </ul>
+
+    <span class="section-anchor" id="uninstall"></span>
+    <h2 class="doc-h2"><span class="num">17</span> Uninstall Behaviour</h2>
+    <p>Deleting the plugin from the Plugins screen (not merely deactivating it) runs <code>uninstall.php</code>, which is destructive and irreversible:</p>
+    <ul>
+      <li>Drops the <code>wp_lexipic_entries</code> and <code>wp_lexipic_sets</code> tables entirely.</li>
+      <li>Deletes the <code>lexipic_settings</code> and <code>lexipic_languages</code> options, plus the FFmpeg-detection transient.</li>
+      <li>Recursively removes the entire <code>wp-content/uploads/lexipic/</code> directory — every audio file, every custom IME override, every backup.</li>
+      <li>Clears any pending <code>lexipic_convert_audio</code> scheduled cron events.</li>
+    </ul>
+    <div class="box danger">
+      <p><strong>There is no data-retention toggle.</strong> Unlike plugins that offer a "delete data on uninstall" checkbox, LexiPic's <code>uninstall.php</code> unconditionally removes everything the moment the plugin itself is deleted. Export anything you want to keep (Section 15) before deleting the plugin — deactivating it alone leaves all data and files untouched.</p>
+    </div>
+
+    <span class="section-anchor" id="troubleshooting"></span>
+    <h2 class="doc-h2"><span class="num">18</span> Troubleshooting</h2>
+    <div class="doc-table-wrap">
+      <table>
+        <thead><tr><th>Symptom</th><th>Likely cause / fix</th></tr></thead>
+        <tbody>
+          <tr><td>Archive shows "Log in to view…" for everyone</td><td><code>public_view</code> is off and the visitor isn't logged in — either enable Public Archive in Settings, or have visitors log in.</td></tr>
+          <tr><td>Add Entry / Sets tabs missing for a contributor</td><td>Their username isn't listed in the relevant <strong>Tab Access Control</strong> field in Settings — confirm the WordPress login name (not display name) was entered correctly.</td></tr>
+          <tr><td>Speak button is disabled</td><td>The browser doesn't support the Web Speech API (no <code>SpeechRecognition</code>/<code>webkitSpeechRecognition</code>) — try Chrome or Edge.</td></tr>
+          <tr><td>Microphone permission alert appears immediately</td><td>The page isn't served over HTTPS — both microphone access and speech recognition require a secure context.</td></tr>
+          <tr><td>Audio plays back as .webm in Safari/iOS</td><td>FFmpeg isn't available on the server (check the status badge in Settings), so the original recording format is used as-is.</td></tr>
+          <tr><td>Newly recorded audio doesn't convert to MP3 right away</td><td>Conversion runs on WP-Cron, which only fires on a site visit after the scheduled time — expected on low-traffic sites without a real system cron.</td></tr>
+          <tr><td>Settings save shows "could not find a user named…"</td><td>A tab-access field had a username with no matching account — that entry was dropped; check spelling and that it's the login name.</td></tr>
+          <tr><td>Uploading a new IME file shows warnings but still saves</td><td>Expected — structural validation only warns about missing sections/settings; it never blocks the save. Missing pieces are simply skipped by the engine.</td></tr>
+          <tr><td>"Download All Four as Zip" fails</td><td>The server's PHP build lacks the <code>ZipArchive</code> extension. Use the individual "Download / Backup" links per file instead.</td></tr>
+          <tr><td>Importing the same export twice creates duplicates</td><td>By design — import always creates a new set; it never merges into or updates an existing one.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-anchor" id="faq"></span>
+    <h2 class="doc-h2"><span class="num">19</span> FAQ</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Are images stored in the WordPress Media Library? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>No. Images are stored as binary <code>MEDIUMBLOB</code> data directly in the <code>wp_lexipic_entries</code> table and served through a dedicated REST endpoint — they never become Media Library attachments and won't appear in <strong>Media → Library</strong>.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can a non-admin delete a set they didn't create? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>No. <code>delete_set</code> in the REST API explicitly checks that the requester is either an administrator (<code>manage_options</code>) or the set's original creator. Anyone else gets a 403.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens if I add a language but never upload custom engine files for it? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>It works immediately using the bundled BPM defaults — <code>active_file_path()</code> falls back to <code>public/js/ime/*.json</code> for any language with no saved override. Transliteration simply behaves identically to BPM until you upload language-specific files.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is the tab access control a real security restriction? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>No — it only controls which tabs render in the shortcode's HTML. The REST <code>can_write</code> permission callback allows any logged-in user to create entries and sets regardless of tab visibility. Treat tab access as a UI convenience, not an authorization mechanism.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I edit the snippet hooks safely? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Hooks are compiled with JavaScript's <code>Function</code> constructor and executed directly in every visitor's browser, so they amount to arbitrary client-side code execution. Only grant IME Engine access (which requires <code>manage_options</code>) to administrators you'd trust with direct file-edit access to the site.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens to my data if I deactivate the plugin? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Nothing is removed. Deactivation only unhooks the plugin's actions and filters; the database tables, options, and uploaded files (audio, custom IME overrides, backups) are left exactly as they were. Data is only deleted if you delete the plugin entirely (see Section 17).</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Why are there two different transliteration directions? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Because entries can originate from either input method. Speech recognition produces script text first, which needs reverse transliteration (script → Roman) to populate the Roman field; a contributor typing in Roman directly needs forward transliteration (Roman → script) to populate the script field as they type.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I import a JSON file from the original standalone PWA version? <span class="arrow">›</span></div>
+      <div class="faq-a"><p>Yes. <code>Lexipic_File_Handler::import_json()</code> detects the absence of a top-level <code>set</code> key and treats the payload as a legacy flat array, remapping the old <code>heritage</code> and <code>transliteration</code> field names to <code>word_script</code> and <code>word_roman</code> automatically.</p></div>
+    </div>
+
+    <footer>
+      LexiPic Documentation — reference covering LexiPic v1.2.2.<br>
+      Shortcode references use single square brackets ([ ]) in actual WordPress content.
+    </footer>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var navSelect = document.getElementById('nav-select');
+
+  if (navSelect) {
+    navSelect.addEventListener('change', function () {
+      var selectVal = this.value;
+      if (!selectVal) return;
+
+      var anchor = document.getElementById(selectVal);
+      if (anchor) {
+        var targetHeading = anchor.nextElementSibling;
+        var elementToScroll = (targetHeading && (targetHeading.tagName === 'H2' || targetHeading.tagName === 'H3'))
+          ? targetHeading
+          : anchor;
+
+        elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      this.value = '';
+    });
+  }
+
+  document.querySelectorAll('.faq-item .faq-q').forEach(function (q) {
+    q.addEventListener('click', function () {
+      var item = this.closest('.faq-item');
+      document.querySelectorAll('.faq-item.open').forEach(function (open) {
+        if (open !== item) open.classList.remove('open');
+      });
+      item.classList.toggle('open');
+    });
+  });
+});
+</script>
+</body>
+</html>

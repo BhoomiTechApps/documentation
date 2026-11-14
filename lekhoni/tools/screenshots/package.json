@@ -1,0 +1,7 @@
+{
+  "name": "lekhoni-manual-screenshots",
+  "private": true,
+  "description": "Regenerates the screenshots in the Lekhoni user manual from the running app.",
+  "scripts": { "shots": "node shots.js" },
+  "dependencies": { "playwright": "^1.45.0", "sharp": "^0.33.0" }
+}

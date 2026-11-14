@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lekhoni user manual</title>
+<meta name="description" content="Complete user manual for Lekhoni (লেখনী), the Bengali and Assamese desktop-publishing app that runs in your browser.">
+<link rel="icon" href="img/lekhoni-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/manual.css">
+<script>
+  // Set the theme before the page paints (no flash).
+  try { var t = localStorage.getItem("lekhoni-manual-theme"); document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to the manual</a>
+
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Chapters">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <a class="brand" href="#welcome">
+    <img src="img/lekhoni-icon.svg" alt="">
+    <b>লেখনী</b><span>Lekhoni user manual · v5.3.3</span>
+  </a>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="search" type="search" placeholder="Search the manual" autocomplete="off" aria-label="Search the manual">
+    <kbd>/</kbd>
+    <div class="results" id="results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="theme" type="button" title="Light / dark" aria-label="Switch light or dark">
+      <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <button class="icon-btn" type="button" title="Print the whole manual" aria-label="Print the whole manual" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2"/><path d="M6 14h12v7H6z"/></svg>
+    </button>
+    <a class="btn primary" id="open-app" href="#" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7M10 14L21 3M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>Open Lekhoni</span></a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Chapters">
+    <nav><ol id="toc"></ol></nav>
+    <p class="side-foot">Written for Lekhoni 5.3.3 · <a href="#changes">What’s new</a></p>
+  </aside>
+
+  <main id="content">
+
+<!-- ═══════════════════════════════ 1. WELCOME ═══════════════════════════════ -->
+<section class="chapter" id="welcome" data-title="Welcome">
+  <p class="kicker">Lekhoni user manual</p>
+  <h1>Welcome to Lekhoni <span class="bn">(লেখনী)</span></h1>
+  <p class="lead">Lekhoni is a desktop-publishing app for Bengali and Assamese that runs in your web browser. Use it to lay out magazines, newsletters, books, posters, invitations and leaflets, then print them, save them as PDF, or hand them on as Word or InDesign files.</p>
+
+  <figure>
+    <img src="img/page1.webp" alt="A magazine page made in Lekhoni: headline, picture with text wrapped round it, a drop cap, a pull quote and a two-column frame" style="max-width:420px;margin:0 auto" loading="lazy">
+    <figcaption style="text-align:center">A page from the sample magazine used throughout this manual, made entirely in Lekhoni.</figcaption>
+  </figure>
+
+  <h2 id="what-you-can-do">What you can do with it</h2>
+  <div class="cards">
+    <a class="card" href="#typing"><span class="ico">অ</span><h4>Type Bengali &amp; Assamese</h4><p>Phonetic typing turns roman letters into বাংলা or অসমীয়া as you type, conjuncts included.</p></a>
+    <a class="card" href="#text"><span class="ico">¶</span><h4>Real typography</h4><p>Fonts, paragraph styles, lists in Bengali numerals, drop caps that keep conjuncts whole.</p></a>
+    <a class="card" href="#frames"><span class="ico">⇢</span><h4>Layout tools</h4><p>Text that flows between frames and pages, text wrap round pictures, columns, guides.</p></a>
+    <a class="card" href="#pages"><span class="ico">▤</span><h4>Print-ready pages</h4><p>Any page size, margins, bleed, crop marks, headers, footers and page numbers in ১, ২, ৩.</p></a>
+    <a class="card" href="#projects"><span class="ico">⇩</span><h4>Save anywhere</h4><p>Project files, PDF, Microsoft Word (.docx), Adobe InDesign (.idml) and plain text.</p></a>
+    <a class="card" href="#projects-offline"><span class="ico">✈</span><h4>Works offline</h4><p>Nothing to install, and once opened it keeps working without the internet.</p></a>
+  </div>
+
+  <h2 id="what-you-need">What you need</h2>
+  <ul>
+    <li><b>A modern browser.</b> Google Chrome or Microsoft Edge on a computer give the best experience: <span class="ui">Save</span> can then keep writing to the same file on your disk. Firefox and Safari work too; there, saving downloads a copy of the file each time.</li>
+    <li><b>A mouse or trackpad</b> and a keyboard. Touch and pen work for moving and resizing, but layout work is easiest with a mouse.</li>
+    <li><b>Fonts.</b> Lekhoni brings its own Bengali fonts. You can add your own font files too (see <a href="#text-fonts">Fonts</a>).</li>
+    <li><b>No account and no installation.</b> Your work stays on your computer, in the browser and in the files you save.</li>
+  </ul>
+
+  <h2 id="how-to-read">How to use this manual</h2>
+  <ul>
+    <li>New to Lekhoni? Read <a href="#tour">The Lekhoni window</a>, then make something with <a href="#quickstart">Your first publication</a>.</li>
+    <li>Looking for one thing? Use the <b>search box</b> at the top (press <kbd>/</kbd> to jump to it).</li>
+    <li>Click any screenshot to see it full size.</li>
+    <li>Names of buttons and menus are written like this: <span class="ui">Page setup…</span>. Keys look like this: <kbd>Ctrl</kbd>+<kbd>S</kbd>. On a Mac, use <kbd>⌘ Cmd</kbd> wherever this manual says <kbd>Ctrl</kbd>.</li>
+    <li>The printer button at the top prints the whole manual, one chapter per page.</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════ 2. TOUR ═══════════════════════════════ -->
+<section class="chapter" id="tour" data-title="The Lekhoni window">
+  <p class="kicker">Getting started</p>
+  <h1>The Lekhoni window</h1>
+  <p class="lead">Everything happens in one window: the toolbar along the top, your pages in the middle, page thumbnails on the left, settings on the right and a status bar along the bottom.</p>
+
+  <figure class="hotspot-fig" data-legend="tour-legend" data-spots='{"project":{"x":9.62,"y":0.78,"w":13.19,"h":6.39},"output":{"x":22.8,"y":0.78,"w":6.6,"h":6.39},"edit":{"x":29.4,"y":0.78,"w":12.7,"h":6.39},"insert":{"x":42.1,"y":0.78,"w":22.16,"h":6.39},"typing":{"x":72.42,"y":0.78,"w":11.61,"h":6.39},"view":{"x":84.03,"y":0.78,"w":15.42,"h":6.39},"rail":{"x":0,"y":7.5,"w":12.5,"h":89.83},"ruler":{"x":25.85,"y":10.89,"w":41.34,"h":1.5},"page":{"x":25.85,"y":12.39,"w":41.34,"h":84.9},"panel":{"x":80.56,"y":7.5,"w":19.44,"h":89.83},"status":{"x":0,"y":97.33,"w":100,"h":2.67}}'>
+    <div class="hotspot-img"><img src="img/overview.webp" alt="The Lekhoni window with a magazine page open" width="1440" height="900"></div>
+    <figcaption>Point at a number, or at a part of the picture, to see what it is. Click to read more about it.</figcaption>
+  </figure>
+  <ol class="legend" id="tour-legend">
+    <li data-spot="project" data-href="#projects"><span>Project</span>: open, save, save as other formats, close.</li>
+    <li data-spot="output" data-href="#projects-print"><span>Output</span>: print, or save as PDF.</li>
+    <li data-spot="edit" data-href="#arranging-delete"><span>Edit</span>: undo, redo, delete, find &amp; replace.</li>
+    <li data-spot="insert" data-href="#tour-toolbar"><span>Insert</span>: text box, picture, table, box, circle, star, line.</li>
+    <li data-spot="typing" data-href="#typing"><span>Typing</span>: Bengali or Assamese, phonetic typing on/off.</li>
+    <li data-spot="view" data-href="#pages-zoom"><span>View</span>: zoom and show/hide the panel.</li>
+    <li data-spot="rail" data-href="#pages-managing"><span>Pages</span>: every page as a thumbnail.</li>
+    <li data-spot="ruler" data-href="#pages-guides"><span>Rulers</span>: measure, and drag out guides.</li>
+    <li data-spot="page" data-href="#text"><span>The page</span>: where you lay out your work.</li>
+    <li data-spot="panel" data-href="#tour-panel"><span>Properties panel</span>: settings for what you select.</li>
+    <li data-spot="status" data-href="#statusbar"><span>Status bar</span>: messages, counts, file size, autosave.</li>
+  </ol>
+
+  <h2 id="tour-toolbar">The toolbar</h2>
+  <p>The toolbar holds actions for the whole document. Buttons are grouped under small captions.</p>
+  <figure><img src="img/toolbar.webp" alt="The Lekhoni toolbar" loading="lazy"><figcaption>The toolbar. Hover over any button in the app to see what it does and its keyboard shortcut.</figcaption></figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:170px">Group</th><th>Buttons</th></tr></thead>
+    <tbody>
+      <tr><td><img src="img/tb-project.webp" alt="" style="height:38px;border-radius:6px"><br><b>Project</b></td><td><span class="ui">Open</span> a project file · <span class="ui">Save</span> it (<kbd>Ctrl</kbd>+<kbd>S</kbd>) · <span class="ui">Save as</span> Word, InDesign or plain text · <span class="ui">Close</span> and start a new one. See <a href="#projects">Projects &amp; files</a>.</td></tr>
+      <tr><td><img src="img/tb-output.webp" alt="" style="height:38px;border-radius:6px"><br><b>Output</b></td><td><span class="ui">Print</span> every page · <span class="ui">PDF</span> opens the print dialog ready to save as PDF. See <a href="#projects-print">Printing and PDF</a>.</td></tr>
+      <tr><td><img src="img/tb-edit.webp" alt="" style="height:38px;border-radius:6px"><br><b>Edit</b></td><td><span class="ui">Undo</span> · <span class="ui">Redo</span> · <span class="ui">Delete</span> the selected objects · <span class="ui">Find</span> &amp; replace.</td></tr>
+      <tr><td><img src="img/tb-insert.webp" alt="" style="height:38px;border-radius:6px"><br><b>Insert</b></td><td><span class="ui">Text</span> box · <span class="ui">Image</span> · <span class="ui">Table</span> · <span class="ui">Box</span> (rectangle) · <span class="ui">Circle</span> · <span class="ui">Star</span> · <span class="ui">Line</span>. Click a tool, then click on the page where the object should go.</td></tr>
+      <tr><td><img src="img/tb-typing.webp" alt="" style="height:38px;border-radius:6px"><br><b>Typing</b></td><td><span class="ui bn">বাংলা</span> / <span class="ui bn">অসমীয়া</span> chooses the script · <span class="ui">Phonetic</span> turns phonetic typing on or off (<kbd>Ctrl</kbd>+<kbd>M</kbd>). See <a href="#typing">Typing</a>.</td></tr>
+      <tr><td><img src="img/tb-view.webp" alt="" style="height:38px;border-radius:6px"><br><b>View</b></td><td>Zoom <span class="ui">Out</span>, the zoom menu, zoom <span class="ui">In</span> · <span class="ui">Panel</span> shows or hides the Properties panel.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="tour-pages">Pages on the left</h2>
+  <div class="side">
+    <div>
+      <p>Each page of your document appears as a small picture. The page you are working on has a red border.</p>
+      <ul>
+        <li>Click a thumbnail to go to that page.</li>
+        <li>Hover over a thumbnail for buttons to move it up <b>↑</b> or down <b>↓</b>, duplicate it <b>⧉</b> or delete it <b>×</b>.</li>
+        <li><span class="ui">+ Add page</span> adds a blank page at the end.</li>
+      </ul>
+      <p>Only the current page is shown in the middle of the window. Printing and saving always include every page.</p>
+    </div>
+    <figure class="tiny"><img src="img/rail.webp" alt="Page thumbnails with the current page outlined" loading="lazy"><figcaption>Page thumbnails.</figcaption></figure>
+  </div>
+
+  <h2 id="tour-panel">The Properties panel</h2>
+  <p>The panel on the right shows settings for whatever you have selected. It has four tabs, and switches to the right one when you select or place an object.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:110px">Tab</th><th>What it holds</th><th style="width:150px">Read more</th></tr></thead>
+    <tbody>
+      <tr><td><b>Text</b></td><td>Paragraph style, font, size, bold/italic/underline, colour, highlight, case, links, alignment, lists, spacing, indents, drop cap.</td><td><a href="#text">Working with text</a></td></tr>
+      <tr><td><b>Frame</b></td><td>For text boxes: columns, inset, vertical alignment, text flow. For pictures: fitting. For shapes: type, fill and outline. For tables: rows, columns, cell colours, grid. For everything: fill, border and text wrap.</td><td><a href="#frames">Text frames</a>, <a href="#pictures">Pictures</a>, <a href="#shapes">Shapes</a>, <a href="#tables">Tables</a></td></tr>
+      <tr><td><b>Arrange</b></td><td>Exact position, size, rotation and opacity; lock; group; align and distribute; links on whole objects; stacking order; hide/show; copy, paste, duplicate, delete.</td><td><a href="#arranging">Arranging objects</a></td></tr>
+      <tr><td><b>Page</b></td><td>Document title, <span class="ui">Page setup…</span>, templates, this page’s options, measurement units, guides, and a list of keyboard shortcuts.</td><td><a href="#pages">Pages &amp; layout</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>Hide the panel with the <span class="ui">Panel</span> button when you want more room for the page. Lekhoni remembers whether it was open and which tab you used last.</p>
+
+  <h2 id="tour-status">The status bar</h2>
+  <figure><img src="img/statusbar.webp" alt="The status bar" loading="lazy"><figcaption>The status bar: latest message on the left, then page, counts, overset warning, sizes and autosave.</figcaption></figure>
+  <p>The status bar along the bottom shows messages from Lekhoni and keeps an eye on your document. It is described in detail in <a href="#statusbar">The status bar</a>.</p>
+</section>
+
+<!-- ═══════════════════════════════ 3. QUICK START ═══════════════════════════════ -->
+<section class="chapter" id="quickstart" data-title="Your first publication">
+  <p class="kicker">Getting started</p>
+  <h1>Your first publication</h1>
+  <p class="lead">This walk-through makes a one-page notice with a headline, a paragraph of Bengali text and a picture. It takes about ten minutes and touches every basic skill.</p>
+
+  <ol class="steps">
+    <li><b>Open Lekhoni</b> in your browser. A blank A4 page appears. If someone else’s work is showing, click <span class="ui">Close</span> on the toolbar and confirm to start fresh.</li>
+    <li><b>Give it a title.</b> Open the <span class="ui">Page</span> tab on the right and type a title, for example <span class="bn-sample">আমাদের গ্রামের খবর</span>. The title becomes the file name when you save.</li>
+    <li><b>Check the page.</b> Still in the Page tab, click <span class="ui">Page setup…</span> to choose the paper size, orientation and margins. A4 portrait is fine for now. See <a href="#pages-setup">Page setup</a>.</li>
+    <li><b>Add a headline.</b> Click <span class="ui">Text</span> on the toolbar, then click near the top of the page. A text box appears with a blinking cursor. Make sure <span class="ui">Phonetic</span> is highlighted and <span class="ui bn">বাংলা</span> is chosen, then type <code>amader gramer khobor</code>. Lekhoni writes <span class="bn-sample">আমাদের গ্রামের খবর</span> as you go. (See <a href="#typing-keys">the key table</a> for every key.)</li>
+    <li><b>Make it big.</b> Click the coloured tab just above the box to select the whole box. In the <span class="ui">Text</span> tab, set <span class="ui">Size</span> to 28, click <b>B</b> for bold and the centre-alignment button. With nothing highlighted, these changes apply to the whole box.</li>
+    <li><b>Fit the box.</b> Drag the small square at the box’s bottom-right corner to make it as wide as the page margins. Drag the coloured tab above the box to move it.</li>
+    <li><b>Add body text.</b> Click <span class="ui">Text</span> again and click below the headline. Type a few sentences. Press <kbd>Enter</kbd> for a new paragraph and <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line inside the same paragraph.</li>
+    <li><b>Add a picture.</b> Click <span class="ui">Image</span>, then click on the page. Choose a photo from your computer. Drag the picture to move it and the corner to resize it. To make the text flow round it, open the <span class="ui">Frame</span> tab and pick the second <span class="ui">Text wrap</span> button.</li>
+    <li><b>Save your project.</b> Press <kbd>Ctrl</kbd>+<kbd>S</kbd> (or <span class="ui">Save</span>). Choose where to keep the <code>.pub</code> file. Lekhoni also saves your work in the browser automatically, but the file is your real copy.</li>
+    <li><b>Print it or make a PDF.</b> Click <span class="ui">PDF</span>, choose <span class="ui">Save as PDF</span> as the printer in the dialog, and save. See <a href="#projects-print">Printing and PDF</a>.</li>
+  </ol>
+
+  <div class="callout tip"><b>Tip</b>A red <b>+</b> at the bottom of a text box means some text doesn’t fit. Make the box bigger, use <span class="ui">Fit frame to text</span> in the Frame tab, or let the text <a href="#frames-flow">flow into another frame</a>.</div>
+</section>
+
+<!-- ═══════════════════════════════ 4. PROJECTS ═══════════════════════════════ -->
+<section class="chapter" id="projects" data-title="Projects &amp; files">
+  <p class="kicker">Basics</p>
+  <h1>Projects &amp; files</h1>
+  <p class="lead">Lekhoni keeps your work safe in two ways: it saves automatically inside the browser, and you can save a project file (<code>.pub</code>) to your disk. You can also save copies for Word, InDesign or as plain text, and print or make PDFs.</p>
+
+  <h2 id="projects-autosave">Automatic saving in the browser</h2>
+  <p>Every change you make is kept in your browser’s storage a moment later. Close the tab, restart the computer, come back tomorrow: your document is still there. The status bar shows <span class="ui">Autosaved</span> when everything is stored, and <span class="ui">Saving…</span> briefly while you work.</p>
+  <div class="callout warn"><b>The browser copy is not a backup</b>It belongs to this browser on this computer only. Clearing your browsing data, using a private window, or switching to another browser or computer means you won’t see it. Always <b>Save</b> a project file for anything that matters.</div>
+
+  <h2 id="projects-save">Saving, opening and closing project files</h2>
+  <ul>
+    <li><b>Save</b> (<kbd>Ctrl</kbd>+<kbd>S</kbd>) writes the whole document — pages, text, pictures and added fonts — into one <code>.pub</code> file. The document title (Page tab) is used as the file name.
+      <ul>
+        <li>In Chrome and Edge you choose a place once; after that, <span class="ui">Save</span> quietly updates the same file.</li>
+        <li>In Firefox and Safari each <span class="ui">Save</span> downloads a fresh copy to your Downloads folder.</li>
+      </ul></li>
+    <li><b>Open</b> loads a <code>.pub</code> file. It replaces the document on screen, so save first if you need the current one. Opening starts a fresh undo history.</li>
+    <li><b>Close</b> clears the screen and starts a new, empty document, after asking you to confirm.</li>
+  </ul>
+  <p>The status bar shows the size of the file on disk and adds <b>· changed</b> when you have edited since your last save.</p>
+  <div class="callout note"><b>About the .pub extension</b>Lekhoni project files use the extension <code>.pub</code>, but they are <b>not</b> Microsoft Publisher files, and Adobe PageMaker cannot open them either. Windows may show a Publisher icon on them; ignore it. To give your work to someone using another program, use <a href="#projects-saveas">Save as</a> or a PDF.</div>
+
+  <h2 id="projects-saveas">Save as Word, InDesign or plain text</h2>
+  <div class="side">
+    <div>
+      <p><span class="ui">Save as</span> on the toolbar saves a <i>copy</i> of your document for another program. Your project stays as it is. Keep saving the <code>.pub</code> file too, because only Lekhoni can open everything in it.</p>
+      <ol>
+        <li>Click <span class="ui">Save as</span>.</li>
+        <li>Choose <b>Microsoft Word</b>, <b>Adobe InDesign</b> or <b>Plain text</b>.</li>
+        <li>Choose where to save (or find the file in Downloads).</li>
+      </ol>
+      <p>Everything is made inside your browser, so this works offline as well.</p>
+    </div>
+    <figure class="wide"><img src="img/dlg-save-as.webp" alt="The Save as dialog with Word, InDesign and plain text" loading="lazy"><figcaption>The Save as dialog.</figcaption></figure>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Kept in the copy</th><th>Word (.docx)</th><th>InDesign (.idml)</th><th>Text (.txt)</th></tr></thead>
+    <tbody>
+      <tr><td>All the text, in reading order</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+      <tr><td>Fonts, sizes, colours, bold, italic, underline</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">—</td></tr>
+      <tr><td>Alignment, indents, spacing, lists</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">List markers only</td></tr>
+      <tr><td>Paragraph styles</td><td class="no">—</td><td class="yes">Yes</td><td class="no">—</td></tr>
+      <tr><td>Tables</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">Cells separated by tabs</td></tr>
+      <tr><td>Pictures</td><td class="yes">Yes (in the text)</td><td class="yes">Yes, embedded, in place</td><td class="no">—</td></tr>
+      <tr><td>Shapes and lines</td><td class="no">—</td><td class="yes">Yes</td><td class="no">—</td></tr>
+      <tr><td>Exact position of every object</td><td class="no">— (text flows page by page)</td><td class="yes">Yes</td><td class="no">—</td></tr>
+      <tr><td>Text flowing between frames</td><td class="yes">As one story</td><td class="yes">Frames stay linked</td><td class="yes">As one story</td></tr>
+      <tr><td>Header, footer, page numbers</td><td class="yes">Yes (numbers in 1, 2, 3)</td><td class="yes">Yes, exactly as in Lekhoni</td><td class="no">—</td></tr>
+      <tr><td>Hyperlinks</td><td class="yes">Yes</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr><td>Drop caps</td><td class="no">—</td><td class="yes">Yes</td><td class="no">—</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Notes on each format</h3>
+  <ul>
+    <li><b>Word:</b> Word has no Bengali-digit page numbering, so page numbers in Word use 1, 2, 3. The wording stays Bengali (for example <span class="bn">৩ এর পৃষ্ঠা ১</span>).</li>
+    <li><b>InDesign:</b> open the file with <span class="menu-path">File › Open</span> in InDesign CS6 or later. Text is set with the <i>Adobe World-Ready Paragraph Composer</i>, which InDesign needs to shape Bengali and Assamese conjuncts correctly. Install the same fonts on that computer.</li>
+    <li><b>Plain text:</b> saved as UTF-8 (Unicode), so Bengali shows correctly in Notepad, Word and any modern editor. A line like <code>----- পৃষ্ঠা ২ -----</code> marks each new page.</li>
+  </ul>
+  <div class="callout tip"><b>Fonts in other programs</b>Word and InDesign show your text in the fonts installed on <i>that</i> computer. Install Noto Serif Bengali, Noto Sans Bengali or whichever fonts you used before opening the file.</div>
+
+  <h2 id="projects-print">Printing and PDF</h2>
+  <ul>
+    <li><span class="ui">Print</span> prints every page, one page per sheet.</li>
+    <li><span class="ui">PDF</span> opens the same print dialog, ready for you to choose <span class="ui">Save as PDF</span> (Chrome, Edge) or <span class="ui">PDF › Save as PDF</span> (Mac) as the destination.</li>
+  </ul>
+  <p>In the print dialog, set <b>Margins</b> to <i>None</i> or <i>Default</i> and <b>Scale</b> to 100% so the page prints at its true size; Lekhoni already sets the paper size. Turn on <b>Background graphics</b> if page colours, table shading or frame fills are missing.</p>
+  <p>Hidden objects, guides, rulers and selection handles are never printed. Hyperlinks stay clickable in the PDF, including links to other pages of the document.</p>
+  <p>For a professional printer, set up <a href="#pages-paper">bleed and crop marks</a> first.</p>
+
+  <h2 id="projects-offline">Working offline and installing Lekhoni</h2>
+  <p>Once you have opened Lekhoni with an internet connection, your browser keeps a copy of the app. It then opens and works without the internet — phonetic typing, saving, Save as and PDF included. Fonts from the web may not load offline the first time; fonts you added from files always work.</p>
+  <p>You can also <b>install</b> Lekhoni so it opens in its own window like any other program: in Chrome or Edge, click the install icon at the right of the address bar, or choose the install option in the browser’s menu. On a phone or tablet, use <span class="menu-path">Add to Home Screen</span>.</p>
+  <p>When a new version of Lekhoni is published, it downloads in the background. The status bar then says <span class="ui">Update installed — reload to use it</span>; reload the page when convenient.</p>
+</section>
+
+<!-- ═══════════════════════════════ 5. PAGES ═══════════════════════════════ -->
+<section class="chapter" id="pages" data-title="Pages &amp; layout">
+  <p class="kicker">Basics</p>
+  <h1>Pages &amp; layout</h1>
+  <p class="lead">Set the size of your pages, their margins and columns, add headers, footers and page numbers, and use rulers and guides to place things exactly.</p>
+
+  <h2 id="pages-setup">Page setup</h2>
+  <div class="side">
+    <div>
+      <p>Open the <span class="ui">Page</span> tab and click <span class="ui">Page setup…</span>. Changes apply to every page straight away and can be undone.</p>
+      <h3 id="pages-size">Page size and orientation</h3>
+      <ul>
+        <li><b>Preset</b>: A3, A4, A5, A6, B4, B5, Letter, Legal, Tabloid, Executive, and the book sizes 5.5 × 8.5 in and 6 × 9 in, or <i>Custom</i>.</li>
+        <li><b>Orientation</b>: portrait or landscape. The margins turn with the paper.</li>
+        <li><b>Width / Height</b>: type exact values for a custom size.</li>
+      </ul>
+      <h3 id="pages-margins">Margins and gutter</h3>
+      <ul>
+        <li><b>Top, Bottom, Left, Right</b> margins. Margin guides are drawn on screen (not printed); turn them off with <span class="ui">Show margin guides</span>.</li>
+        <li><b>Gutter / binding</b> adds extra space on the bound edge. <i>Inside (alternates, for books)</i> adds it on the left of right-hand pages and the right of left-hand pages. Page 1 is a right-hand page.</li>
+      </ul>
+      <h3 id="pages-columns">Columns</h3>
+      <p>Set the <b>number of columns</b> and the <b>gap</b> between them. Column guides appear on the page and objects snap to them. Page columns are guides for placing frames; to split the text inside one frame into columns, see <a href="#frames-columns">Columns inside a frame</a>.</p>
+      <h3 id="pages-paper">Paper colour, bleed and crop marks</h3>
+      <ul>
+        <li><b>Page colour</b> fills every page and prints.</li>
+        <li><b>Bleed</b>: objects and the page colour may run past the edge of the page by this much, so nothing white shows after a printer trims the paper. Bleed shows on screen as a dashed red line, and the printed sheet grows to fit it.</li>
+        <li><b>Crop marks</b>: short lines in the corners that show a printer where to cut.</li>
+      </ul>
+    </div>
+    <figure class="wide"><img src="img/dlg-page-setup.webp" alt="The Page setup dialog" loading="lazy"><figcaption>Page setup: size, margins, columns, paper, header, footer, numbering and font.</figcaption></figure>
+  </div>
+
+  <h2 id="pages-headers">Headers, footers and page numbers</h2>
+  <p>Headers and footers repeat on every page. Set them in <span class="ui">Page setup…</span>.</p>
+  <figure><img src="img/header.webp" alt="A header with a rule line under it" loading="lazy"><figcaption>A header aligned to the outside edge, with a rule line under it.</figcaption></figure>
+  <ul>
+    <li>Tick <b>Show header</b> or <b>Show footer</b> and type the text. Write <code>{page}</code> for the page number and <code>{total}</code> for the number of pages (<code>{পৃষ্ঠা}</code> and <code>{মোট}</code> work too).</li>
+    <li><b>Align</b>: left, centre, right, or <i>outside</i> / <i>inside</i> edge, which swap sides on left and right pages as in a book.</li>
+    <li><b>Size</b>, <b>Colour</b>, an optional <b>rule line</b>, and <b>Also show on first page</b> (untick it for a cover).</li>
+    <li>The font for header, footer and numbers is chosen at the bottom of the dialog.</li>
+  </ul>
+  <h3 id="pages-numbers">Automatic page numbers</h3>
+  <div class="side">
+    <div>
+      <p>Tick <b>Show automatic page numbers</b>, then choose:</p>
+      <ul>
+        <li><b>Position</b>: top or bottom; left, centre, right or outside.</li>
+        <li><b>Format</b>: <code>১</code>, <code>পৃষ্ঠা ১</code>, <code>N এর পৃষ্ঠা ১</code> or <code>- ১ -</code>.</li>
+        <li><b>Number style</b>: Bengali digits (১, ২, ৩), Western digits (1, 2, 3), words (এক, দুই…), or Roman (i, ii, iii / I, II, III).</li>
+        <li><b>Start at</b> a number other than 1, the <b>size</b>, and the distance <b>from edge</b>.</li>
+      </ul>
+      <p>With Bengali digits or words, English words in headers are written in Bengali too: <code>Page {page} of {total}</code> appears as <span class="bn">৩ এর পৃষ্ঠা ১</span> (<span class="bn">ৰ</span> for Assamese).</p>
+      <p>To leave the header, footer and number off one page (a cover or chapter opener), open that page and tick <span class="ui">No header, footer or number on this page</span> in the Page tab.</p>
+    </div>
+    <figure class="small"><img src="img/page-number.webp" alt="A page number in Bengali digits" loading="lazy"><figcaption>“Page {page}” with Bengali digits, at the outside edge of a left-hand page.</figcaption></figure>
+  </div>
+
+  <h2 id="pages-templates">Templates</h2>
+  <p>The <span class="ui">Template</span> menu in the Page tab sets margins and columns in one step: <i>Blank</i>, <i>Two column</i>, <i>Three column</i>, <i>Newsletter</i> and <i>Book page</i> (wider margins for binding). Templates keep your page size.</p>
+
+  <h2 id="pages-managing">Adding, moving and deleting pages</h2>
+  <ul>
+    <li><b>Add</b>: <span class="ui">+ Add page</span> under the thumbnails.</li>
+    <li><b>Duplicate</b>: the <b>⧉</b> button on a thumbnail, or <span class="ui">Duplicate</span> under <i>This page</i> in the Page tab. Everything on the page is copied.</li>
+    <li><b>Move</b>: the <b>↑ ↓</b> buttons on a thumbnail, or <span class="ui">Move up</span> / <span class="ui">Move down</span> in the Page tab.</li>
+    <li><b>Delete</b>: the <b>×</b> button on a thumbnail. Lekhoni asks first if the page has anything on it. Undo brings it back.</li>
+  </ul>
+  <p>The current page number shows in the status bar (<i>Page 2 of 5</i>).</p>
+
+  <h2 id="pages-guides">Rulers, guides and units</h2>
+  <div class="side">
+    <div>
+      <p>Rulers run along the top and left of the page.</p>
+      <ul>
+        <li><b>Make a guide</b>: press on a ruler and drag onto the page. A horizontal guide comes from the top ruler, a vertical one from the left ruler.</li>
+        <li><b>Move a guide</b>: drag it. <b>Remove it</b>: drag it back onto the ruler or off the page.</li>
+        <li>Objects snap to guides, margins, column guides and the centre of the page while you drag them. Hold <kbd>Alt</kbd> while dragging to turn snapping off.</li>
+        <li>Guides are saved with the document and never printed.</li>
+      </ul>
+      <p><b>Units</b>: in the Page tab under <i>View</i>, choose millimetres, centimetres, inches or points. Rulers and every length in the panel and Page setup use this unit.</p>
+      <p><span class="ui">Show margin &amp; column guides</span> (Page tab) turns the dashed margin and column lines on or off.</p>
+    </div>
+    <figure class="wide"><img src="img/guide.webp" alt="A guide dragged from the top ruler onto the page" loading="lazy"><figcaption>A horizontal guide dragged down from the ruler.</figcaption></figure>
+  </div>
+
+  <h2 id="pages-zoom">Zoom</h2>
+  <ul>
+    <li>Use <span class="ui">Out</span> and <span class="ui">In</span>, or choose 50–300%, <i>Fit page</i> or <i>Fit width</i> from the zoom menu.</li>
+    <li>Hold <kbd>Ctrl</kbd> and turn the mouse wheel (or pinch on a trackpad) to zoom.</li>
+    <li>Zoom only changes the view; printing is always at true size.</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════ 6. TYPING ═══════════════════════════════ -->
+<section class="chapter" id="typing" data-title="Typing Bengali &amp; Assamese">
+  <p class="kicker">Text</p>
+  <h1>Typing Bengali &amp; Assamese</h1>
+  <p class="lead">With phonetic typing you write Bengali or Assamese on an ordinary English keyboard: type the sounds in roman letters, and Lekhoni writes the letters, vowel signs and conjuncts for you.</p>
+
+  <h2 id="typing-script">Choosing the script</h2>
+  <div class="side">
+    <div>
+      <p>The <span class="ui">Typing</span> group on the toolbar has two script buttons:</p>
+      <ul>
+        <li><span class="ui bn">বাংলা</span> — Bengali, using <span class="bn">র</span>.</li>
+        <li><span class="ui bn">অসমীয়া</span> — Assamese, using <span class="bn">ৰ</span> and <span class="bn">ৱ</span>.</li>
+      </ul>
+      <p>The choice is saved with the document and also sets the digit words used for page numbers.</p>
+    </div>
+    <figure class="tiny"><img src="img/tb-typing.webp" alt="Script buttons and the Phonetic button" loading="lazy"><figcaption>Script and phonetic typing.</figcaption></figure>
+  </div>
+
+  <h2 id="typing-phonetic">Phonetic typing</h2>
+  <div class="side">
+    <div>
+      <p>When the <span class="ui">Phonetic</span> button is highlighted, letters you type in a text box or table cell turn into Bengali or Assamese. Press <kbd>Ctrl</kbd>+<kbd>M</kbd>, or click the button, to switch it on or off — for example to type an English word.</p>
+      <ul>
+        <li>Each word is converted live while you type it. A space or a punctuation mark finishes the word.</li>
+        <li><kbd>Backspace</kbd> inside the word you are typing takes back the last roman letter, so you can correct a sound (<span class="bn">খা → খ → ক</span>).</li>
+        <li>Clicking elsewhere, using the arrow keys or switching boxes also finishes the word; roman letters never stay on the page.</li>
+        <li>Typing over highlighted text replaces it.</li>
+        <li>If you use a Bengali keyboard from your computer (such as Avro or the Windows/Mac Bengali keyboard), Lekhoni leaves it alone. Turn phonetic typing off to avoid typing through both.</li>
+      </ul>
+    </div>
+    <figure class="small"><img src="img/phonetic-typing.webp" alt="ami bangla likhi typed as আমি বাংলা লিখি" loading="lazy"><figcaption><code>ami bangla likhi</code> typed with phonetic typing on.</figcaption></figure>
+  </div>
+
+  <h2 id="typing-try">Try it here</h2>
+  <p>This box uses the same typing engine and key map as Lekhoni. Type roman letters on the left and see the result below.</p>
+  <div class="playground">
+    <div class="row">
+      <span class="seg" role="radiogroup" aria-label="Script">
+        <label><input type="radio" name="pg-lang" value="bn" checked> <span class="bn">বাংলা</span></label>
+        <label><input type="radio" name="pg-lang" value="as"> <span class="bn">অসমীয়া</span></label>
+      </span>
+    </div>
+    <textarea id="pg-input" spellcheck="false" aria-label="Type roman letters">ami bangla likhi. kabyo, kkhoma, prrithibii</textarea>
+    <div class="out" id="pg-output" lang="bn" aria-live="polite"></div>
+    <div class="status" id="pg-status">Loading the typing engine…</div>
+  </div>
+
+  <h2 id="typing-keys">Key table</h2>
+  <p>The table below is drawn from Lekhoni’s current key map, so it always matches the app. Longer keys win: for example <code>kh</code> gives <span class="bn">খ</span> rather than <span class="bn">ক</span> + <span class="bn">হ</span>. Switch the script above to see the Assamese table.</p>
+  <div id="key-table"><p class="status">Loading…</p></div>
+
+  <h2 id="typing-rules">How letters combine</h2>
+  <ul>
+    <li><b>Conjuncts</b> form by themselves: consonants typed together join with a hasanta, as in <code>kkh</code>, <code>pr</code>, <code>ngg</code>.</li>
+    <li><b>Vowel signs</b>: a vowel after a consonant becomes its sign (<span class="bn">কা, কি, কু</span>); a vowel at the start of a word or after another vowel is written in full (<span class="bn">আ, ই, উ</span>).</li>
+    <li><b>Inherent vowel</b>: <code>o</code> after a consonant adds nothing, so <code>ko</code> is just <span class="bn">ক</span>.</li>
+    <li><b>Ya-phala</b>: <code>y</code> after a joining consonant gives <span class="bn">্য</span> (<code>kabyo</code> → <span class="bn">কাব্য</span>).</li>
+    <li><b>Reph</b>: a plain <code>r</code> does not form a reph. Type <code>rr</code> for an explicit reph.</li>
+    <li><b>Keeping letters apart</b>: an apostrophe <code>'</code> between letters stops them joining (<code>k'Sh</code> gives <span class="bn">ক‌ষ</span>). At the start or end of a word, <code>'</code> is an ordinary quote mark.</li>
+    <li><b>Danda</b>: <code>.</code> gives <span class="bn">।</span> and <code>..</code> gives <span class="bn">॥</span>. Digits become Bengali digits.</li>
+  </ul>
+  <div class="callout note"><b>The key map can change</b>The key map is a settings file in Lekhoni (<code>data/translit-forward-map.json</code>). If your organisation changes it, phonetic typing follows the new map, and so does the table and the “try it” box in this manual once the same file is copied here.</div>
+
+  <h2 id="typing-paste">Pasting text</h2>
+  <p>Pasting into a text box always pastes plain text, without the fonts and colours of the place you copied from, so it takes on the look of the box. Bengali text copied from websites, Word or other Unicode sources pastes correctly. Text in old non-Unicode fonts (such as SutonnyMJ) will look like gibberish and must be converted to Unicode first.</p>
+</section>
+
+<!-- ═══════════════════════════════ 7. TEXT ═══════════════════════════════ -->
+<section class="chapter" id="text" data-title="Working with text">
+  <p class="kicker">Text</p>
+  <h1>Working with text</h1>
+  <p class="lead">Text lives in text boxes. Format a few words or the whole box, build paragraphs with spacing and indents, make lists, add drop caps and save your look as paragraph styles.</p>
+
+  <h2 id="text-boxes">Text boxes</h2>
+  <ul>
+    <li><b>Make one</b>: click <span class="ui">Text</span> on the toolbar, then click on the page. The new box uses the font and size shown in the Text tab.</li>
+    <li><b>Type in it</b>: click inside the box. <kbd>Enter</kbd> starts a new paragraph; <kbd>Shift</kbd>+<kbd>Enter</kbd> starts a new line in the same paragraph.</li>
+    <li><b>Select the box itself</b>: click the coloured tab above it. Then panel changes affect the whole box. (<kbd>Esc</kbd> stops typing and deselects the box.)</li>
+    <li><b>Move</b> it by dragging the coloured tab above it; <b>resize</b> it with the square at the bottom-right corner.</li>
+  </ul>
+
+  <h2 id="text-formatting">Formatting words or the whole box</h2>
+  <div class="side">
+    <div>
+      <p>The rule is simple: <b>highlight words to format just them; with nothing highlighted, the whole box changes.</b> The panel always shows the formatting at the cursor.</p>
+      <h3 id="text-fonts">Fonts</h3>
+      <ul>
+        <li>Choose a <b>font</b> from the list: Noto Serif Bengali, Noto Sans Bengali, Tiro Bangla, Hind Siliguri or Baloo Da 2.</li>
+        <li><span class="ui">+ Add font file</span> adds a font from your computer (<code>.ttf</code>, <code>.otf</code>, <code>.woff</code>, <code>.woff2</code>). The font is stored inside your project, so it travels with the <code>.pub</code> file and works offline. Use only Unicode Bengali fonts.</li>
+      </ul>
+      <h3 id="text-size">Size</h3>
+      <p>Type a size in points or pick one from the list. <span class="ui">A−</span> and <span class="ui">A+</span> (<kbd>Ctrl</kbd>+<kbd>[</kbd> and <kbd>Ctrl</kbd>+<kbd>]</kbd>) step through common sizes.</p>
+      <h3 id="text-character">Character formatting</h3>
+      <ul>
+        <li><b>B</b> bold (<kbd>Ctrl</kbd>+<kbd>B</kbd>), <i>I</i> italic (<kbd>Ctrl</kbd>+<kbd>I</kbd>), <u>U</u> underline (<kbd>Ctrl</kbd>+<kbd>U</kbd>), <s>S</s> strikethrough.</li>
+        <li>x² superscript and x₂ subscript (highlight the text first).</li>
+        <li><b>Colour</b> and <b>Highlight</b> (a marker-pen background; <span class="ui">None</span> removes it).</li>
+        <li><b>Case</b>: as typed, UPPERCASE, lowercase, Title Case or Small Caps. Case affects Latin letters; Bengali has no capitals.</li>
+        <li><span class="ui">Clear formatting</span> removes bold, colours, sizes and other character formatting.</li>
+      </ul>
+      <p>Many Bengali fonts have no italic. The browser then slants the letters itself, which may look rough; prefer colour or bold for emphasis.</p>
+    </div>
+    <figure><img src="img/panel-text.webp" alt="The Text tab of the Properties panel" loading="lazy"><figcaption>The Text tab with a text box selected.</figcaption></figure>
+  </div>
+
+  <h2 id="text-paragraphs">Paragraphs</h2>
+  <h3 id="text-alignment">Alignment</h3>
+  <p>Left, centre, right and justify. <b>With the cursor in the text</b>, alignment changes only that paragraph (or every paragraph you have highlighted). <b>With the box selected</b> but not being edited, it sets the whole box.</p>
+  <figure><img src="img/dropcap.webp" alt="Justified Bengali text with a three-line drop cap" loading="lazy"><figcaption>Justified text with a 3-line drop cap. The drop cap keeps the conjunct <span class="bn">গ্রা</span> whole.</figcaption></figure>
+  <div class="callout tip"><b>About justified text</b>The last line of a paragraph is never stretched, nor is the line just before a <kbd>Shift</kbd>+<kbd>Enter</kbd> line break. This is normal, and matches Word and InDesign. To justify a whole box at once, select the box (click its tab) before clicking Justify, or highlight all the text with <kbd>Ctrl</kbd>+<kbd>A</kbd>.</div>
+  <h3 id="text-lists">Lists</h3>
+  <div class="side">
+    <div>
+      <p>The two list buttons make a <b>bulleted</b> or <b>numbered</b> list from the paragraphs at the cursor. Choose the style for the box:</p>
+      <ul>
+        <li><b>Numbers</b>: <span class="bn">১, ২, ৩</span> · 1, 2, 3 · i, ii, iii · I, II, III · a, b, c.</li>
+        <li><b>Bullets</b>: ● ○ ■ –</li>
+      </ul>
+      <p>Press <kbd>Enter</kbd> twice to end a list. Click the list button again to turn list paragraphs back into ordinary ones.</p>
+    </div>
+    <figure class="small"><img src="img/lists.webp" alt="A numbered list in Bengali digits and a square-bullet list" loading="lazy"><figcaption>A numbered list with Bengali digits and a list with square bullets.</figcaption></figure>
+  </div>
+  <h3 id="text-spacing">Spacing and indents</h3>
+  <ul>
+    <li><b>Line height</b>: a multiple of the font size (1.2 is normal; Bengali often reads better at 1.4–1.6).</li>
+    <li><b>Letter</b> and <b>Word</b> spacing, in pixels; negative values tighten.</li>
+    <li><b>Before</b> and <b>After</b>: space above and below each paragraph.</li>
+    <li><b>Indents</b>: <i>First line</i> (the classic paragraph indent), <i>Left</i> and <i>Right</i>.</li>
+    <li><b>Hyphenate English words</b> breaks long English words at line ends. Bengali words are not hyphenated.</li>
+  </ul>
+  <h3 id="text-dropcap">Drop caps</h3>
+  <p>Choose <b>2, 3 or 4 lines</b> under <i>Drop cap</i> to enlarge the first letter of the box. Lekhoni keeps a whole akshara as the large letter (<span class="bn">ক্ষ, ত্র, গ্রা</span>), never just its first consonant.</p>
+
+  <h2 id="text-styles">Paragraph styles</h2>
+  <p>A paragraph style stores a complete look — font, size, colour, alignment, spacing, indents, case and drop cap — so you can apply it to any box in one step and keep a publication consistent.</p>
+  <ul>
+    <li>Built-in styles: <i>Body text</i>, <i>Heading 1</i>, <i>Heading 2</i>, <i>Caption</i> and <i>Quote</i>.</li>
+    <li><b>Apply</b>: select a text box and pick a style from <span class="ui">Paragraph style</span>.</li>
+    <li><b>Save as style…</b> saves the selected box’s formatting as a new style with a name you choose.</li>
+    <li><b>Update style</b> redefines the style from the selected box and restyles every box that uses it.</li>
+    <li><b>Delete</b> removes a style; boxes keep their current look.</li>
+  </ul>
+  <p>If you change a styled box by hand, the menu shows the style name with <i>(changed)</i>.</p>
+
+  <h2 id="text-find">Find &amp; replace</h2>
+  <div class="side">
+    <div>
+      <p>Press <kbd>Ctrl</kbd>+<kbd>F</kbd> (or <kbd>Ctrl</kbd>+<kbd>H</kbd>, or <span class="ui">Find</span> on the toolbar). Lekhoni searches every page, text box and table cell.</p>
+      <ul>
+        <li><span class="ui">Find next</span> goes to the next match and shows its page.</li>
+        <li><span class="ui">Replace</span> changes the current match; <span class="ui">Replace all</span> changes every match and tells you how many.</li>
+        <li><b>Match case</b> and <b>Whole words</b> narrow the search.</li>
+      </ul>
+      <p>The window stays open at the side while you work; close it with × or <kbd>Esc</kbd>.</p>
+    </div>
+    <figure><img src="img/dlg-find.webp" alt="The Find and replace window" loading="lazy"><figcaption>Find &amp; replace.</figcaption></figure>
+  </div>
+
+  <h2 id="text-links">Hyperlinks</h2>
+  <div class="side">
+    <div>
+      <p>Highlight some words and press <kbd>Ctrl</kbd>+<kbd>K</kbd> (or <span class="ui">Hyperlink…</span> in the Text tab). Choose what to link to:</p>
+      <ul>
+        <li>a <b>web address</b>, an <b>email address</b>, a <b>phone number</b>, or <b>a page in this document</b>.</li>
+      </ul>
+      <p>With nothing highlighted, type the <i>Text to show</i> in the dialog. To link a whole picture, shape, text box or table, select it and use <span class="ui">Link object…</span> in the Arrange tab.</p>
+      <p>With the cursor in a link, a small bar shows where it goes, with <span class="ui">Open</span>, <span class="ui">Edit</span> and <span class="ui">Remove</span>. <kbd>Ctrl</kbd>+click follows a link while you edit.</p>
+      <p>Links stay clickable in PDFs, including links that jump to another page.</p>
+    </div>
+    <figure><img src="img/dlg-link.webp" alt="The Hyperlink dialog" loading="lazy"><figcaption>The Hyperlink dialog.</figcaption></figure>
+  </div>
+  <figure class="small"><img src="img/link-bubble.webp" alt="The bar shown under an email link" loading="lazy"><figcaption>The link bar appears when the cursor is in a link.</figcaption></figure>
+</section>
+
+<!-- ═══════════════════════════════ 8. FRAMES ═══════════════════════════════ -->
+<section class="chapter" id="frames" data-title="Text frames, flow &amp; wrap">
+  <p class="kicker">Layout</p>
+  <h1>Text frames, flow &amp; wrap</h1>
+  <p class="lead">A text box is also a frame: it can have columns, padding, a background and a border; its story can flow on into other frames; and other objects can push its text aside.</p>
+
+  <h2 id="frames-settings">Frame settings</h2>
+  <div class="side">
+    <div>
+      <p>Select a text box and open the <span class="ui">Frame</span> tab.</p>
+      <h3 id="frames-columns">Columns inside a frame</h3>
+      <p>Set <b>Columns</b> (1–6) and the <b>Gap</b> between them. Text fills the first column, then the next.</p>
+      <figure><img src="img/columns.webp" alt="A text frame with two columns" loading="lazy"><figcaption>A two-column frame.</figcaption></figure>
+      <h3 id="frames-inset">Inset and vertical alignment</h3>
+      <p><b>Inset</b> is the padding between the frame’s edge and its text. <b>Vertical alignment</b> places the text at the top, middle or bottom of the frame — handy for captions and boxes with a coloured background.</p>
+      <h3 id="frames-fill">Fill and border</h3>
+      <p>Tick <b>Fill</b> and pick a colour for a background, and set a <b>Border</b> width in points and its colour.</p>
+      <h3 id="frames-overset">Text that doesn’t fit (overset)</h3>
+      <p>A red <b>+</b> at the bottom of a frame means some text doesn’t fit. The status bar also warns <i>⚠ 1 frame overset</i>. Either:</p>
+      <ul>
+        <li>make the frame bigger,</li>
+        <li>click <span class="ui">Fit frame to text</span> to make it exactly as tall as its text, or</li>
+        <li>let the text flow into another frame (below).</li>
+      </ul>
+    </div>
+    <figure><img src="img/panel-frame-text.webp" alt="The Frame tab for a text box" loading="lazy"><figcaption>The Frame tab for a text box.</figcaption></figure>
+  </div>
+  <figure class="small"><img src="img/overset.webp" alt="A text box with the red overset mark" loading="lazy"><figcaption>The red + shows that the text continues beyond the frame.</figcaption></figure>
+
+  <h2 id="frames-flow">Text that flows between frames</h2>
+  <p>One story can run from one frame into others, on the same page or later pages — the way a magazine article continues in the next column or on page 4. Typing, formatting, find &amp; replace and undo all work across the whole story.</p>
+  <p>Select the frame where the story starts (or the last frame so far) and use <i>Text flow</i> in the <span class="ui">Frame</span> tab:</p>
+  <ul>
+    <li><span class="ui">Flow into a frame…</span> — then click an <b>empty</b> text frame, on this page or another (switch pages in the thumbnails if needed; <kbd>Esc</kbd> cancels).</li>
+    <li><span class="ui">Flow to next page</span> — makes a frame of the same size and place on the next page (adding a page if needed) and continues the text there.</li>
+    <li><span class="ui">Stop flow here</span> — the text after this frame comes back into it and shows as overset.</li>
+  </ul>
+  <div class="gallery">
+    <figure><img src="img/flow-out.webp" alt="The flow-out marker at the end of a frame" loading="lazy"><figcaption>A small marker at the bottom-right shows the text continues in another frame.</figcaption></figure>
+    <figure><img src="img/flow-in.webp" alt="The flow-in marker at the start of a frame on page 2" loading="lazy"><figcaption>On page 2, a marker at the top-left shows where the text comes in.</figcaption></figure>
+  </div>
+  <p>The panel tells you where you are, for example <i>Frame 1 of 2 in this story. Continues on page 2.</i> If you delete the first frame, the story moves into the frames that remain.</p>
+
+  <h2 id="frames-wrap">Text wrap</h2>
+  <div class="side">
+    <div>
+      <p>Any object — picture, shape, table or text box — can make the text of <i>other</i> text boxes flow round it. Select the object and choose under <i>Text wrap</i> in the <span class="ui">Frame</span> tab:</p>
+      <ul>
+        <li><b>No wrap</b>: text runs over or under the object.</li>
+        <li><b>Wrap round the frame</b>: text goes round the object’s rectangle.</li>
+        <li><b>Wrap round the outline</b>: text follows the shape of ellipses, triangles, diamonds and stars.</li>
+        <li><b>Jump</b>: text stops above the object and carries on below it.</li>
+      </ul>
+      <p><b>Offset</b> sets the gap between object and text. Text goes round the side with more room.</p>
+      <p>A text box can be told to <b>ignore wraps</b> (tick <span class="ui">This box ignores wraps</span>), for example a caption placed over a picture. Frames with several columns, and rotated frames, don’t wrap.</p>
+    </div>
+    <figure><img src="img/panel-frame-image.webp" alt="Frame tab for a picture with text wrap" loading="lazy"><figcaption>The Frame tab of a picture, with <i>Wrap round the frame</i> chosen.</figcaption></figure>
+  </div>
+  <figure><img src="img/text-wrap.webp" alt="Text wrapping round a picture" loading="lazy"><figcaption>The article wraps round the picture and its caption.</figcaption></figure>
+</section>
+
+<!-- ═══════════════════════════════ 9. PICTURES ═══════════════════════════════ -->
+<section class="chapter" id="pictures" data-title="Pictures">
+  <p class="kicker">Layout</p>
+  <h1>Pictures</h1>
+  <p class="lead">Place photos and drawings on the page, decide how they fill their frame, and let text flow round them.</p>
+
+  <h2 id="pictures-insert">Inserting a picture</h2>
+  <ol>
+    <li>Click <span class="ui">Image</span> on the toolbar.</li>
+    <li>Click on the page where the picture should go.</li>
+    <li>Choose an image file (JPEG, PNG, WebP, GIF or SVG).</li>
+  </ol>
+  <p>The picture is stored inside your project, so it travels with the <code>.pub</code> file. Very large photos (longer than 3000 pixels) are scaled down on import to keep files small; this is still plenty for print.</p>
+
+  <h2 id="pictures-adjust">Moving, resizing and replacing</h2>
+  <div class="side">
+    <div>
+      <ul>
+        <li><b>Move</b>: drag the picture itself.</li>
+        <li><b>Resize</b>: drag the square at the bottom-right corner; hold <kbd>Shift</kbd> to keep proportions.</li>
+        <li><b>Rotate</b>: drag the round handle below the picture (see <a href="#arranging-rotate">Rotating</a>).</li>
+        <li><b>Replace</b>: double-click the picture, or click <span class="ui">Replace image…</span> in the Frame tab. The frame keeps its size and place.</li>
+      </ul>
+      <h3 id="pictures-fit">Fitting</h3>
+      <ul>
+        <li><b>Fit inside frame</b>: the whole picture shows; there may be empty space at the sides.</li>
+        <li><b>Fill frame (crop edges)</b>: the frame is filled; edges that don’t fit are hidden.</li>
+        <li><b>Stretch to frame</b>: the picture is stretched to the frame’s exact shape.</li>
+      </ul>
+      <p><b>Fill &amp; border</b> add a background colour (seen with <i>Fit inside</i>) and a border. <b>Text wrap</b> works as described in <a href="#frames-wrap">Text wrap</a>.</p>
+    </div>
+    <figure class="wide"><img src="img/selected-picture.webp" alt="A selected picture with its handles" loading="lazy"><figcaption>A selected picture: the move tab above, the resize square at the corner and the rotation handle below.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ 10. SHAPES ═══════════════════════════════ -->
+<section class="chapter" id="shapes" data-title="Shapes &amp; lines">
+  <p class="kicker">Layout</p>
+  <h1>Shapes &amp; lines</h1>
+  <p class="lead">Boxes, circles, stars and lines decorate a page, frame a quotation or separate sections.</p>
+
+  <h2 id="shapes-draw">Drawing a shape</h2>
+  <p>Click <span class="ui">Box</span>, <span class="ui">Circle</span>, <span class="ui">Star</span> or <span class="ui">Line</span> on the toolbar, then click on the page. Drag the shape to move it and its corner to resize it.</p>
+  <div class="callout tip"><b>Text on a shape</b>Put a text box on top of a filled box (as for the quotation in the sample magazine). In the text box’s Frame tab, set vertical alignment to middle and tick <span class="ui">This box ignores wraps</span>.</div>
+
+  <h2 id="shapes-settings">Shape settings</h2>
+  <div class="side">
+    <div>
+      <p>Select the shape and open the <span class="ui">Frame</span> tab.</p>
+      <ul>
+        <li><b>Type</b>: change between rectangle, ellipse, triangle, diamond, star and line at any time.</li>
+        <li><b>Corner</b>: rounds the corners of a rectangle.</li>
+        <li><b>Points</b>: the number of points of a star (3–24).</li>
+        <li><b>Fill</b>: tick it and choose a colour, or untick it for an outline only.</li>
+        <li><b>Outline</b> colour, <b>Width</b> in points (0 for none) and <b>Style</b>: solid, dashed or dotted.</li>
+        <li><b>Text wrap</b>: shapes can push text aside, including round their outline.</li>
+      </ul>
+      <h3 id="shapes-lines">Lines and arrows</h3>
+      <p>For a line, choose its <b>Direction</b> (horizontal, vertical, rising or falling) and <b>Arrows</b> at the end, the start or both ends.</p>
+    </div>
+    <figure><img src="img/panel-frame-shape.webp" alt="Frame tab for a rectangle" loading="lazy"><figcaption>Settings for a rounded rectangle.</figcaption></figure>
+  </div>
+  <figure class="small"><img src="img/panel-frame-line.webp" alt="Frame tab for a line" loading="lazy" style="max-width:300px"><figcaption>Settings for a line: direction and arrowheads.</figcaption></figure>
+</section>
+
+<!-- ═══════════════════════════════ 11. TABLES ═══════════════════════════════ -->
+<section class="chapter" id="tables" data-title="Tables">
+  <p class="kicker">Layout</p>
+  <h1>Tables</h1>
+  <p class="lead">Tables arrange text in rows and columns, with shading, borders and their own text formatting.</p>
+
+  <h2 id="tables-insert">Inserting a table</h2>
+  <div class="side">
+    <div>
+      <ol>
+        <li>Click <span class="ui">Table</span> on the toolbar.</li>
+        <li>Click on the page where the table should go.</li>
+        <li>Enter the number of <b>Rows</b> and <b>Columns</b> and click <span class="ui">Insert</span>.</li>
+      </ol>
+      <p>The first row starts shaded and bold, as a heading row. Click into any cell to type.</p>
+    </div>
+    <figure class="small"><img src="img/dlg-table.webp" alt="Insert Table dialog" loading="lazy" style="max-width:320px"><figcaption>Insert Table.</figcaption></figure>
+  </div>
+
+  <h2 id="tables-edit">Changing a table</h2>
+  <figure><img src="img/table-selected.webp" alt="A selected table with coloured heading row" loading="lazy" style="max-width:560px"><figcaption>A table with a coloured heading row. The cell being edited is outlined.</figcaption></figure>
+  <div class="side">
+    <div>
+      <ul>
+        <li><b>Rows and columns</b>: click into a cell first, then use <span class="ui">+ Row above</span>, <span class="ui">+ Row below</span>, <span class="ui">+ Column left</span>, <span class="ui">+ Column right</span>, <span class="ui">Delete row</span> or <span class="ui">Delete column</span> in the Frame tab.</li>
+        <li><b>Column widths and row heights</b>: drag any border inside the table. Rows never shrink below their text.</li>
+        <li><b>Cell colours</b>: choose <i>Apply to</i> — this cell, this row, this column or the whole table — then pick the <b>Fill</b> and <b>Text</b> colours.</li>
+        <li><b>Vertical alignment</b> of the text in cells: top, middle or bottom.</li>
+        <li><b>Grid</b>: border width and colour for all cell lines, and the <b>Padding</b> inside each cell.</li>
+        <li><b>Text</b>: font, size, bold and colours in the Text tab work on highlighted words, or on the whole table. Alignment applies to the cell you are in.</li>
+      </ul>
+      <p>Move a table with the tab above it, and resize it with its corner: the columns and rows scale with it.</p>
+    </div>
+    <figure><img src="img/panel-frame-table.webp" alt="Frame tab for a table" loading="lazy"><figcaption>Table settings in the Frame tab.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ 12. ARRANGING ═══════════════════════════════ -->
+<section class="chapter" id="arranging" data-title="Arranging objects">
+  <p class="kicker">Layout</p>
+  <h1>Arranging objects</h1>
+  <p class="lead">Select, move, resize, rotate, align, stack, group, lock and hide the objects on your page.</p>
+
+  <h2 id="arranging-select">Selecting</h2>
+  <ul>
+    <li><b>Click</b> an object to select it. A selected object shows a coloured outline, a move tab above it, a resize square at its corner and a round rotation handle below.</li>
+    <li><b>Shift+click</b> adds an object to the selection or takes it out.</li>
+    <li><b>Drag across an empty part of the page</b> to select everything the rectangle touches.</li>
+    <li><kbd>Ctrl</kbd>+<kbd>A</kbd> (while not typing) selects everything on the page.</li>
+    <li><kbd>Esc</kbd> deselects. The status bar shows what is selected and its size.</li>
+  </ul>
+  <figure class="small"><img src="img/multi-select.webp" alt="Two objects selected together" loading="lazy"><figcaption>Two objects selected: each gets a dashed outline, and the whole selection gets a frame with one move tab and one resize handle.</figcaption></figure>
+
+  <h2 id="arranging-move">Moving and resizing</h2>
+  <ul>
+    <li><b>Move</b>: pictures and shapes move by dragging them; text boxes and tables move by their tab (so clicking in them still puts the cursor in the text).</li>
+    <li><b>Nudge</b>: arrow keys move the selection 1 mm; with <kbd>Shift</kbd>, 5 mm.</li>
+    <li><b>Resize</b>: drag the square at the bottom-right corner. Hold <kbd>Shift</kbd> to keep proportions.</li>
+    <li><b>Snapping</b>: objects snap to margins, column guides, your own guides and the page centre. Hold <kbd>Alt</kbd> while dragging to place freely.</li>
+  </ul>
+
+  <h2 id="arranging-rotate">Rotating</h2>
+  <div class="side">
+    <div>
+      <p>Drag the <b>round handle</b> below a selected object to turn it round its centre.</p>
+      <ul>
+        <li>It settles on 0°, 90°, 180° and 270° when you get close.</li>
+        <li>Hold <kbd>Shift</kbd> to turn in 15° steps.</li>
+        <li><b>Double-click</b> the handle to straighten the object.</li>
+        <li>The angle shows in the status bar while you drag, and in <i>Rotate (°)</i> in the Arrange tab, where you can type an exact value.</li>
+      </ul>
+      <p>Locked objects have no rotation handle. Rotated text frames don’t wrap round other objects.</p>
+    </div>
+    <figure class="tiny"><img src="img/rotate-star.webp" alt="A rotated star with its rotation handle" loading="lazy"><figcaption>A star turned 12°, with its rotation handle.</figcaption></figure>
+  </div>
+
+  <h2 id="arranging-panel">The Arrange tab</h2>
+  <div class="side">
+    <div>
+      <h3 id="arranging-exact">Exact position and size</h3>
+      <p><b>X</b> and <b>Y</b> are the distance of the top-left corner from the page’s top-left corner; <b>W</b> and <b>H</b> the width and height, all in your chosen unit. Also <b>Rotate</b> and <b>Opacity</b> (0–100%).</p>
+      <h3 id="arranging-lock">Lock</h3>
+      <p>Tick <b>Lock</b> so an object can’t be moved, resized, rotated or deleted by accident. You can still edit the text in a locked text box.</p>
+      <h3 id="arranging-group">Group</h3>
+      <p>Select several objects and click <span class="ui">Group</span> (<kbd>Ctrl</kbd>+<kbd>G</kbd>) to move and scale them as one. Click a group to select it; click a text box in it again to edit its text. <span class="ui">Ungroup</span> is <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd>.</p>
+      <h3 id="arranging-align">Align and distribute</h3>
+      <p>Choose what to align <i>relative to</i>: page margins, page edges, or each other. Then align left edges, centres, right edges, tops, middles or bottoms. With three or more objects, <span class="ui">Distribute ↔</span> and <span class="ui">Distribute ↕</span> make the gaps between them equal.</p>
+      <h3 id="arranging-stacking">Stacking order</h3>
+      <p>Objects can overlap. <span class="ui">To front</span> and <span class="ui">To back</span> move an object above or below all others; <span class="ui">Forward</span> and <span class="ui">Backward</span> move it one step.</p>
+      <h3 id="arranging-hide">Hide and show</h3>
+      <p><span class="ui">Hide</span> leaves an object in the document but out of print; it shows as a faint outline so you can select it and <span class="ui">Show</span> it again.</p>
+      <h3 id="arranging-copy">Copy, paste and duplicate</h3>
+      <p><span class="ui">Copy</span> (<kbd>Ctrl</kbd>+<kbd>C</kbd>), cut (<kbd>Ctrl</kbd>+<kbd>X</kbd>), <span class="ui">Paste</span> (<kbd>Ctrl</kbd>+<kbd>V</kbd>) onto the current page — also onto another page — and <span class="ui">Duplicate</span> (<kbd>Ctrl</kbd>+<kbd>D</kbd>).</p>
+    </div>
+    <figure><img src="img/panel-arrange.webp" alt="The Arrange tab" loading="lazy"><figcaption>The Arrange tab.</figcaption></figure>
+  </div>
+
+  <h2 id="arranging-delete">Deleting</h2>
+  <p>Select one or more objects and click <span class="ui">Delete</span> on the toolbar, press <kbd>Delete</kbd> (or <kbd>Backspace</kbd>) when you are not typing, or use <span class="ui">Delete object</span> at the bottom of the Arrange tab. The toolbar button also works while you are typing in a text box, and deletes the whole box. Locked objects are kept. <span class="ui">Undo</span> brings deleted objects back.</p>
+
+  <h2 id="arranging-undo">Undo and redo</h2>
+  <p><span class="ui">Undo</span> (<kbd>Ctrl</kbd>+<kbd>Z</kbd>) and <span class="ui">Redo</span> (<kbd>Ctrl</kbd>+<kbd>Y</kbd>) step through your last 100 changes. Each action — a move, a style, a deletion — is one step; typing is grouped by pauses. While you are typing inside a text box, <kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes typing in that box; click outside the text for document-wide undo.</p>
+</section>
+
+<!-- ═══════════════════════════════ 13. STATUS BAR ═══════════════════════════════ -->
+<section class="chapter" id="statusbar" data-title="The status bar">
+  <p class="kicker">Reference</p>
+  <h1>The status bar</h1>
+  <p class="lead">The one-row bar along the bottom of the window shows messages and keeps an eye on your document.</p>
+  <figure><img src="img/statusbar.webp" alt="The status bar" loading="lazy"></figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:170px">Item</th><th>What it tells you</th></tr></thead>
+    <tbody>
+      <tr><td><b>Message</b></td><td>The latest message from Lekhoni (“Copied”, “Text now flows into that frame”, “Locked — unlock it in Arrange to move”…). New messages show at full strength, then fade a little after a few seconds. Warnings are red.</td></tr>
+      <tr><td><b>Page</b></td><td>Which page you are on and how many there are.</td></tr>
+      <tr><td><b>Selection</b></td><td>What is selected and its size, rotation and lock state, for example <i>Text box · 80 × 30 mm · 15°</i> or <i>3 objects selected</i>.</td></tr>
+      <tr><td><b>Words · characters</b></td><td>Counts for the whole document: every text box and table cell (header and footer not included). Point at it for characters without spaces and the number of letters as you see them (aksharas).</td></tr>
+      <tr><td><b>⚠ Overset</b></td><td>Appears when text on this page doesn’t fit its frame. See <a href="#frames-overset">overset</a>.</td></tr>
+      <tr><td><b>In memory</b></td><td>The size of the document as it stands — about the size the project file would be if saved now. Point at it for the size of the undo history.</td></tr>
+      <tr><td><b>On disk</b></td><td>The size of the project file you last saved or opened, with <i>· changed</i> when you have edited since. <i>Not saved to a file</i> until you save or open one in this session.</td></tr>
+      <tr><td><b>Autosave</b></td><td><i>Autosaved</i> when the copy in this browser is up to date, <i>Saving…</i> while you work. It turns red if the browser’s storage is full; then save a project file straight away.</td></tr>
+    </tbody>
+  </table></div>
+  <p>On a narrow window the least important items are hidden (memory first, then selection, then disk, then counts) so the bar always stays a single row. The status bar is never printed.</p>
+</section>
+
+<!-- ═══════════════════════════════ 14. SHORTCUTS ═══════════════════════════════ -->
+<section class="chapter" id="shortcuts" data-title="Keyboard shortcuts">
+  <p class="kicker">Reference</p>
+  <h1>Keyboard shortcuts</h1>
+  <p class="lead">On a Mac, use <kbd>⌘ Cmd</kbd> instead of <kbd>Ctrl</kbd>. The same list is in the app, at the bottom of the Page tab.</p>
+  <h2 id="shortcuts-document">Document</h2>
+  <div class="tbl-wrap"><table><tbody>
+    <tr><td style="width:220px"><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save the project</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Undo / redo (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> also redoes)</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>F</kbd> or <kbd>Ctrl</kbd>+<kbd>H</kbd></td><td>Find &amp; replace</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>M</kbd></td><td>Phonetic typing on / off</td></tr>
+    <tr><td><kbd>Ctrl</kbd> + mouse wheel</td><td>Zoom</td></tr>
+    <tr><td><kbd>Esc</kbd></td><td>Stop typing, cancel a tool, close a dialog, deselect</td></tr>
+  </tbody></table></div>
+  <h2 id="shortcuts-text">Text</h2>
+  <div class="tbl-wrap"><table><tbody>
+    <tr><td style="width:220px"><kbd>Enter</kbd></td><td>New paragraph</td></tr>
+    <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>New line in the same paragraph</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>B</kbd> / <kbd>I</kbd> / <kbd>U</kbd></td><td>Bold / italic / underline</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>[</kbd> / <kbd>Ctrl</kbd>+<kbd>]</kbd></td><td>Font size down / up</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Hyperlink (on highlighted text, or on the selected object)</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+click</td><td>Follow a hyperlink</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd> (in text)</td><td>Highlight all the text in the box</td></tr>
+  </tbody></table></div>
+  <h2 id="shortcuts-objects">Objects</h2>
+  <div class="tbl-wrap"><table><tbody>
+    <tr><td style="width:220px"><kbd>Delete</kbd> / <kbd>Backspace</kbd></td><td>Delete the selected objects</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>X</kbd> / <kbd>V</kbd></td><td>Copy / cut / paste objects</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd> (not in text)</td><td>Select everything on the page</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>G</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></td><td>Group / ungroup</td></tr>
+    <tr><td><kbd>Shift</kbd>+click</td><td>Add to or remove from the selection</td></tr>
+    <tr><td>Arrow keys</td><td>Nudge 1 mm (with <kbd>Shift</kbd>: 5 mm)</td></tr>
+    <tr><td><kbd>Shift</kbd> + drag corner</td><td>Resize keeping proportions</td></tr>
+    <tr><td><kbd>Shift</kbd> + drag rotation handle</td><td>Rotate in 15° steps</td></tr>
+    <tr><td><kbd>Alt</kbd> + drag</td><td>Move without snapping</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ═══════════════════════════════ 15. TROUBLESHOOTING ═══════════════════════════════ -->
+<section class="chapter" id="troubleshooting" data-title="Troubleshooting &amp; FAQ">
+  <p class="kicker">Help</p>
+  <h1>Troubleshooting &amp; FAQ</h1>
+  <p class="lead">Answers to the questions people ask most.</p>
+
+  <h3 id="faq-lost">My document has disappeared.</h3>
+  <p>Lekhoni’s automatic copy lives in one browser on one computer. Check you are using the same browser and not a private window. If you cleared your browsing data, the automatic copy is gone; open your last <code>.pub</code> file with <span class="ui">Open</span>. This is why saving a project file matters.</p>
+
+  <h3 id="faq-storage">The status bar says “Not autosaved — storage full”.</h3>
+  <p>The browser has run out of room for the automatic copy, usually because of many large pictures. Save a project file at once with <kbd>Ctrl</kbd>+<kbd>S</kbd>. Then free space: delete unused pictures, or replace huge photos with smaller ones.</p>
+
+  <h3 id="faq-phonetic">Phonetic typing doesn’t work.</h3>
+  <ul>
+    <li>Check that <span class="ui">Phonetic</span> on the toolbar is highlighted (<kbd>Ctrl</kbd>+<kbd>M</kbd>).</li>
+    <li>Click inside a text box or table cell first.</li>
+    <li>If the status bar says <i>Phonetic typing unavailable (map failed to load)</i>, reload the page while connected to the internet once.</li>
+    <li>A Bengali keyboard from your operating system takes over typing; switch your computer back to the English keyboard to use phonetic typing.</li>
+  </ul>
+
+  <h3 id="faq-letters">A word comes out with the wrong letters.</h3>
+  <p>Look up the keys in the <a href="#typing-keys">key table</a>. Longer keys win, so type an apostrophe to keep letters apart (<code>k'Sh</code>). Use <kbd>Backspace</kbd> while still in the word to step back one roman letter.</p>
+
+  <h3 id="faq-justify">Justify doesn’t stretch some lines.</h3>
+  <p>The last line of every paragraph, and a line ending with <kbd>Shift</kbd>+<kbd>Enter</kbd>, are never stretched. With the cursor in the text, Justify changes only that paragraph; select the box, or highlight all with <kbd>Ctrl</kbd>+<kbd>A</kbd>, to justify everything. See <a href="#text-alignment">Alignment</a>.</p>
+
+  <h3 id="faq-plus">What is the red + on my text box?</h3>
+  <p>Some text doesn’t fit. See <a href="#frames-overset">Text that doesn’t fit</a>.</p>
+
+  <h3 id="faq-fonts">The fonts look different in Word, InDesign or on another computer.</h3>
+  <p>Other programs use the fonts installed on their computer. Install the same Unicode Bengali fonts there. Fonts you added to Lekhoni from a file travel inside the <code>.pub</code> file, but not inside Word or InDesign copies.</p>
+
+  <h3 id="faq-garbled">Pasted Bengali text looks like gibberish.</h3>
+  <p>The text was written in an old non-Unicode font (such as SutonnyMJ from Bijoy). Convert it to Unicode with a converter first, then paste it.</p>
+
+  <h3 id="faq-pagemaker">Can PageMaker or Microsoft Publisher open my .pub file?</h3>
+  <p>No. Lekhoni project files share the <code>.pub</code> extension with Microsoft Publisher by coincidence; the contents are completely different, and PageMaker uses its own formats. Use <a href="#projects-saveas">Save as</a> (Word or InDesign) or a PDF to share your work.</p>
+
+  <h3 id="faq-print">My printout is the wrong size or missing colours.</h3>
+  <p>In the print dialog, set Scale to 100% and Margins to None or Default, and turn on Background graphics. See <a href="#projects-print">Printing and PDF</a>.</p>
+
+  <h3 id="faq-cantmove">I can’t move, resize or delete an object.</h3>
+  <p>It is probably locked: the status bar says so when you try. Untick <b>Lock</b> in the Arrange tab. If clicking selects a different object, the one you want may be underneath; use <span class="ui">To back</span> on the top one, or select by dragging across the page.</p>
+
+  <h3 id="faq-wrap">Text doesn’t wrap round my picture.</h3>
+  <p>Check the picture’s Text wrap setting in the Frame tab. Text boxes with several columns, rotated text boxes, and boxes set to <i>ignore wraps</i> are not affected by wraps.</p>
+
+  <h3 id="faq-update">The status bar says “Update installed — reload to use it”.</h3>
+  <p>A new version of Lekhoni has been downloaded. Save if you like, then reload the page to start using it. Your document is kept.</p>
+</section>
+
+<!-- ═══════════════════════════════ 16. CHANGES ═══════════════════════════════ -->
+<section class="chapter" id="changes" data-title="What’s new">
+  <p class="kicker">Reference</p>
+  <h1>What’s new</h1>
+  <p class="lead">The main changes in each version of Lekhoni.</p>
+
+  <h2 id="v533">5.3.3 — Status bar</h2>
+  <p>A one-row <a href="#statusbar">status bar</a> along the bottom: messages, page, selection, word and character counts, overset warning, size in memory and on disk, and autosave state.</p>
+
+  <h2 id="v532">5.3.2 — Justify fixes</h2>
+  <ul>
+    <li>Line breaks (<kbd>Shift</kbd>+<kbd>Enter</kbd>) no longer split a paragraph when aligning, so Justify reaches the whole paragraph. Older documents are converted when opened and look the same.</li>
+    <li>Paragraph alignment no longer fixes the font size of the text.</li>
+    <li>A justified paragraph that continues in the next linked frame is justified to the end of the first frame.</li>
+  </ul>
+
+  <h2 id="v531">5.3.1 — Delete button and rotation handle</h2>
+  <p>A <span class="ui">Delete</span> button on the toolbar, and a <a href="#arranging-rotate">rotation handle</a> below selected objects.</p>
+
+  <h2 id="v530">5.3.0 — Save as Word, InDesign or text</h2>
+  <p><a href="#projects-saveas">Save as</a> Microsoft Word (.docx), Adobe InDesign (.idml) and plain text (.txt), made in the browser and working offline.</p>
+
+  <h2 id="v520">5.2.0 — Links, wrap, flow and groups</h2>
+  <ul>
+    <li>Hyperlinks on text and whole objects, kept in PDFs.</li>
+    <li>Text wrap round frames and shape outlines, and jump wrap.</li>
+    <li>Text flowing through linked frames and onto later pages.</li>
+    <li>Selecting several objects, groups, align and distribute.</li>
+    <li>Alignment per paragraph; measurement units; drop caps that keep conjuncts whole.</li>
+  </ul>
+
+  <h2 id="v510">5.1.0 — Desktop-publishing pass</h2>
+  <ul>
+    <li>Formatting of highlighted words; real paragraphs with spacing and indents; lists with Bengali numbers; drop caps; paragraph styles; find &amp; replace.</li>
+    <li>Text frames with columns, inset, vertical alignment, fill and border; overset mark and Fit frame to text.</li>
+    <li>Page setup: orientation, many paper sizes, columns, page colour, bleed and crop marks, richer headers, footers and page numbers.</li>
+    <li>Exact position and size, rotation, opacity, lock, stacking steps, copy and paste; more shapes; table editing; zoom presets.</li>
+  </ul>
+
+  <h2 id="v50">5.0 — The new Lekhoni</h2>
+  <ul>
+    <li>A new toolbar and Properties panel; table resizing; a new logo.</li>
+    <li>Phonetic typing rebuilt: live conversion, Backspace within a word, plain-text paste, <kbd>Ctrl</kbd>+<kbd>M</kbd>.</li>
+    <li>Storage in the browser’s database (room for pictures), offline use, print and PDF of every page.</li>
+  </ul>
+</section>
+
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Picture"><div><img alt=""><p></p></div></div>
+<button class="icon-btn to-top" id="to-top" type="button" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<script src="assets/vendor/translit/translit-engine.js"></script>
+<script src="assets/vendor/translit/translit-hooks.js"></script>
+<script src="assets/vendor/translit/translit-wrapper.js"></script>
+<script src="assets/js/translit-demo.js"></script>
+<script src="assets/js/manual.js"></script>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OCR Studio user manual</title>
+<meta name="description" content="Complete user manual for OCR Studio: offline OCR for Eastern Nagari (Bengali–Assamese script) and English, and a corpus builder for heritage and language work.">
+<link rel="icon" href="img/ocr-studio-icon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/manual.css">
+<link rel="stylesheet" href="assets/css/theme.css">
+<script>
+  try { var t = localStorage.getItem("ocr-studio-manual-theme"); document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to the manual</a>
+
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Chapters">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <a class="brand" href="#welcome">
+    <img src="img/ocr-studio-icon.png" alt="">
+    <b>OCR Studio</b><span>User manual · v3.2.0</span>
+  </a>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="search" type="search" placeholder="Search the manual" autocomplete="off" aria-label="Search the manual">
+    <kbd>/</kbd>
+    <div class="results" id="results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="theme" type="button" title="Light / dark" aria-label="Switch light or dark">
+      <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <button class="icon-btn" type="button" title="Print the whole manual" aria-label="Print the whole manual" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2"/><path d="M6 14h12v7H6z"/></svg>
+    </button>
+    <a class="btn primary" id="open-app" href="#" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7M10 14L21 3M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>Open OCR Studio</span></a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Chapters">
+    <nav><ol id="toc"></ol></nav>
+    <p class="side-foot">Written for OCR Studio 3.2.0 · <a href="#changes">What’s new</a></p>
+  </aside>
+
+  <main id="content">
+
+<!-- ═══════════════════════════════ 1. WELCOME ═══════════════════════════════ -->
+<section class="chapter" id="welcome" data-title="Welcome">
+  <p class="kicker">OCR Studio user manual</p>
+  <h1>Welcome to OCR Studio</h1>
+  <p class="lead">OCR Studio turns printed pages into accurate, searchable Unicode text — in Eastern Nagari script (Bengali, Assamese, Bishnupriya Manipuri, Sylheti and other languages written in the Bengali–Assamese script) and in English. It is also a <b>corpus builder</b>: every page you check is kept with its source, its permission and, if you like, a recorded reading, ready to export as a language corpus and as training data for better recognition.</p>
+
+  <figure>
+    <img src="img/overview.webp" alt="OCR Studio with a scanned book page on the left and its recognised Bengali text on the right" loading="lazy">
+    <figcaption>A page from a scanned book on the left, the recognised text on the right, ready to proofread.</figcaption>
+  </figure>
+
+  <h2 id="what-it-does">What you can do with it</h2>
+  <div class="cards">
+    <a class="card" href="#recognise"><span class="ico">▤</span><h4>Read printed pages</h4><p>Scans, PDFs and phone photos of Bengali, Assamese and English print become editable Unicode text.</p></a>
+    <a class="card" href="#prepare"><span class="ico">◩</span><h4>Rescue poor scans</h4><p>Straighten, correct perspective, and let automatic clean-up deal with faded, small or speckled print.</p></a>
+    <a class="card" href="#proofread"><span class="ico">✎</span><h4>Proofread and type</h4><p>Correct the text beside the page, with Eastern Nagari typing on any keyboard.</p></a>
+    <a class="card" href="#source"><span class="ico">ⓘ</span><h4>Record the source</h4><p>Title, author, year, publisher and permission travel with every page you export.</p></a>
+    <a class="card" href="#collection"><span class="ico">⧉</span><h4>Build a corpus</h4><p>Collect pages from many books and export them as one corpus, with searchable PDFs per book.</p></a>
+    <a class="card" href="#models"><span class="ico">⚙</span><h4>Train for your language</h4><p>Export line images with their correct text, train a model, and load it back in.</p></a>
+  </div>
+
+  <h2 id="principles">Private and offline</h2>
+  <ul>
+    <li><b>Nothing is uploaded.</b> Recognition, clean-up and exports all happen inside your browser. Pages, text and recordings stay on your device.</li>
+    <li><b>Works without the internet</b> once it has been opened online. The header shows <span class="ui">Works offline</span> when everything is ready.</li>
+    <li><b>No account, no installation.</b> You can also install it as an app (see <a href="#settings-install">Installing</a>).</li>
+  </ul>
+
+  <h2 id="what-you-need">What you need</h2>
+  <ul>
+    <li>A recent <b>Chrome, Edge, Firefox or Safari</b> on a computer, tablet or phone. A computer with a larger screen is most comfortable for proofreading.</li>
+    <li><b>Printed pages</b>, as PDF files or images (JPEG or PNG). Handwriting is not recognised; you can still transcribe it by hand (see <a href="#proofread-handwriting">Handwritten pages</a>).</li>
+    <li>For recording readings: a microphone.</li>
+  </ul>
+
+  <h2 id="practice">Practice files</h2>
+  <p>The pictures in this manual were made with three sample files you can download and use to follow along:</p>
+  <ul>
+    <li><a href="samples/gramer-katha.pdf" download>gramer-katha.pdf</a> — two pages of a scanned Bengali book; the second page is faded on yellowed paper.</li>
+    <li><a href="samples/page2-crooked.jpg" download>page2-crooked.jpg</a> — a page scanned slightly crooked.</li>
+    <li><a href="samples/photo.jpg" download>photo.jpg</a> — a page photographed with a phone, at an angle.</li>
+  </ul>
+
+  <h2 id="how-to-read">How to use this manual</h2>
+  <ul>
+    <li>New here? Read <a href="#tour">The OCR Studio window</a>, then digitise a page with <a href="#quickstart">Your first page</a>.</li>
+    <li>Building a corpus from a whole book? Read <a href="#collection">Building a corpus</a> and <a href="#workflow">A digitisation workflow</a>.</li>
+    <li>Use the <b>search box</b> at the top (press <kbd>/</kbd>). Click any picture to see it full size.</li>
+    <li>Buttons are written like <span class="ui">Start OCR</span>; keys like <kbd>Esc</kbd>.</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════ 2. TOUR ═══════════════════════════════ -->
+<section class="chapter" id="tour" data-title="The OCR Studio window">
+  <p class="kicker">Getting started</p>
+  <h1>The OCR Studio window</h1>
+  <p class="lead">Controls run along the top. The page you are working on is on the left, its text on the right.</p>
+
+  <figure class="hotspot-fig" data-legend="tour-legend" data-spots='{"language":{"x":1.81,"y":11.16,"w":29.47,"h":4},"file":{"x":32.52,"y":11.16,"w":25.57,"h":4},"progress":{"x":59.34,"y":12.1,"w":13.47,"h":2.11},"collection":{"x":77.16,"y":11.16,"w":10.17,"h":4},"theme":{"x":87.88,"y":11.27,"w":10.31,"h":3.78},"offline":{"x":89.83,"y":6.16,"w":6.42,"h":2.4},"zoom":{"x":1.81,"y":18.27,"w":8.2,"h":3.56},"pages":{"x":35.74,"y":18.27,"w":13.08,"h":3.56},"tools":{"x":1.81,"y":22.72,"w":32.87,"h":3.56},"canvas":{"x":1.81,"y":27.61,"w":47.01,"h":67.06},"actions":{"x":70.01,"y":18.49,"w":28.19,"h":3.56},"source":{"x":51.18,"y":23.61,"w":47.01,"h":3.87},"text":{"x":51.18,"y":28.59,"w":47.01,"h":60.95},"status":{"x":51.18,"y":90.42,"w":47.01,"h":4.24}}'>
+    <div class="hotspot-img"><img src="img/overview.webp" alt="The OCR Studio window" width="1440" height="900"></div>
+    <figcaption>Point at a number or at a part of the picture to see what it is; click to read more.</figcaption>
+  </figure>
+  <ol class="legend" id="tour-legend">
+    <li data-spot="language" data-href="#recognise-language"><span>Language and clean-up</span>: which languages to read, models, and scan clean-up.</li>
+    <li data-spot="file" data-href="#open"><span>File</span>: choose a PDF or image, then Start OCR.</li>
+    <li data-spot="progress" data-href="#recognise-run"><span>Progress</span>: what the engine is doing.</li>
+    <li data-spot="collection" data-href="#collection"><span>Collection</span>: the pages you have kept, and how many.</li>
+    <li data-spot="theme" data-href="#settings-theme"><span>Light / Dark</span>: the look of the app.</li>
+    <li data-spot="offline" data-href="#settings-offline"><span>Works offline</span>: ready to use without the internet.</li>
+    <li data-spot="zoom" data-href="#open-zoom"><span>Zoom</span> the page.</li>
+    <li data-spot="pages" data-href="#open-pdf"><span>Pages</span>: move through a PDF.</li>
+    <li data-spot="tools" data-href="#prepare"><span>Image tools</span>: Deskew, Perspective, Enhance, B/W, Reset.</li>
+    <li data-spot="canvas" data-href="#open"><span>The page</span> as it will be read.</li>
+    <li data-spot="actions" data-href="#tour-actions"><span>Text actions</span>: record, listen, type, source, copy, save, add.</li>
+    <li data-spot="source" data-href="#source"><span>Source</span>: the book this page comes from.</li>
+    <li data-spot="text" data-href="#proofread"><span>Extracted text</span>: read and correct it here.</li>
+    <li data-spot="status" data-href="#recognise-status"><span>Status line</span>: characters, confidence, training lines, clean-up.</li>
+  </ol>
+
+  <h2 id="tour-controls">The controls bar</h2>
+  <figure><img src="img/controls.webp" alt="The controls bar" loading="lazy"><figcaption>Language, models, scan clean-up, file, Start OCR, progress, Collection and the Light/Dark switch.</figcaption></figure>
+  <p>Click the title bar (<span class="ui">OCR Studio</span> with the arrow) to fold the controls away and give the page more room; click again to open them. OCR Studio remembers your choice on each device.</p>
+
+  <h2 id="tour-page">The page panel</h2>
+  <figure><img src="img/left-toolbar.webp" alt="Zoom, page number and image tools" loading="lazy" style="max-width:640px"><figcaption>Zoom, the page number of a PDF, and the image tools.</figcaption></figure>
+  <p>The page panel shows the page exactly as it will be read. The image tools change this picture; see <a href="#prepare">Preparing the page</a>.</p>
+
+  <h2 id="tour-actions">The text panel</h2>
+  <figure><img src="img/text-actions.webp" alt="Buttons above the extracted text" loading="lazy" style="max-width:640px"></figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:190px">Button</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ui">Record</span></td><td>Records someone reading the page aloud; the recording stays with the page. See <a href="#audio-record">Recording a reading</a>.</td></tr>
+      <tr><td><span class="ui">Listen</span></td><td>Reads the text aloud with a machine voice, if one is installed. See <a href="#audio-listen">Listening</a>.</td></tr>
+      <tr><td>Keyboard</td><td>Turns on Eastern Nagari typing in the text box. See <a href="#proofread-typing">Typing Eastern Nagari</a>.</td></tr>
+      <tr><td>ⓘ Source details</td><td>Title, author, year, permission and more. See <a href="#source">Source details</a>.</td></tr>
+      <tr><td>Copy</td><td>Copies all the text. The icon turns into a tick when done.</td></tr>
+      <tr><td>Save</td><td>Saves this page as text, searchable PDF, a bundle or training lines. See <a href="#save">Saving a page</a>.</td></tr>
+      <tr><td><span class="ui">Add</span></td><td>Adds this page to the collection. See <a href="#collection">Building a corpus</a>.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Under the buttons, a line shows the <a href="#source">source</a> of the page; click it to edit. Under the text, the <a href="#recognise-status">status line</a> tells you about the page. Messages appear for a moment at the bottom of the screen.</p>
+</section>
+
+<!-- ═══════════════════════════════ 3. QUICK START ═══════════════════════════════ -->
+<section class="chapter" id="quickstart" data-title="Your first page">
+  <p class="kicker">Getting started</p>
+  <h1>Your first page</h1>
+  <p class="lead">From a scanned page to proofread, searchable text in ten steps. Use <a href="samples/gramer-katha.pdf" download>the sample book</a> if you have nothing to hand.</p>
+  <ol class="steps">
+    <li><b>Open OCR Studio.</b> Wait for <span class="ui">Works offline</span> at the top right the first time; after that it works without the internet.
+      <figure><img src="img/empty.webp" alt="OCR Studio when first opened" loading="lazy"><figcaption>OCR Studio before a file is chosen.</figcaption></figure></li>
+    <li><b>Choose the file.</b> Click <span class="ui">Choose file</span> and pick a PDF or a picture of a page. The page appears on the left.</li>
+    <li><b>Say where it comes from.</b> Click the line above the text box (<i>Add source details…</i>) and fill in at least the title, the author and the permission. See <a href="#source">Source details</a>.</li>
+    <li><b>Check the languages.</b> <span class="ui">BN/AS/EN</span> reads Bengali, Assamese and English. Choose a narrower setting if the page uses fewer (see <a href="#recognise-language">Choosing languages</a>).</li>
+    <li><b>Straighten if needed.</b> If the page is crooked or photographed at an angle, use <span class="ui">Deskew</span> or <span class="ui">Perspective</span>. Leave scan clean-up on <span class="ui">Auto</span>.</li>
+    <li><b>Click Start OCR.</b> A few seconds later the text appears on the right.</li>
+    <li><b>Proofread.</b> Compare the text with the page and correct mistakes. Keep <b>one line of text for each printed line</b>, so the page can also become training data.</li>
+    <li><b>Check the status line.</b> It should say <i>corrected</i> and <i>Training lines ready</i>.</li>
+    <li><b>Keep it.</b> Click <span class="ui">Add</span> to put the page into your collection, or the save button for a text file or searchable PDF.</li>
+    <li><b>Next page.</b> For a PDF, click the arrow beside the page number and repeat from step 5. The source details stay the same for every page of the file.</li>
+  </ol>
+  <figure><img src="img/text-corrected.webp" alt="The text panel after proofreading" loading="lazy" style="max-width:660px"><figcaption>After proofreading: the status line says the page is corrected and 14 training lines are ready.</figcaption></figure>
+</section>
+
+<!-- ═══════════════════════════════ 4. OPENING ═══════════════════════════════ -->
+<section class="chapter" id="open" data-title="Opening pages">
+  <p class="kicker">Working with pages</p>
+  <h1>Opening pages</h1>
+  <p class="lead">OCR Studio reads PDF files and pictures of pages. One page is shown and read at a time.</p>
+
+  <h2 id="open-files">Choosing a file</h2>
+  <p>Click <span class="ui">Choose file</span>. Its name appears beside the button.</p>
+  <ul>
+    <li><b>PDF</b>: scanned books and documents. Each page is read separately.</li>
+    <li><b>Pictures</b>: JPEG and PNG work everywhere. Some formats (for example HEIC photos from iPhones) may not open; the app then says <i>This image format cannot be opened. Try JPEG or PNG.</i> Save or export the photo as JPEG first.</li>
+  </ul>
+  <p>Choosing a new file clears the text box and any recording. Text you have not added or saved is lost, so keep your page first.</p>
+
+  <h2 id="open-pdf">Moving through a PDF</h2>
+  <p>For a PDF, <i>Page 1 of N</i> appears above the page. Use the arrows, or type a page number and press <kbd>Enter</kbd>. The text box keeps the text of the page you last recognised until you start OCR on the new page.</p>
+
+  <h2 id="open-zoom">Zoom</h2>
+  <p><span class="ui">−</span> and <span class="ui">+</span> change the zoom from 50% to 300%. Above 100% you can scroll around the page.</p>
+  <div class="callout warn"><b>Zoom reloads the page</b>Changing the zoom draws the page again from the file, which undoes Deskew, Perspective, Enhance and B/W. Set the zoom first, then correct the page. For a PDF, the zoom also sets how sharply the page is drawn: a higher zoom gives the engine more detail, which can help with small print.</div>
+
+  <h2 id="open-tips">Getting good scans</h2>
+  <ul>
+    <li><b>Resolution</b>: scan at 300 dpi (400 dpi for small print). Grey or colour is better than black and white; let OCR Studio do the conversion.</li>
+    <li><b>Flat and straight</b>: press the book flat; keep the page square to the scanner or camera.</li>
+    <li><b>Phone photos</b>: use daylight without shadows, hold the phone parallel to the page, and fill the frame with the page. Use <a href="#prepare-perspective">Perspective</a> afterwards.</li>
+    <li><b>One page per image</b>: a photo of two facing pages is read as one wide page; crop it or photograph each page.</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════ 5. PREPARE ═══════════════════════════════ -->
+<section class="chapter" id="prepare" data-title="Preparing the page">
+  <p class="kicker">Working with pages</p>
+  <h1>Preparing the page</h1>
+  <p class="lead">Straight, clear pages read best. The image tools fix crooked scans and angled photos; automatic scan clean-up helps with faded, small or speckled print.</p>
+
+  <h2 id="prepare-deskew">Deskew: straighten a crooked scan</h2>
+  <p><span class="ui">Deskew</span> measures how far the lines of text slope and turns the page to make them level. It corrects up to 10° either way, and says how much it turned the page.</p>
+  <div class="pair">
+    <figure><img src="img/crooked-before.webp" alt="A crooked scan" loading="lazy"><figcaption>Before: the page is tilted.</figcaption></figure>
+    <figure><img src="img/crooked-after.webp" alt="The same page after Deskew" loading="lazy"><figcaption>After Deskew: <i>Deskewed 2.5°</i>.</figcaption></figure>
+  </div>
+  <figure class="small"><img src="img/toast-deskew.webp" alt="Message: Deskewed 2.5°" loading="lazy" style="max-width:300px"><figcaption>The message says how far the page was turned.</figcaption></figure>
+  <div class="callout warn"><b>When Deskew gets it wrong</b>Deskew looks for dark lines of text. On <b>faded</b> print, or pages with <b>dark shadows, edges or black borders</b>, it can lock on to the wrong thing and turn the page the wrong way — often by the full 10°. If that happens, click <span class="ui">Reset</span> and straighten the page with <a href="#prepare-perspective">Perspective</a> instead, by dragging its corners to the corners of the text block. Small tilts of a degree or two need no correction: the engine copes with them.</div>
+
+  <h2 id="prepare-perspective">Perspective: flatten a photo taken at an angle</h2>
+  <div class="side">
+    <div>
+      <ol>
+        <li>Click <span class="ui">Perspective</span>. Four gold handles appear at the corners of the picture.</li>
+        <li>Drag each handle to a corner of the page (or of the printed area).</li>
+        <li>Click <span class="ui">Apply</span>. The page is stretched into a flat rectangle. <span class="ui">Cancel</span> leaves it as it was.</li>
+      </ol>
+      <p>While the handles are showing, Start OCR waits: apply or cancel first.</p>
+    </div>
+    <figure class="wide"><img src="img/perspective-mode.webp" alt="Perspective handles on the corners of a photographed page" loading="lazy"><figcaption>The handles dragged to the corners of the photographed page.</figcaption></figure>
+  </div>
+  <div class="pair">
+    <figure><img src="img/photo-before.webp" alt="A page photographed at an angle" loading="lazy"><figcaption>The phone photo as taken.</figcaption></figure>
+    <figure><img src="img/photo-after.webp" alt="The page after perspective correction" loading="lazy"><figcaption>After Perspective: flat and square, ready to read.</figcaption></figure>
+  </div>
+  <figure><img src="img/photo-result.webp" alt="The corrected photo recognised" loading="lazy"><figcaption>The flattened photo after Start OCR.</figcaption></figure>
+
+  <h2 id="prepare-enhance">Enhance and B/W</h2>
+  <ul>
+    <li><span class="ui">Enhance</span> turns the page grey and stretches the contrast: faint print becomes darker and yellowed paper lighter.</li>
+    <li><span class="ui">B/W</span> turns the page into pure black and white. It can hide stains and show-through from the other side of the paper, but it can also turn shadows into black patches and break thin strokes.</li>
+    <li><span class="ui">Reset</span> undoes every image correction and shows the page as it is in the file.</li>
+  </ul>
+  <div class="pair">
+    <figure><img src="img/p2-enhance.webp" alt="A faded page after Enhance" loading="lazy"><figcaption>Enhance on the faded sample page: the print is darker.</figcaption></figure>
+    <figure><img src="img/p2-bw.webp" alt="The same page after B/W, with a black patch where the shadow was" loading="lazy"><figcaption>B/W on the same page: the shadow becomes a black patch. Here Enhance, or scan clean-up alone, is the better choice.</figcaption></figure>
+  </div>
+  <p>You often don’t need either: <a href="#prepare-cleanup">scan clean-up</a> treats a copy of the page automatically, and tests showed black-and-white conversion usually makes recognition <i>worse</i>. Try Enhance or B/W when a page reads badly with clean-up alone.</p>
+
+  <h2 id="prepare-cleanup">Automatic scan clean-up</h2>
+  <p>Before reading, OCR Studio measures the scan — line spacing, stroke thickness, paper evenness, ink contrast and specks — and cleans <b>a copy</b> of the page to suit it. The page on screen, the searchable PDF and the training lines keep the original picture.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:150px">Setting</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><b>Auto</b> (default)</td><td>Measures the page and applies only what it needs. Use this unless a book keeps reading badly.</td></tr>
+      <tr><td><b>Off</b></td><td>Reads the page exactly as shown.</td></tr>
+      <tr><td><b>Faded</b></td><td>Evens out the background and strengthens faint ink (and enlarges small text): faded print, yellowed or uneven paper, shadows.</td></tr>
+      <tr><td><b>Low-res</b></td><td>Enlarges small or low-resolution text to the size the models were trained on, and strengthens thin strokes.</td></tr>
+      <tr><td><b>Heavy ink</b></td><td>For thick, bold or bleeding print: evens the background without thickening.</td></tr>
+      <tr><td><b>Specks</b></td><td>Smooths away specks on broken, dotty print.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Choose the setting in the menu with the scan icon, next to <span class="ui">Language</span>. OCR Studio remembers it on each device. After recognition, the status line says what was found and done, for example <i>Scan clean-up (faded): background evened, ink strengthened.</i> Click <span class="ui">View cleaned page</span> to see the copy the engine read.</p>
+  <div class="side">
+    <div><p>The sample book’s second page is faded print on yellowed, unevenly lit paper. With clean-up on Auto it was recognised at 92% confidence, and the status line reported:</p>
+    <figure><img src="img/text-status-cleanup.webp" alt="Status line reporting scan clean-up" loading="lazy"></figure></div>
+    <figure class="tiny"><img src="img/p2-before.webp" alt="The faded page as scanned" loading="lazy"><figcaption>The faded page as scanned.</figcaption></figure>
+  </div>
+  <figure><img src="img/cleanup-compare.webp" alt="Faded original next to the cleaned copy" loading="lazy" style="max-width:640px"><figcaption>The faded sample page as scanned (left) and the cleaned copy the engine read (right). The page was read at 92% confidence.</figcaption></figure>
+  <p>On test pages in Bishnupriya Manipuri, clean-up cut the share of wrongly read characters on faded pages from 27% to 7%, on low-resolution pages from 20% to 9%, and on phone photos with shadows from 6% to 4%.</p>
+</section>
+
+<!-- ═══════════════════════════════ 6. RECOGNISE ═══════════════════════════════ -->
+<section class="chapter" id="recognise" data-title="Recognising text">
+  <p class="kicker">Working with pages</p>
+  <h1>Recognising text</h1>
+  <p class="lead">Choose the languages on the page and start OCR. The recognised text appears on the right, with a status line that tells you how it went.</p>
+
+  <h2 id="recognise-language">Choosing languages</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:140px">Setting</th><th>Reads</th></tr></thead>
+    <tbody>
+      <tr><td><b>BN/AS/EN</b> (default)</td><td>Bengali, Assamese and English together. Good for mixed pages and for languages like Bishnupriya Manipuri that use letters from both Bengali and Assamese (such as <span class="bn">ৰ</span> and <span class="bn">ৱ</span>).</td></tr>
+      <tr><td><b>BN/AS</b></td><td>Bengali and Assamese, no English. Fewer stray Latin letters on pages with no English.</td></tr>
+      <tr><td><b>BN</b></td><td>Bengali only.</td></tr>
+      <tr><td><b>AS</b></td><td>Assamese only.</td></tr>
+      <tr><td><b>EN</b></td><td>English only.</td></tr>
+      <tr><td><i>Your models</i></td><td>Models you have added, alone or with English. See <a href="#models">Language models</a>.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The narrowest setting that covers the page usually gives the fewest mistakes. OCR Studio remembers your choice.</p>
+
+  <h2 id="recognise-run">Start OCR</h2>
+  <p>Click <span class="ui">Start OCR</span>. The progress bar shows <i>Loading engine…</i>, <i>Cleaning up the scan…</i>, then a percentage, then <i>Done</i>. A page usually takes a few seconds; the first page after opening the app or changing languages takes a little longer while the engine starts. The text box is replaced with the new text.</p>
+  <p>If a recording belonged to a different page, it is removed when you recognise a new page (the app tells you). Add or save a page before moving on.</p>
+
+  <h2 id="recognise-status">The status line</h2>
+  <figure><img src="img/text-status.webp" alt="The status line after recognition" loading="lazy" style="max-width:660px"></figure>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:220px">It says</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><i>Page 1</i></td><td>Which page of the file the text is from.</td></tr>
+      <tr><td><i>489 characters</i></td><td>Letters and signs in the text (spaces not counted).</td></tr>
+      <tr><td><i>confidence 92%</i></td><td>How sure the engine was, on average. Above 90% usually means few mistakes; below 70% means the page needs careful checking, or better preparation.</td></tr>
+      <tr><td><i>not yet corrected / corrected</i></td><td>Whether you have changed the machine’s text. Every page should be proofread before it goes into a corpus.</td></tr>
+      <tr><td><i>Training lines ready (14)</i></td><td>Your text has exactly one line for each printed line, so the page can be exported as training data. See <a href="#proofread-lines">One line per printed line</a>.</td></tr>
+      <tr><td><i>Scan clean-up…</i></td><td>What automatic clean-up found and did, with a link to view the cleaned copy.</td></tr>
+    </tbody>
+  </table></div>
+  <p>For text you typed without running OCR, the line shows just the number of characters, marked <i>(typed)</i>.</p>
+</section>
+
+<!-- ═══════════════════════════════ 7. PROOFREAD ═══════════════════════════════ -->
+<section class="chapter" id="proofread" data-title="Proofreading &amp; typing">
+  <p class="kicker">Text</p>
+  <h1>Proofreading &amp; typing</h1>
+  <p class="lead">Machine reading is never perfect. Proofreading turns it into text you can trust, and makes every page more valuable for the corpus.</p>
+
+  <h2 id="proofread-how">Correcting the text</h2>
+  <div class="pair">
+    <figure><img src="img/text-raw.webp" alt="Text as recognised" loading="lazy"><figcaption>As recognised: <span class="bn">দুরের</span> should be <span class="bn">দূরের</span>, and a danda was read as <code>|</code>.</figcaption></figure>
+    <figure><img src="img/text-corrected.webp" alt="Text after correction" loading="lazy"><figcaption>After correction: the status line now says <i>corrected</i>.</figcaption></figure>
+  </div>
+  <p>Read the text against the page line by line and type your corrections straight into the box. Common machine mistakes in Eastern Nagari:</p>
+  <ul>
+    <li>Long and short vowel signs swapped: <span class="bn">ু / ূ</span>, <span class="bn">ি / ী</span>.</li>
+    <li>The danda <span class="bn">।</span> read as <code>|</code> or <code>I</code>.</li>
+    <li><span class="bn">র</span> and <span class="bn">ৰ</span>, <span class="bn">ব</span> and <span class="bn">ৱ</span> confused, especially with BN/AS/EN.</li>
+    <li>Conjuncts read as separate letters, or the other way round; missing <span class="bn">ঁ</span> (chandrabindu).</li>
+    <li>Page headers, page numbers and footnotes read into the text. Keep or remove them consistently across a book.</li>
+  </ul>
+  <p>Text is saved as Unicode in the standard composed form (NFC), so letters with the same appearance are stored the same way.</p>
+
+  <h2 id="proofread-lines">One line per printed line</h2>
+  <p>To export a page as <b>training lines</b> (line pictures paired with their correct text), the text must have exactly one line for each printed line on the page. Don’t join lines into paragraphs and don’t split them. Blank lines are ignored.</p>
+  <figure><img src="img/text-status-lines.webp" alt="Status line warning that the line counts differ" loading="lazy" style="max-width:660px"><figcaption>Two lines were joined, so the counts no longer match: <i>Text has 13 lines, page has 14</i>. Split them again and the warning clears.</figcaption></figure>
+  <p>The text itself is still saved and collected when the counts differ; only training lines are left out.</p>
+
+  <h2 id="proofread-typing">Typing Eastern Nagari</h2>
+  <div class="side">
+    <div>
+      <p>The keyboard button above the text turns on Eastern Nagari typing <b>in the text box itself</b>: type Roman letters and the word appears in script at the cursor as you type.</p>
+      <ul>
+        <li><kbd>Space</kbd>, <kbd>Enter</kbd>, a click or an arrow key finishes the word.</li>
+        <li><kbd>Backspace</kbd> while still in the word corrects its Roman spelling; the bar under the text shows the Roman letters of the word in progress.</li>
+        <li>Press the button again, or <kbd>Esc</kbd>, to go back to normal typing.</li>
+      </ul>
+      <p>It follows the LexiPic Bishnupriya Manipuri typing rules (for example, <code>r</code> gives <span class="bn">ৰ</span> and <code>w</code> gives <span class="bn">ৱ</span>). Check the <a href="#proofread-keys">key table</a> below for every key.</p>
+    </div>
+    <figure class="wide"><img src="img/keyboard-on.webp" alt="Eastern Nagari typing in the text box" loading="lazy"><figcaption>Typing <code>ami bishnupriya manipuri lekh…</code>; the word in progress is shown in the bar below.</figcaption></figure>
+  </div>
+  <h3 id="proofread-try">Try it here</h3>
+  <p>This box uses the same typing engine and rules as OCR Studio.</p>
+  <div class="playground">
+    <textarea id="pg-input" spellcheck="false" aria-label="Type Roman letters">ami bishnupriya manipuri lekha.</textarea>
+    <div class="out" id="pg-output" lang="bn" aria-live="polite"></div>
+    <div class="status" id="pg-status">Loading the typing engine…</div>
+  </div>
+  <h3 id="proofread-keys">Key table</h3>
+  <p>Drawn from OCR Studio’s typing rules, so it always matches the app. Longer keys win: <code>kh</code> gives <span class="bn">খ</span>, not <span class="bn">ক</span> + <span class="bn">হ</span>.</p>
+  <div id="key-table"><p class="status">Loading…</p></div>
+
+  <h2 id="proofread-handwriting">Handwritten pages</h2>
+  <p>No available model reads handwritten Eastern Nagari reliably. Instead, open the photo or scan, zoom in on the left, and type the text on the right with <a href="#proofread-typing">Eastern Nagari typing</a>. Typed pages can be saved, added to the collection and saved as searchable PDFs like any other; they are marked <i>manual transcription</i>.</p>
+
+  <h2 id="proofread-copy">Copy and paste</h2>
+  <div class="side">
+    <div>
+      <p>The copy button copies all the text. Right-clicking in a text field (the text box, source details, model fields) opens a small menu with <span class="ui">Copy</span> and <span class="ui">Paste</span>. Right-click is switched off elsewhere in the app. On phones and tablets, press and hold for the system’s own menu.</p>
+    </div>
+    <figure class="tiny"><img src="img/context-menu.webp" alt="Copy and Paste menu" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ 8. SOURCE ═══════════════════════════════ -->
+<section class="chapter" id="source" data-title="Source details">
+  <p class="kicker">Corpus</p>
+  <h1>Source details</h1>
+  <p class="lead">Text without a source can’t be cited, credited or shared with confidence. Source details are written into every export of the page.</p>
+
+  <h2 id="source-fill">Filling them in</h2>
+  <div class="side">
+    <div>
+      <p>Click the line above the text (or the ⓘ button). Fill in what you know and click <span class="ui">Save details</span>.</p>
+      <ul>
+        <li><b>Title</b>, <b>Author / creator</b>, <b>Year</b>.</li>
+        <li><b>Publisher / source</b>: publisher, library, or family collection.</li>
+        <li><b>Edition / volume</b>.</li>
+        <li><b>Language</b>: Bishnupriya Manipuri, Assamese, Bengali, Sylheti, English or Other (say which in Notes).</li>
+        <li><b>Script</b>: Eastern Nagari, Latin, Meetei Mayek or Other.</li>
+        <li><b>Permission</b>: see below.</li>
+        <li><b>Digitised by</b>: your name or group.</li>
+        <li><b>Place</b>: where the original is kept.</li>
+        <li><b>Notes</b>: anything else.</li>
+      </ul>
+    </div>
+    <figure><img src="img/dlg-source.webp" alt="The Source details form" loading="lazy"><figcaption>Source details for the sample book.</figcaption></figure>
+  </div>
+  <figure><img src="img/source-summary.webp" alt="The source line above the text" loading="lazy" style="max-width:660px"><figcaption>Once saved, the source shows above the text with its permission.</figcaption></figure>
+
+  <h2 id="source-permission">Permission</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:270px">Choice</th><th>Use it when</th></tr></thead>
+    <tbody>
+      <tr><td><b>Not yet known</b> (default)</td><td>You haven’t checked. Find out before sharing the text.</td></tr>
+      <tr><td><b>Public domain / copyright expired</b></td><td>The work is out of copyright.</td></tr>
+      <tr><td><b>Permission given by the rights holder</b></td><td>The author, family or publisher agreed.</td></tr>
+      <tr><td><b>Published under an open licence</b></td><td>For example Creative Commons; name the licence in Notes.</td></tr>
+      <tr><td><b>Community use only: do not publish</b></td><td>The text may be used within the community but not published. Exports and PDFs carry a warning.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="source-remembered">What OCR Studio remembers</h2>
+  <ul>
+    <li>Details are kept <b>per file</b> (by its name and size): open the same book again and its details come back. Every page of a PDF shares them.</li>
+    <li>For a new file, <b>Digitised by</b>, <b>Language</b> and <b>Script</b> are filled in from the last file, since they rarely change.</li>
+    <li>The <b>page number</b> is added automatically. A single picture always counts as page 1, so for photos of individual pages write the real page number in Notes (for example <i>Page 37</i>).</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════ 9. SAVE ═══════════════════════════════ -->
+<section class="chapter" id="save" data-title="Saving a page">
+  <p class="kicker">Exports</p>
+  <h1>Saving a page</h1>
+  <p class="lead">The save button (download arrow) offers four ways to save the current page. Files are named after the title and page, for example <code>গ্রামবাংলার-কথা_p001.txt</code>.</p>
+  <div class="side">
+    <div>
+      <h2 id="save-text">Text file (.txt)</h2>
+      <p>Your corrected text, UTF-8 Unicode (NFC).</p>
+      <h2 id="save-pdf">Searchable PDF</h2>
+      <p>The page picture with your <b>corrected</b> text laid invisibly over it, word by word. Searching, copying and screen readers give the proofread words, not the machine’s first reading. The PDF’s properties hold the title, page, author, language, year, publisher, permission and who digitised it; pages marked <i>Community use only</i> say so.</p>
+      <p>Pages typed by hand can be saved as searchable PDFs too; the text is laid down the page in reading order.</p>
+    </div>
+    <figure class="wide"><img src="img/dlg-save.webp" alt="The Save this page dialog" loading="lazy"><figcaption>Save this page.</figcaption></figure>
+  </div>
+  <h2 id="save-bundle">Page bundle (.zip)</h2>
+  <p>Everything about the page in one folder:</p>
+<pre class="tree"><b>গ্রামবাংলার-কথা_p001/</b>
+  page.jpg           <i>the page picture</i>
+  text.txt           <i>your corrected text</i>
+  recognised.txt     <i>the machine’s text, before correction</i>
+  reading.wav        <i>the recorded reading, if any</i>
+  searchable.pdf
+  metadata.json      <i>source details and how the page was made</i>
+  <b>training/</b>          <i>line pictures and their text, if the lines match</i></pre>
+
+  <h2 id="save-training">Training lines (.zip)</h2>
+  <p>One picture of each printed line (<code>…_001.png</code>) with its corrected text (<code>…_001.gt.txt</code>), the format used by <i>tesstrain</i> to train Tesseract models. Available when the text has <a href="#proofread-lines">one line per printed line</a>; otherwise the dialog explains why not.</p>
+
+  <h2 id="save-metadata">What metadata.json holds</h2>
+  <p>From the sample book:</p>
+<pre class="code">{
+  "title": "গ্রামবাংলার কথা",
+  "author": "সুধীর দাস",
+  "year": "1962",
+  "publisher": "Village library collection",
+  "language": "ben",
+  "script": "Beng",
+  "rights": "permission",
+  "rights_label": "Used with permission",
+  "digitised_by": "Heritage volunteers",
+  "file_name": "gramer-katha.pdf",
+  "file_page": 1,
+  "method": "ocr",
+  "ocr": { "engine": "Tesseract 5 LSTM …", "languages": "ben+asm+eng", "mean_confidence": 92 },
+  "proofread": true,
+  "characters": 489,
+  "unicode": "UTF-8, NFC",
+  "training_lines": 14,
+  "has_recording": false,
+  "app": "OCR Studio 3.2.0"
+}</pre>
+</section>
+
+<!-- ═══════════════════════════════ 10. COLLECTION ═══════════════════════════════ -->
+<section class="chapter" id="collection" data-title="Building a corpus">
+  <p class="kicker">Corpus</p>
+  <h1>Building a corpus</h1>
+  <p class="lead">The collection gathers pages from as many books as you like, on your device, and exports them as one corpus: text, pictures, recordings, source details, training data and a searchable PDF for every book.</p>
+
+  <h2 id="collection-add">Adding pages</h2>
+  <p>When a page is proofread, click <span class="ui">Add</span>. The page — picture, corrected and machine text, recording, source details and training lines — is stored on this device, and the count beside <span class="ui">Collection</span> goes up.</p>
+  <figure class="small"><img src="img/toast-added.webp" alt="Message: Added page 1 to the collection" loading="lazy" style="max-width:420px"></figure>
+  <p>Adding the same page twice keeps two copies; remove the extra one in the collection.</p>
+
+  <h2 id="collection-view">The collection</h2>
+  <div class="side">
+    <div>
+      <p>Click <span class="ui">Collection</span> to see every page with its title, page number, characters, whether it was corrected, its training lines, recording and permission.</p>
+      <ul>
+        <li>The bin button removes one page.</li>
+        <li><span class="ui">Clear</span> removes every page from this device, after asking. Export first.</li>
+        <li><span class="ui">Export collection (.zip)</span> downloads the corpus.</li>
+      </ul>
+    </div>
+    <figure class="wide"><img src="img/dlg-collection.webp" alt="The Collection with three pages" loading="lazy"><figcaption>Three pages: two from the scanned book, one from a phone photo.</figcaption></figure>
+  </div>
+
+  <h2 id="collection-export">What the export contains</h2>
+<pre class="tree"><b>ocr-collection_2026-11-14.zip</b>
+  README.txt         <i>what is in the export, and any pages marked community use only</i>
+  corpus.txt         <i>every page’s text, one after another</i>
+  corpus.jsonl       <i>one line per page: text plus source details and permission</i>
+  <b>pdf/</b>
+    গ্রামবাংলার-কথা.pdf   <i>one searchable PDF per book, its pages in order</i>
+  <b>pages/</b>
+    <b>0001_গ্রামবাংলার-কথা_p001/</b>   <i>a page bundle for each page</i>
+    <b>0002_গ্রামবাংলার-কথা_p002/</b>
+    <b>0003_গ্রামবাংলার-কথা_p001/</b>
+  <b>training/</b>          <i>all training lines from every page, in one folder</i></pre>
+  <ul>
+    <li><b>corpus.txt</b> is plain text for reading, searching or word counts.</li>
+    <li><b>corpus.jsonl</b> is for language tools: each line is one page as JSON — <code>{"id": 1, "folder": "pages/0001_…", "text": "…", "title": …, "rights": …}</code> — with every field of <a href="#save-metadata">metadata.json</a>.</li>
+    <li><b>pdf/</b> groups pages by title (or by file when there is no title) and puts them in page order, so a book digitised page by page comes out as one searchable PDF.</li>
+    <li><b>training/</b> is ready for <a href="#models-train">training a model</a>.</li>
+  </ul>
+  <div class="callout warn"><b>Respect permissions</b>Check the <code>rights</code> of every page before publishing. If any page is marked <i>Community use only</i>, the README says how many, and those PDFs carry the warning.</div>
+
+  <h2 id="collection-storage">Where the collection is kept</h2>
+  <p>The collection lives in the browser’s storage on this device, and OCR Studio asks the browser to keep it permanently. It is still <b>not a backup</b>: clearing browsing data, uninstalling the browser, or a full device can lose it. Export regularly — for example after every book or every working day — and keep the zip files safe. If the device runs out of space, the app says <i>This device is out of storage space. Export and clear the collection.</i></p>
+
+  <h2 id="workflow">A digitisation workflow</h2>
+  <p>A routine that works well for a community digitisation project:</p>
+  <ol class="steps">
+    <li><b>Plan</b>: list the books, check permissions, and agree who digitises what and what to do with headers and page numbers.</li>
+    <li><b>Scan</b> each book to one PDF at 300 dpi (see <a href="#open-tips">Getting good scans</a>).</li>
+    <li><b>Open the PDF</b> and fill in the source details once.</li>
+    <li>For each page: <b>prepare</b>, <b>Start OCR</b>, <b>proofread</b> (one line per printed line), optionally <b>record</b> a reading, and <b>Add</b>.</li>
+    <li><b>Export</b> the collection at the end of each session and store the zip safely.</li>
+    <li>After a few books, <b>train a model</b> from the training lines, and use it for the next books.</li>
+  </ol>
+</section>
+
+<!-- ═══════════════════════════════ 11. AUDIO ═══════════════════════════════ -->
+<section class="chapter" id="audio" data-title="Recording &amp; listening">
+  <p class="kicker">Corpus</p>
+  <h1>Recording &amp; listening</h1>
+  <p class="lead">A recorded reading turns a page into spoken-language data: text and speech that match, the material needed for speech technology in your language.</p>
+
+  <h2 id="audio-record">Recording a reading</h2>
+  <ol>
+    <li>Click <span class="ui">Record</span>. The first time, allow the browser to use the microphone.</li>
+    <li>Read the page aloud. The button shows <span class="ui">Stop</span> and a timer.</li>
+    <li>Click <span class="ui">Stop</span>. A player appears above the text.</li>
+  </ol>
+  <div class="gallery">
+    <figure><img src="img/recording.webp" alt="Recording in progress" loading="lazy"><figcaption>Recording: Stop and the timer.</figcaption></figure>
+    <figure><img src="img/recorded.webp" alt="The recording player above the text" loading="lazy"><figcaption>The recording, with save and discard buttons.</figcaption></figure>
+  </div>
+  <p>The recording is kept <b>with this page</b>: it goes into the page bundle and the collection as <code>reading.wav</code> (uncompressed WAV, mono). Use the save button to download it on its own, or the bin to discard it. Recognising a different page removes it.</p>
+  <p>Tips: record in a quiet room, one steady reader, at a natural pace, reading exactly what is printed. A few hours from one reader is a good start for a voice of your own.</p>
+
+  <h2 id="audio-listen">Listening with a machine voice</h2>
+  <p><span class="ui">Listen</span> reads the text aloud with a machine voice that runs on the device. Select part of the text to hear only that part; press again to stop.</p>
+  <ul>
+    <li>Voices are large and are installed by whoever hosts OCR Studio. If none is installed, the app says <i>No machine voice is installed.</i></li>
+    <li>The first time, the app asks before downloading the voice and speech engine (about 70 MB). After that, Listen works offline on that device.</li>
+    <li>When several voices are installed, a menu beside Listen lets you choose; the choice is remembered.</li>
+    <li>When a reading finishes, a <b>Machine voice</b> bar lets you play it again or save it as <code>…_machine-voice.wav</code>.</li>
+  </ul>
+  <div class="callout note"><b>Machine readings are kept apart</b>Machine readings are never added to bundles or the collection, so they can’t be mistaken for human recordings in the corpus. The available voices are Bengali voices: they read Eastern Nagari text with Bengali pronunciation, so Bishnupriya Manipuri words will not always sound right.</div>
+</section>
+
+<!-- ═══════════════════════════════ 12. MODELS ═══════════════════════════════ -->
+<section class="chapter" id="models" data-title="Language models">
+  <p class="kicker">Recognition</p>
+  <h1>Language models</h1>
+  <p class="lead">Bengali, Assamese and English models are built in. You can add a model trained for your own language — for example one trained from the pages you have proofread.</p>
+
+  <h2 id="models-add">Adding a model</h2>
+  <div class="side">
+    <div>
+      <ol>
+        <li>Click the model button next to <span class="ui">Language</span>.</li>
+        <li>Enter a <b>Code</b> (2–20 lowercase letters, digits or _, for example <code>bpy</code>) and a <b>Name</b> (for example <i>Bishnupriya Manipuri</i>).</li>
+        <li>Choose the <b>Model file</b>: a Tesseract 4/5 <code>.traineddata</code> file, or the same compressed as <code>.gz</code>.</li>
+        <li>Click <span class="ui">Add model</span>. It is selected straight away; run OCR to test it.</li>
+      </ol>
+      <p>Your models appear under <i>Your models</i> in the Language menu, alone and with English. They are stored on this device and work offline. The bin button beside a model removes it.</p>
+      <p>A damaged or unsuitable file is reported (<i>The language model could not be loaded…</i>) instead of hanging.</p>
+    </div>
+    <figure><img src="img/dlg-models.webp" alt="The Language models dialog" loading="lazy"><figcaption>Language models.</figcaption></figure>
+  </div>
+
+  <h2 id="models-train">Training a model for your language</h2>
+  <ol class="steps">
+    <li>Recognise pages with <b>BN</b> or <b>BN/AS</b> and proofread them, keeping one line of text per printed line, until the status line shows <i>Training lines ready</i>.</li>
+    <li>Add the pages to the collection and export it. The <code>training/</code> folder holds the line pairs.</li>
+    <li>Train with <a href="https://github.com/tesseract-ocr/tesstrain" target="_blank" rel="noopener">tesstrain</a>, fine-tuning from the <code>ben</code> or <code>asm</code> model.</li>
+    <li>Load the new <code>.traineddata</code> under Language models and select it.</li>
+  </ol>
+  <p>More, and more varied, pages give a better model: different books, fonts and print qualities.</p>
+</section>
+
+<!-- ═══════════════════════════════ 13. SETTINGS ═══════════════════════════════ -->
+<section class="chapter" id="settings" data-title="Look, offline &amp; privacy">
+  <p class="kicker">Reference</p>
+  <h1>Look, offline &amp; privacy</h1>
+
+  <h2 id="settings-theme">Light and dark</h2>
+  <div class="side">
+    <div>
+      <p>The <span class="ui">Light</span> / <span class="ui">Dark</span> switch at the right of the controls changes the look: Light “Stone” (the default) or Dark “Graphite”. Your choice is remembered on each device. A link can also open the app in one look by adding <code>?theme=light</code> or <code>?theme=dark</code> to its address.</p>
+      <p>The page picture is never recoloured.</p>
+    </div>
+    <figure class="wide"><img src="img/dark.webp" alt="OCR Studio in the dark look" loading="lazy"><figcaption>The Dark look.</figcaption></figure>
+  </div>
+
+  <h2 id="settings-phone">On phones and tablets</h2>
+  <div class="side">
+    <div>
+      <p>On a narrow screen the panels stack: controls at the top, the page, then the text. Everything works the same; proofreading long pages is easier on a larger screen or with a keyboard attached.</p>
+    </div>
+    <figure class="tiny"><img src="img/phone.webp" alt="OCR Studio on a phone" loading="lazy"></figure>
+  </div>
+
+  <h2 id="settings-offline">Offline use</h2>
+  <p>The recognition engine and the Bengali, Assamese and English models come with the app. After the first visit, the browser keeps them: the header shows <span class="ui">Preparing offline use…</span> and then <span class="ui">Works offline</span>. From then on everything works without the internet, except downloading a machine voice the first time.</p>
+
+  <h2 id="settings-install">Installing</h2>
+  <p>To use OCR Studio like an app: in Chrome or Edge, click the install icon in the address bar or the install option in the browser’s menu; on a phone or tablet, use <i>Add to Home Screen</i>.</p>
+
+  <h2 id="settings-update">Updates</h2>
+  <p>When a new version is published, a message says <i>A new version is ready. Tap here to update.</i> Add or save your page, then tap it; the app reloads with the new version. Your collection, models and source details are kept.</p>
+
+  <h2 id="settings-privacy">Privacy and your data</h2>
+  <ul>
+    <li>Pages, text, recordings, the collection, your models and source details are stored <b>only in this browser on this device</b>. Nothing is sent anywhere.</li>
+    <li>Another browser or device has its own, separate collection.</li>
+    <li>Clearing the browser’s site data for OCR Studio deletes them. Export first.</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════ 14. TROUBLESHOOTING ═══════════════════════════════ -->
+<section class="chapter" id="troubleshooting" data-title="Troubleshooting &amp; FAQ">
+  <p class="kicker">Help</p>
+  <h1>Troubleshooting &amp; FAQ</h1>
+
+  <h3 id="faq-garbage">The text is full of mistakes.</h3>
+  <ul>
+    <li>Check the <b>language</b> setting matches the page.</li>
+    <li>Straighten the page (<a href="#prepare-deskew">Deskew</a> or <a href="#prepare-perspective">Perspective</a>).</li>
+    <li>For a PDF with small print, <b>zoom in</b> before Start OCR so the page is drawn in more detail.</li>
+    <li>Try a <a href="#prepare-cleanup">clean-up</a> setting (Faded, Low-res, Specks) instead of Auto, or Enhance.</li>
+    <li>Rescan at a higher resolution if you can.</li>
+  </ul>
+
+  <h3 id="faq-deskew">Deskew turned the page the wrong way.</h3>
+  <p>This happens on faded pages and pages with dark edges or shadows. Click <span class="ui">Reset</span> and use <a href="#prepare-perspective">Perspective</a> instead.</p>
+
+  <h3 id="faq-lost-corrections">My Deskew / Enhance disappeared.</h3>
+  <p>Changing the zoom or the page draws the page again from the file. Set the zoom first, then correct.</p>
+
+  <h3 id="faq-start">Start OCR does nothing, or says “Choose a file first”.</h3>
+  <p>Choose a file first. If Perspective handles are showing, click Apply or Cancel. If the button is greyed, recognition is still running.</p>
+
+  <h3 id="faq-failed">“Recognition failed” or “The language model could not be loaded”.</h3>
+  <p>For a built-in language, reload the page once while online. For a custom model, the file may be damaged or not a Tesseract 4/5 LSTM model; remove it and add a good copy.</p>
+
+  <h3 id="faq-image">“This image format cannot be opened.”</h3>
+  <p>Convert the picture to JPEG or PNG (many phones save HEIC by default).</p>
+
+  <h3 id="faq-training">The save dialog says training lines aren’t available.</h3>
+  <p>The text must have one line for each printed line. The status line shows the two counts; join or split lines until they match. Training lines also need OCR to have been run on the page.</p>
+
+  <h3 id="faq-mic">Recording doesn’t start.</h3>
+  <p>The browser was not allowed to use the microphone. Allow it in the site settings (the icon at the left of the address bar) and try again.</p>
+
+  <h3 id="faq-listen">Listen says no voice is installed.</h3>
+  <p>Machine voices are optional and have to be installed on the website by whoever hosts OCR Studio. Ask them, or record readings instead.</p>
+
+  <h3 id="faq-storage">“This device is out of storage space.”</h3>
+  <p>Export the collection, keep the zip safe, then clear the collection to free space.</p>
+
+  <h3 id="faq-collection-missing">My collection is empty.</h3>
+  <p>The collection belongs to one browser on one device. Check you are using the same browser, not a private window. If browsing data was cleared, the collection is gone; use your last export.</p>
+
+  <h3 id="faq-rightclick">Right-click doesn’t work.</h3>
+  <p>By design, right-click works only in text fields (Copy and Paste). Use the copy button or the keyboard shortcuts of your system elsewhere.</p>
+</section>
+
+<!-- ═══════════════════════════════ 15. GLOSSARY ═══════════════════════════════ -->
+<section class="chapter" id="glossary" data-title="Glossary">
+  <p class="kicker">Reference</p>
+  <h1>Glossary</h1>
+  <div class="tbl-wrap"><table><tbody>
+    <tr><td style="width:190px"><b>OCR</b></td><td>Optical character recognition: a program reading the letters in a picture of text.</td></tr>
+    <tr><td><b>Corpus</b></td><td>A large, organised collection of texts (and sometimes recordings) in a language, used for research, dictionaries and language technology.</td></tr>
+    <tr><td><b>Eastern Nagari</b></td><td>The Bengali–Assamese script, used for Bengali, Assamese, Bishnupriya Manipuri, Sylheti and other languages.</td></tr>
+    <tr><td><b>Unicode, NFC</b></td><td>The international standard for storing text. NFC is its composed form, in which letters that look the same are stored the same way.</td></tr>
+    <tr><td><b>Confidence</b></td><td>How sure the engine was of its reading, as a percentage averaged over the page.</td></tr>
+    <tr><td><b>Searchable PDF</b></td><td>A PDF that shows the page picture, with the text hidden underneath so it can be searched and copied.</td></tr>
+    <tr><td><b>Training lines</b></td><td>Pictures of single printed lines paired with their correct text, used to teach a recognition model.</td></tr>
+    <tr><td><b>Model / traineddata</b></td><td>The file that teaches Tesseract one language or script.</td></tr>
+    <tr><td><b>Tesseract</b></td><td>The open-source recognition engine inside OCR Studio (version 5, LSTM).</td></tr>
+    <tr><td><b>tesstrain</b></td><td>The official tools for training Tesseract models.</td></tr>
+    <tr><td><b>Deskew</b></td><td>Turning a crooked page so its lines are level.</td></tr>
+    <tr><td><b>Perspective correction</b></td><td>Flattening a page photographed at an angle into a rectangle.</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ═══════════════════════════════ 16. CHANGES ═══════════════════════════════ -->
+<section class="chapter" id="changes" data-title="What’s new">
+  <p class="kicker">Reference</p>
+  <h1>What’s new</h1>
+  <h2 id="v320">3.2.0 — Scan clean-up</h2>
+  <p>Automatic <a href="#prepare-cleanup">scan clean-up</a> for faded, uneven, small, low-resolution and speckled print, with Auto, Off and forced settings, a note of what was done and <i>View cleaned page</i>. The auto-correct of 3.1 was removed.</p>
+  <h2 id="v301">3.0.1 — Typing in the text box</h2>
+  <p>Eastern Nagari typing now works directly in the text box, word by word, with Backspace corrections.</p>
+  <h2 id="v300">3.0.0 — Corrected searchable PDFs</h2>
+  <p>Searchable PDFs carry your proofread text, placed word by word, with source details in the PDF properties. Collection exports add one searchable PDF per book. Hand-typed pages can be saved as searchable PDFs.</p>
+  <h2 id="v230">2.3.0 and 2.2 — Listen</h2>
+  <p>Machine voices that run on the device, including a Bengali female voice (SYSPIN, IISc Bengaluru); voice menu; machine readings kept apart from human recordings.</p>
+  <h2 id="v21">2.1 — New look</h2>
+  <p>Light and Dark looks, the copy-and-paste menu, and messages shown above dialogs.</p>
+  <h2 id="v20">2.0 — Offline and corpus</h2>
+  <p>Fully offline recognition, a reusable faster engine, saving as text, searchable PDF, page bundle and training lines, the collection, source details, custom language models, Eastern Nagari typing, Enhance and B/W, and recordings kept with the page.</p>
+</section>
+
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Picture"><div><img alt=""><p></p></div></div>
+<button class="icon-btn to-top" id="to-top" type="button" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<script src="assets/vendor/ime/engine.js"></script>
+<script src="assets/js/ime-demo.js"></script>
+<script src="assets/js/manual.js"></script>
+</body>
+</html>

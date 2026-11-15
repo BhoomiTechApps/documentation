@@ -1,0 +1,14 @@
+{
+  "name": "translitlab-manual-screenshots",
+  "private": true,
+  "description": "Takes the screenshots for the TransLit-Lab user manual from a running WordPress site.",
+  "scripts": {
+    "front": "node shots-front.js",
+    "admin": "node shots-admin.js",
+    "measure": "node measure.js"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0",
+    "sharp": "^0.33.0"
+  }
+}

@@ -1,7 +1,7 @@
 # Artisan Outlet user manual
 
-The user manual for **Artisan Outlet 2.7.0** (WordPress shop for rural artisans) and its add-on
-**Artisan Outlet Mobile 2.5.0** (the phone app and the artisan section), as one static website.
+The user manual for **Artisan Outlet 2.8.0** (WordPress shop for rural artisans) and its add-on
+**Artisan Outlet Mobile 2.6.0** (the phone app and the artisan section), as one static website.
 
 Published at: `https://bhoomitechapps.github.io/documentation/artisan-outlet/`
 
@@ -66,7 +66,7 @@ settled and confirmed by each side.
    WP_URL=http://localhost:8781 npm run all
    ```
 
-   The phases run in order and each depends on the one before (`p1-admin` … `p9-contacts`; phase 8 sets the Help link and retakes the Store settings, phase 9 adds artisan contact links and retakes the artisan screens). Phase 1
+   The phases run in order and each depends on the one before (`p1-admin` … `p10-search`; phase 8 sets the Help link and retakes the Store settings, phase 9 adds artisan contact links and retakes the artisan screens, phase 10 shows search as you type). Phase 1
    writes the artisans' PINs to `pins.json`, phase 2 the order links to `orders.json`, phase 3 the
    key of order HK-4 to `hk4.key`. Pictures go to `../../img`; a few extra pictures are taken that the
    manual doesn't use.

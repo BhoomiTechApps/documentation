@@ -21,7 +21,7 @@
   </button>
   <a class="brand" href="#welcome">
     <img src="img/artisan-outlet-icon.svg" alt="">
-    <b>Artisan Outlet</b><span>User manual · core 2.7.0 + Mobile 2.5.0</span>
+    <b>Artisan Outlet</b><span>User manual · core 2.8.0 + Mobile 2.6.0</span>
   </a>
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -43,7 +43,7 @@
 <div class="layout">
   <aside class="sidebar" aria-label="Chapters">
     <nav><ol id="toc"></ol></nav>
-    <p class="side-foot">Written for Artisan Outlet 2.7.0 and Artisan Outlet Mobile 2.5.0 · <a href="#changes">What’s new</a></p>
+    <p class="side-foot">Written for Artisan Outlet 2.8.0 and Artisan Outlet Mobile 2.6.0 · <a href="#changes">What’s new</a></p>
   </aside>
 
   <main id="content">
@@ -73,8 +73,8 @@
   <div class="tbl-wrap"><table>
     <thead><tr><th style="width:220px">Plugin</th><th>What it adds</th></tr></thead>
     <tbody>
-      <tr><td><b>Artisan Outlet</b> 2.7.0<br><span class="muted">the core plugin</span></td><td>The catalogue (crafts, artisans, craft types), cart and checkout, UPI and cash on delivery, its own order database, shipping and tracking, emails, settlements with artisans, the sales report, website shortcodes and a REST API. Everything is under the <span class="ui">Artisan Outlet</span> menu in the dashboard.</td></tr>
-      <tr><td><b>Artisan Outlet Mobile</b> 2.5.0<br><span class="muted">the add-on</span></td><td>A phone app (a web app that can be added to the home screen) at <code>yoursite.com/craft-app/</code>, with an <b>artisan section</b> where artisans confirm payments, ship orders and settle up. Needs Artisan Outlet 2.6.0 or later.</td></tr>
+      <tr><td><b>Artisan Outlet</b> 2.8.0<br><span class="muted">the core plugin</span></td><td>The catalogue (crafts, artisans, craft types), cart and checkout, UPI and cash on delivery, its own order database, shipping and tracking, emails, settlements with artisans, the sales report, website shortcodes and a REST API. Everything is under the <span class="ui">Artisan Outlet</span> menu in the dashboard.</td></tr>
+      <tr><td><b>Artisan Outlet Mobile</b> 2.6.0<br><span class="muted">the add-on</span></td><td>A phone app (a web app that can be added to the home screen) at <code>yoursite.com/craft-app/</code>, with an <b>artisan section</b> where artisans confirm payments, ship orders and settle up. Needs Artisan Outlet 2.6.0 or later.</td></tr>
     </tbody>
   </table></div>
 
@@ -112,8 +112,8 @@
 
   <h2 id="install-steps">Installing the plugins</h2>
   <ol class="steps">
-    <li><b>Upload Artisan Outlet.</b> <span class="ui">Plugins → Add New Plugin → Upload Plugin</span>, choose <code>artisan-outlet-2.7.0.zip</code>, <span class="ui">Install Now</span>, <span class="ui">Activate</span>.</li>
-    <li><b>Upload Artisan Outlet Mobile</b> (<code>artisan-outlet-mobile-2.5.0.zip</code>) the same way and activate it. If the core plugin is missing or older than 2.6, the add-on shows a notice and stays switched off.</li>
+    <li><b>Upload Artisan Outlet.</b> <span class="ui">Plugins → Add New Plugin → Upload Plugin</span>, choose <code>artisan-outlet-2.8.0.zip</code>, <span class="ui">Install Now</span>, <span class="ui">Activate</span>.</li>
+    <li><b>Upload Artisan Outlet Mobile</b> (<code>artisan-outlet-mobile-2.6.0.zip</code>) the same way and activate it. If the core plugin is missing or older than 2.6, the add-on shows a notice and stays switched off.</li>
     <li><b>Check what was created.</b> Activation creates the order tables and two pages: <b>Cart &amp; Checkout</b> (<code>/checkout/</code>) and <b>Track your order</b> (<code>/track-order/</code>). It also adds two roles, <i>Store staff</i> and <i>Artisan</i>, and the <span class="ui">Artisan Outlet</span> menu.</li>
     <li><b>Put the shop on a page.</b> Create a page called “Shop” containing the shortcode <code>[ao_outlet]</code>. Add it, the checkout page and the tracking page to your site’s menu.</li>
     <li><b>Set a Site Icon</b> in <span class="ui">Appearance → Customize → Site Identity</span> (block themes: <span class="ui">Settings → General</span>). The phone app uses it as its home-screen icon.</li>
@@ -345,6 +345,17 @@
     <figure><img src="img/shop-artisans.webp" alt="Artisans tab: four artisan cards" loading="lazy"><figcaption><b>Artisans</b>: each with place, tradition and generations.</figcaption></figure>
   </div>
   <p>The <b>Cart</b> tab shows a count when the cart has something in it; <b>Track order</b> finds an order by its number. On other pages, a floating cart button appears at the bottom corner once the cart has something in it.</p>
+  <h3 id="website-search">Searching</h3>
+  <figure class="mid"><img src="img/shop-search.webp" alt="Crafts tab with “sualkuchi silk” typed in the search box and the line “4 crafts found for sualkuchi silk” above the results" loading="lazy"><figcaption>Results change as you type. Here “sualkuchi silk” finds Rupa Kalita’s silk pieces: <i>Sualkuchi</i> is her village, not part of any craft’s name.</figcaption></figure>
+  <ul>
+    <li><b>Search as you type.</b> The results update about a third of a second after the visitor stops typing, without reloading the page; the search box keeps its place. One letter on its own is ignored; clearing the box shows everything again. <span class="ui">Search</span> or Enter also works.</li>
+    <li><b>Every public field is searched.</b> On the Crafts tab: name, description and introduction, materials, technique, time to make, origin, care, item code, the steps of <i>How it is made</i>, craft types, and the artisan’s name, place and tradition. On the Artisans tab: name, story and introduction, village, district, state, craft tradition, languages, awards, generations, the family timeline and craft types.</li>
+    <li><b>Every word must match</b>, in any field and in any order. Capitals and accents don’t matter, and the start of a word is enough (<i>jacq</i> finds <i>jacquard</i>).</li>
+    <li>A line above the results says how many were found. The search works together with the craft-type chips and <span class="ui">Load more</span>, and the page address changes with it, so a search can be bookmarked or shared.</li>
+    <li>Private fields (private notes, contact person, phone, email, address, UPI ID) are never searched.</li>
+  </ul>
+  <p class="note">The search keeps a small index of each craft and artisan, updated whenever one is saved. It is built automatically the first time 2.8.0 runs; on a large catalogue the first page load after updating can take a moment longer.</p>
+
   <h3 id="website-help">The Help button</h3>
   <figure class="mid"><img src="img/shop-help.webp" alt="The shop tabs with a Help button at the right" loading="lazy"><figcaption>With a <a href="#settings-store">Help link</a> set, <span class="ui">Help</span> sits at the right of the tabs and opens your help page in a new browser tab, leaving the shop open.</figcaption></figure>
   <div class="side">
@@ -538,8 +549,10 @@
   <figure class="phone"><img src="img/phone-banner.webp" alt="Website on a phone with a banner: Browse crafts, meet the artisans and track orders in our app. Open" loading="lazy"><figcaption>The banner on the website, on a phone. Closing it hides it on that phone.</figcaption></figure>
 
   <h2 id="app-browse">Browsing</h2>
+  <p>The search boxes on <b>Home</b>, <b>Crafts</b> and <b>Artisans</b> search as you type, in the same fields as the <a href="#website-search">website search</a>. The list below the box updates while the keyboard stays open; tapping Search on the keyboard closes it to show the results. <span class="ui">Back</span> leaves the screen rather than stepping back through each search.</p>
   <div class="phones">
     <figure><img src="img/app-crafts.webp" alt="Crafts screen" loading="lazy"><figcaption>Crafts, with search and craft types.</figcaption></figure>
+    <figure><img src="img/app-search.webp" alt="App home screen with “bell metal” typed in the search box, showing the two bell metal crafts" loading="lazy"><figcaption>Search as you type, on the home screen.</figcaption></figure>
     <figure><img src="img/app-craft.webp" alt="A craft: photo, name, artisan, price, quantity and Add to cart" loading="lazy"><figcaption>A craft. For an artisan who ships: <i>you pay them directly by UPI</i>.</figcaption></figure>
     <figure><img src="img/app-craft-making.webp" alt="How it is made in the app" loading="lazy"><figcaption><i>How it is made</i>.</figcaption></figure>
     <figure><img src="img/app-artisan.webp" alt="Artisan profile in the app" loading="lazy"><figcaption>An artisan’s profile.</figcaption></figure>
@@ -821,6 +834,7 @@
       <tr><td><code>ao_order_created</code>, <code>ao_order_event</code>, <code>ao_settlement_created</code>, <code>ao_settlement_updated</code></td><td>Actions after these happen.</td></tr>
       <tr><td><code>ao_craft_data</code>, <code>ao_order_export</code>, <code>ao_order_view_url</code>, <code>ao_order_rate_limit</code></td><td>Filters for craft data, order data, the order page address and the order rate limit.</td></tr>
       <tr><td><code>ao_contact_icon</code>, <code>ao_contact_types</code></td><td>Replace the <a href="#website-contacts">contact icons</a> (for example with official brand icons; receives <code>$html</code> and <code>$type</code>), or add and change link types.</td></tr>
+      <tr><td><code>ao_search_text</code></td><td>Change what the <a href="#website-search">search</a> finds for a craft or artisan: receives the indexed <code>$text</code> and the <code>$post</code>. Call <code>AO_Search::build_all()</code> after changing it, to re-index everything.</td></tr>
       <tr><td><code>aom_app_slug</code></td><td>Change <code>craft-app</code> in the app address.</td></tr>
       <tr><td><code>ao_use_block_editor</code></td><td>Use the block editor for crafts and artisans.</td></tr>
     </tbody>
@@ -876,6 +890,13 @@
 <section class="chapter" id="changes" data-title="What’s new">
   <p class="kicker">Help</p>
   <h1>What’s new</h1>
+  <h2 id="v280">Core 2.8.0 · Mobile 2.6.0</h2>
+  <ul>
+    <li><a href="#website-search">Search as you type</a> in the website shop and in the app: results update while typing, without reloading.</li>
+    <li>Search now looks in every public field of a craft or artisan (materials, technique, steps, artisan’s name and village, languages, awards, family timeline…), not just the name and description. Every word must match.</li>
+    <li>The shop shows how many crafts or artisans were found; the app’s home-screen search filters the home list itself.</li>
+    <li>New <code>ao_search_text</code> filter for developers.</li>
+  </ul>
   <h2 id="v270">Core 2.7.0 · Mobile 2.5.0</h2>
   <ul>
     <li>New <a href="#artisans-contact">Contact &amp; social</a> tab on the artisan screen: up to three public links (phone, WhatsApp, email, website, Facebook, Instagram, YouTube, X, LinkedIn).</li>

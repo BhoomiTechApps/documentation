@@ -21,7 +21,7 @@
   </button>
   <a class="brand" href="#welcome">
     <img src="img/artisan-outlet-icon.svg" alt="">
-    <b>Artisan Outlet</b><span>User manual · core 2.6.1 + Mobile 2.4.1</span>
+    <b>Artisan Outlet</b><span>User manual · core 2.7.0 + Mobile 2.5.0</span>
   </a>
   <div class="search" role="search">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -43,7 +43,7 @@
 <div class="layout">
   <aside class="sidebar" aria-label="Chapters">
     <nav><ol id="toc"></ol></nav>
-    <p class="side-foot">Written for Artisan Outlet 2.6.1 and Artisan Outlet Mobile 2.4.1 · <a href="#changes">What’s new</a></p>
+    <p class="side-foot">Written for Artisan Outlet 2.7.0 and Artisan Outlet Mobile 2.5.0 · <a href="#changes">What’s new</a></p>
   </aside>
 
   <main id="content">
@@ -62,7 +62,7 @@
   <h2 id="what-it-does">What you can do with it</h2>
   <div class="cards">
     <a class="card" href="#crafts"><span class="ico">◈</span><h4>Show the craft and its story</h4><p>Photos, price and stock, the making process step by step, care, and the artisan behind each piece.</p></a>
-    <a class="card" href="#artisans"><span class="ico">☺</span><h4>Introduce the artisans</h4><p>Family story, tradition timeline, generations, awards, workshop photos and video.</p></a>
+    <a class="card" href="#artisans"><span class="ico">☺</span><h4>Introduce the artisans</h4><p>Family story, tradition timeline, generations, awards, workshop photos and video, and up to three ways to reach them.</p></a>
     <a class="card" href="#buying"><span class="ico">₹</span><h4>Sell with UPI or COD</h4><p>Pay with a UPI app or QR code and give the UTR, or pay cash when the parcel arrives.</p></a>
     <a class="card" href="#orders"><span class="ico">▤</span><h4>Run the orders</h4><p>Confirm payments, ship with tracking numbers, keep the customer informed, cancel and refund.</p></a>
     <a class="card" href="#artisan-app"><span class="ico">📱</span><h4>Let artisans ship</h4><p>Artisans who ship themselves are paid directly and run their orders from the phone app.</p></a>
@@ -73,8 +73,8 @@
   <div class="tbl-wrap"><table>
     <thead><tr><th style="width:220px">Plugin</th><th>What it adds</th></tr></thead>
     <tbody>
-      <tr><td><b>Artisan Outlet</b> 2.6.1<br><span class="muted">the core plugin</span></td><td>The catalogue (crafts, artisans, craft types), cart and checkout, UPI and cash on delivery, its own order database, shipping and tracking, emails, settlements with artisans, the sales report, website shortcodes and a REST API. Everything is under the <span class="ui">Artisan Outlet</span> menu in the dashboard.</td></tr>
-      <tr><td><b>Artisan Outlet Mobile</b> 2.4.1<br><span class="muted">the add-on</span></td><td>A phone app (a web app that can be added to the home screen) at <code>yoursite.com/craft-app/</code>, with an <b>artisan section</b> where artisans confirm payments, ship orders and settle up. Needs Artisan Outlet 2.6.0 or later.</td></tr>
+      <tr><td><b>Artisan Outlet</b> 2.7.0<br><span class="muted">the core plugin</span></td><td>The catalogue (crafts, artisans, craft types), cart and checkout, UPI and cash on delivery, its own order database, shipping and tracking, emails, settlements with artisans, the sales report, website shortcodes and a REST API. Everything is under the <span class="ui">Artisan Outlet</span> menu in the dashboard.</td></tr>
+      <tr><td><b>Artisan Outlet Mobile</b> 2.5.0<br><span class="muted">the add-on</span></td><td>A phone app (a web app that can be added to the home screen) at <code>yoursite.com/craft-app/</code>, with an <b>artisan section</b> where artisans confirm payments, ship orders and settle up. Needs Artisan Outlet 2.6.0 or later.</td></tr>
     </tbody>
   </table></div>
 
@@ -112,8 +112,8 @@
 
   <h2 id="install-steps">Installing the plugins</h2>
   <ol class="steps">
-    <li><b>Upload Artisan Outlet.</b> <span class="ui">Plugins → Add New Plugin → Upload Plugin</span>, choose <code>artisan-outlet-2.6.1.zip</code>, <span class="ui">Install Now</span>, <span class="ui">Activate</span>.</li>
-    <li><b>Upload Artisan Outlet Mobile</b> (<code>artisan-outlet-mobile-2.4.1.zip</code>) the same way and activate it. If the core plugin is missing or older than 2.6, the add-on shows a notice and stays switched off.</li>
+    <li><b>Upload Artisan Outlet.</b> <span class="ui">Plugins → Add New Plugin → Upload Plugin</span>, choose <code>artisan-outlet-2.7.0.zip</code>, <span class="ui">Install Now</span>, <span class="ui">Activate</span>.</li>
+    <li><b>Upload Artisan Outlet Mobile</b> (<code>artisan-outlet-mobile-2.5.0.zip</code>) the same way and activate it. If the core plugin is missing or older than 2.6, the add-on shows a notice and stays switched off.</li>
     <li><b>Check what was created.</b> Activation creates the order tables and two pages: <b>Cart &amp; Checkout</b> (<code>/checkout/</code>) and <b>Track your order</b> (<code>/track-order/</code>). It also adds two roles, <i>Store staff</i> and <i>Artisan</i>, and the <span class="ui">Artisan Outlet</span> menu.</li>
     <li><b>Put the shop on a page.</b> Create a page called “Shop” containing the shortcode <code>[ao_outlet]</code>. Add it, the checkout page and the tracking page to your site’s menu.</li>
     <li><b>Set a Site Icon</b> in <span class="ui">Appearance → Customize → Site Identity</span> (block themes: <span class="ui">Settings → General</span>). The phone app uses it as its home-screen icon.</li>
@@ -153,11 +153,13 @@
   <p class="lead"><span class="ui">Artisan Outlet → Settings</span> has seven tabs. Each tab saves on its own with <span class="ui">Save Changes</span>, so changing one tab never touches another.</p>
 
   <h2 id="settings-store">Store</h2>
-  <figure class="mid"><img src="img/settings-store.webp" alt="Store tab: store name, order number prefix, staff notification email, cart and checkout page, track order page" loading="lazy"></figure>
+  <figure class="mid"><img src="img/settings-store.webp" alt="Store tab: store name, order number prefix, staff notification email, cart and checkout page, track order page, help link and help button label" loading="lazy"></figure>
   <ul>
     <li><b>Order number prefix</b>: letters only. <code>HK-</code> gives order numbers such as <code>HK-1</code>, <code>HK-2</code>.</li>
     <li><b>Send staff notifications to</b>: the email address for new orders, payments to verify and settlements.</li>
     <li><b>Cart &amp; checkout page</b> and <b>Track order page</b>: the two pages created on activation. Change them only if you made your own pages with <code>[ao_checkout]</code> and <code>[ao_track_order]</code>.</li>
+    <li><b>Help link</b>: the address of your help page or user manual, starting with <code>https://</code> (or <code>http://</code>). When it is set, a <a href="#website-help">Help button</a> appears at the right of the shop’s tabs and opens it in a new browser tab. Leave it empty for no button. An address the plugin can’t accept is refused with a message and the old one is kept.</li>
+    <li><b>Help button label</b>: the button’s text, “Help” by default.</li>
   </ul>
 
   <h2 id="settings-payments">Payments</h2>
@@ -190,7 +192,12 @@
 
   <h2 id="settings-display">Shop display</h2>
   <figure class="mid"><img src="img/settings-display.webp" alt="Shop display tab: six card templates, cards per row, cards per page, pagination and Add to cart on cards" loading="lazy"></figure>
-  <p>How the crafts are laid out, on the website and in the phone app alike: the <a href="#website-cards">card template</a>, cards per row (a maximum; rows wrap on narrow screens), cards per page, pagination (<i>Page numbers</i>, <i>Load more</i> or none) and whether each card has an <span class="ui">Add to cart</span> button. A shortcode can override any of these for one page.</p>
+  <p>How the crafts are laid out, on the website and in the phone app alike: the <a href="#website-cards">card template</a>, cards per row (a maximum; rows wrap on narrow screens), cards per page, pagination (<i>Page numbers</i>, <i>Load more</i> or none), whether each card has an <span class="ui">Add to cart</span> button, and the artisans’ <a href="#website-contacts">contact icons</a>:</p>
+  <ul>
+    <li><b>Contact icons on cards</b>: show each artisan’s contact and social icons on paired cards (on by default). Their page always shows them.</li>
+    <li><b>Contact icon size</b>: 12 to 40 pixels (default 18), for cards and artisan pages, website and app. Above about 22 px, three icons may wrap onto two rows on narrow cards.</li>
+  </ul>
+  <p>A shortcode can override any of these for one page.</p>
 
   <h2 id="settings-look">Colours &amp; fonts</h2>
   <div class="pair">
@@ -221,7 +228,7 @@
   <h2 id="artisans-edit">The artisan page</h2>
   <p>Click <span class="ui">Add new artisan</span>, or an artisan’s name. Type the name as the title, write the <b>family story</b> in the main editor and a <b>one-line introduction</b> in the <span class="ui">Excerpt</span> box; the introduction appears on cards and lists. The portrait is the <span class="ui">Artisan photo</span> (featured image). Tick the craft types they practise.</p>
   <figure><img src="img/artisan-edit.webp" alt="Edit artisan screen: title, story in the editor, Craft types and Artisan photo on the right, the Artisan details box below" loading="lazy"><figcaption>The edit screen uses the classic editor, so the <span class="ui">Artisan details</span> box sits right under the story.</figcaption></figure>
-  <p>Below the story is the <span class="ui">Artisan details</span> box with six tabs.</p>
+  <p>Below the story is the <span class="ui">Artisan details</span> box with seven tabs.</p>
 
   <h3 id="artisans-profile">Profile</h3>
   <figure class="mid"><img src="img/artisan-tab-profile.webp" alt="Profile tab: village or town, district, state, craft tradition, languages" loading="lazy"></figure>
@@ -234,6 +241,21 @@
   <h3 id="artisans-photos">Photos &amp; video</h3>
   <figure class="mid"><img src="img/artisan-tab-photos.webp" alt="Photos and video tab: video URL and workshop gallery" loading="lazy"></figure>
   <p>A YouTube or Vimeo address about the family or workshop, and the <b>workshop &amp; family gallery</b>.</p>
+
+  <h3 id="artisans-contact">Contact &amp; social</h3>
+  <figure class="mid"><img src="img/artisan-tab-contact.webp" alt="Contact and social tab: WhatsApp 98000 00101, Instagram @rupa.weaves, Website https://example.org/rupa-kalita" loading="lazy"></figure>
+  <p>Up to <b>three</b> ways to reach the artisan, shown as small icons under their name on the <a href="#website-contacts">craft cards</a> and on their page, on the website and in the app. For each row choose the type and type the details:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:200px">Type</th><th>What to type</th><th style="width:250px">Tapping the icon</th></tr></thead>
+    <tbody>
+      <tr><td>Phone</td><td>A 10-digit mobile number (+91 is added), or a number with its country code</td><td>Starts a call</td></tr>
+      <tr><td>WhatsApp</td><td>The same</td><td>Opens a WhatsApp chat</td></tr>
+      <tr><td>Email</td><td>An email address</td><td>Opens the mail app</td></tr>
+      <tr><td>Website</td><td>The full address, starting with <code>https://</code></td><td>Opens it in a new tab</td></tr>
+      <tr><td>Facebook, Instagram, YouTube, X, LinkedIn</td><td>The full address, or just the <code>@handle</code></td><td>Opens the profile in a new tab</td></tr>
+    </tbody>
+  </table></div>
+  <p>These details are <b>public</b>: use only numbers and accounts the artisan is happy to share. Empty a row to remove it. A row that doesn’t look right (for example an email without “@”) isn’t saved, and a message says which. The private contact phone stays on the <a href="#artisans-notes">Private notes</a> tab.</p>
 
   <h3 id="artisans-selling">Selling &amp; payment</h3>
   <p>The most important tab: it decides who is paid and who ships for all of this artisan’s crafts.</p>
@@ -323,7 +345,29 @@
     <figure><img src="img/shop-artisans.webp" alt="Artisans tab: four artisan cards" loading="lazy"><figcaption><b>Artisans</b>: each with place, tradition and generations.</figcaption></figure>
   </div>
   <p>The <b>Cart</b> tab shows a count when the cart has something in it; <b>Track order</b> finds an order by its number. On other pages, a floating cart button appears at the bottom corner once the cart has something in it.</p>
+  <h3 id="website-help">The Help button</h3>
+  <figure class="mid"><img src="img/shop-help.webp" alt="The shop tabs with a Help button at the right" loading="lazy"><figcaption>With a <a href="#settings-store">Help link</a> set, <span class="ui">Help</span> sits at the right of the tabs and opens your help page in a new browser tab, leaving the shop open.</figcaption></figure>
+  <div class="side">
+    <div>
+      <p>On a phone the button shrinks to its question-mark icon so the tabs keep their space; screen readers still announce it as “Help (opens in a new tab)”.</p>
+      <p>For one page only: <code>[ao_outlet help="no"]</code> hides the button, and <code>[ao_outlet help="https://…"]</code> opens a different address.</p>
+    </div>
+    <figure class="phone"><img src="img/shop-help-phone.webp" alt="On a phone: the Help button as an icon at the end of the tabs" loading="lazy"></figure>
+  </div>
   <figure class="phone"><img src="img/cart-fab.webp" alt="The floating cart button with a count of 2" loading="lazy" style="max-width:160px"></figure>
+
+  <h2 id="website-contacts">Contact icons</h2>
+  <div class="side">
+    <div>
+      <p>When an artisan has <a href="#artisans-contact">contact or social links</a>, they appear as small round icons under the artisan on <b>paired cards</b>, and under the figures on the artisan’s page. Each icon is its own link; the rest of the artisan’s half of the card still opens their page.</p>
+      <ul>
+        <li>Phone, WhatsApp, email and website have line icons; social networks show a short label: <b>FB</b>, <b>IG</b>, <b>YT</b>, <b>X</b>, <b>LI</b>. Pointing at an icon shows what it is; screen readers announce, for example, “WhatsApp of Rupa Kalita”.</li>
+        <li>Switch them off or change their size in <a href="#settings-display">Settings → Shop display</a>, or for one page with <code>contact_icons="no"</code> or <code>icon_size="24"</code>.</li>
+        <li>Artisans without links look exactly as before.</li>
+      </ul>
+    </div>
+    <figure><img src="img/card-contacts.webp" alt="Paired card with WhatsApp, Instagram and website icons under Rupa Kalita" loading="lazy"></figure>
+  </div>
 
   <h2 id="website-craft">A craft’s page</h2>
   <figure><img src="img/craft-page-top.webp" alt="Muga silk mekhela chador: photo, craft type, the artisan, description, price, quantity, Add to cart, Only 2 left, and quick facts" loading="lazy"><figcaption>Photos, the craft type, the artisan, the short description, price with <span class="ui">Add to cart</span>, and quick facts.</figcaption></figure>
@@ -335,7 +379,7 @@
   <p>Below the tabs is <i>More by this artisan</i>. Tabs with nothing in them are hidden. Adding <code>#making</code>, <code>#care</code> or <code>#artisan</code> to the page address opens that tab.</p>
 
   <h2 id="website-artisan">An artisan’s page</h2>
-  <figure><img src="img/artisan-page-top.webp" alt="Rupa Kalita: portrait, tradition, place, introduction and figures" loading="lazy"><figcaption>Portrait, tradition, place and figures: generations, practising since, crafts in the shop.</figcaption></figure>
+  <figure><img src="img/artisan-page-top.webp" alt="Rupa Kalita: portrait, tradition, place, introduction and figures" loading="lazy"><figcaption>Portrait, tradition, place and figures: generations, practising since, crafts in the shop, and the contact icons.</figcaption></figure>
   <div class="pair">
     <figure><img src="img/artisan-page-story.webp" alt="Our story tab with Recognition" loading="lazy"><figcaption><b>Our story</b>, with awards under <i>Recognition</i>.</figcaption></figure>
     <figure><img src="img/artisan-page-tradition.webp" alt="Family tradition: a timeline from 1958 to 2016" loading="lazy"><figcaption><b>Family tradition</b>: the timeline.</figcaption></figure>
@@ -375,8 +419,9 @@
       <tr><td><code>artisan</code></td><td>—</td><td>Only one artisan’s crafts: the artisan’s ID, shown in the address bar when you edit them.</td></tr>
       <tr><td><code>mode</code></td><td>—</td><td><code>mode="app"</code> embeds the phone app (needs Artisan Outlet Mobile).</td></tr>
       <tr><td><code>height</code></td><td><code>760</code></td><td>App height with <code>mode="app"</code>: pixels or a share of the screen (<code>85vh</code>).</td></tr>
+      <tr><td><code>help</code></td><td>from Settings</td><td>The <a href="#website-help">Help button</a>: <code>help="no"</code> hides it on this page, <code>help="https://…"</code> opens another address.</td></tr>
       <tr><td><code>align</code></td><td>—</td><td><code>wide</code> or <code>full</code> lets the shop or app stretch beyond the theme’s content column.</td></tr>
-      <tr><td><code>card_style</code>, <code>columns</code> (1–6), <code>per_page</code> (1–60), <code>pagination</code> (<code>numbers</code>, <code>load_more</code>, <code>none</code>), <code>add_to_cart</code> (<code>yes</code>/<code>no</code>)</td><td>from Settings</td><td>The <a href="#settings-display">Shop display</a> settings for this page.</td></tr>
+      <tr><td><code>card_style</code>, <code>columns</code> (1–6), <code>per_page</code> (1–60), <code>pagination</code> (<code>numbers</code>, <code>load_more</code>, <code>none</code>), <code>add_to_cart</code> and <code>contact_icons</code> (<code>yes</code>/<code>no</code>), <code>icon_size</code> (12–40)</td><td>from Settings</td><td>The <a href="#settings-display">Shop display</a> settings for this page.</td></tr>
       <tr><td><code>font_base</code>, <code>font_heading</code>, <code>font_title</code>, <code>font_price</code>, <code>font_artisan</code>, <code>font_button</code></td><td>from Settings</td><td>Font sizes in pixels.</td></tr>
     </tbody>
   </table></div>
@@ -499,6 +544,8 @@
     <figure><img src="img/app-craft-making.webp" alt="How it is made in the app" loading="lazy"><figcaption><i>How it is made</i>.</figcaption></figure>
     <figure><img src="img/app-artisan.webp" alt="Artisan profile in the app" loading="lazy"><figcaption>An artisan’s profile.</figcaption></figure>
     <figure><img src="img/app-artisans.webp" alt="Artisans list in the app" loading="lazy"><figcaption>Artisans.</figcaption></figure>
+    <figure><img src="img/app-card-contacts.webp" alt="App card with contact icons under the artisan" loading="lazy"><figcaption>Contact icons on a card…</figcaption></figure>
+    <figure><img src="img/app-artisan-contacts.webp" alt="Artisan profile in the app with contact icons under the badges" loading="lazy"><figcaption>…and on the profile.</figcaption></figure>
   </div>
   <p>Going back is instant and keeps your place in the list; results are remembered for two minutes.</p>
 
@@ -773,6 +820,7 @@
       <tr><td><code>ao_payment_methods</code></td><td>Add an automatic payment gateway; call <code>AO_Orders::confirm_payment()</code> from its webhook.</td></tr>
       <tr><td><code>ao_order_created</code>, <code>ao_order_event</code>, <code>ao_settlement_created</code>, <code>ao_settlement_updated</code></td><td>Actions after these happen.</td></tr>
       <tr><td><code>ao_craft_data</code>, <code>ao_order_export</code>, <code>ao_order_view_url</code>, <code>ao_order_rate_limit</code></td><td>Filters for craft data, order data, the order page address and the order rate limit.</td></tr>
+      <tr><td><code>ao_contact_icon</code>, <code>ao_contact_types</code></td><td>Replace the <a href="#website-contacts">contact icons</a> (for example with official brand icons; receives <code>$html</code> and <code>$type</code>), or add and change link types.</td></tr>
       <tr><td><code>aom_app_slug</code></td><td>Change <code>craft-app</code> in the app address.</td></tr>
       <tr><td><code>ao_use_block_editor</code></td><td>Use the block editor for crafts and artisans.</td></tr>
     </tbody>
@@ -828,6 +876,16 @@
 <section class="chapter" id="changes" data-title="What’s new">
   <p class="kicker">Help</p>
   <h1>What’s new</h1>
+  <h2 id="v270">Core 2.7.0 · Mobile 2.5.0</h2>
+  <ul>
+    <li>New <a href="#artisans-contact">Contact &amp; social</a> tab on the artisan screen: up to three public links (phone, WhatsApp, email, website, Facebook, Instagram, YouTube, X, LinkedIn).</li>
+    <li>They appear as small <a href="#website-contacts">icons</a> on paired cards and artisan pages, on the website and in the app.</li>
+    <li>New <a href="#settings-display">Shop display</a> settings: contact icons on cards (on or off) and their size; shortcodes can override both.</li>
+  </ul>
+  <h2 id="v262">Core 2.6.2</h2>
+  <ul>
+    <li>New <a href="#settings-store">Help link</a> in Settings → Store: a <a href="#website-help">Help button</a> at the right of the shop’s tabs opens your help page or user manual in a new browser tab. Its label can be changed, and <code>[ao_outlet help="…"]</code> hides it or changes the address on one page.</li>
+  </ul>
   <h2 id="v261">Core 2.6.1 · Mobile 2.4.1</h2>
   <ul>
     <li>Names with “&amp;” or an apostrophe now show correctly everywhere: craft types such as “Cane &amp; bamboo” and titles such as “Rupa’s stole” used to show HTML codes in the phone app, the website cart and payment pages, SMS or WhatsApp messages sent through <code>ao_notify</code>, and the sales-report CSV. Orders placed earlier display correctly too.</li>

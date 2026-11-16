@@ -3,7 +3,7 @@
   "private": true,
   "description": "Takes the screenshots for the Artisan Outlet user manual from a running sample shop.",
   "scripts": {
-    "all": "node p1-admin.js && node p2-website.js && node p3-app.js && node p4-staff.js && node p5-artisan.js && node p6-settle.js && node p7-final.js",
+    "all": "node p1-admin.js && node p2-website.js && node p3-app.js && node p4-staff.js && node p5-artisan.js && node p6-settle.js && node p7-final.js && node p8-help.js && node p9-contacts.js",
     "measure": "node measure.js"
   },
   "dependencies": { "playwright": "^1.48.0", "sharp": "^0.33.0" }

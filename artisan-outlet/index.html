@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Outlet user manual</title>
+<meta name="description" content="User manual for Artisan Outlet, a standalone WordPress shop for rural artisans with UPI and cash on delivery, and its phone app add-on Artisan Outlet Mobile.">
+<link rel="icon" href="img/artisan-outlet-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/manual.css">
+<link rel="stylesheet" href="assets/css/theme.css">
+<script>
+  try { var t = localStorage.getItem("artisan-outlet-manual-theme"); document.documentElement.dataset.theme = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to the manual</a>
+
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Chapters">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <a class="brand" href="#welcome">
+    <img src="img/artisan-outlet-icon.svg" alt="">
+    <b>Artisan Outlet</b><span>User manual · core 2.6.1 + Mobile 2.4.1</span>
+  </a>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="search" type="search" placeholder="Search the manual" autocomplete="off" aria-label="Search the manual">
+    <kbd>/</kbd>
+    <div class="results" id="results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="theme" type="button" title="Light / dark" aria-label="Switch light or dark">
+      <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <button class="icon-btn" type="button" title="Print the whole manual" aria-label="Print the whole manual" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2"/><path d="M6 14h12v7H6z"/></svg>
+    </button>
+    <a class="btn primary" id="open-app" href="#" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7M10 14L21 3M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg><span>Open the shop</span></a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Chapters">
+    <nav><ol id="toc"></ol></nav>
+    <p class="side-foot">Written for Artisan Outlet 2.6.1 and Artisan Outlet Mobile 2.4.1 · <a href="#changes">What’s new</a></p>
+  </aside>
+
+  <main id="content">
+
+<!-- ═══════════════════════════════ 1. WELCOME ═══════════════════════════════ -->
+<section class="chapter" id="welcome" data-title="Welcome">
+  <p class="kicker">Artisan Outlet user manual</p>
+  <h1>Welcome to Artisan Outlet</h1>
+  <p class="lead">Artisan Outlet turns a WordPress site into an online shop for rural artisans and handloom weavers. Every craft comes with the family who made it and how it was made. Customers pay by <b>UPI</b> or <b>cash on delivery</b>, and orders, shipping and the money owed between the shop and each artisan are all kept in the plugin. No WooCommerce is needed. Its add-on, <b>Artisan Outlet Mobile</b>, adds a phone app that customers can install, and in which artisans run their own orders.</p>
+
+  <figure>
+    <img src="img/shop-crafts.webp" alt="The shop on a website: craft cards with a photo, name, price and Add to cart, each paired with the artisan who made it" loading="lazy">
+    <figcaption>The shop on a website, with each craft beside its artisan. The examples in this manual use a sample shop, “Hastakala Crafts”, with four fictional artisans from Assam.</figcaption>
+  </figure>
+
+  <h2 id="what-it-does">What you can do with it</h2>
+  <div class="cards">
+    <a class="card" href="#crafts"><span class="ico">◈</span><h4>Show the craft and its story</h4><p>Photos, price and stock, the making process step by step, care, and the artisan behind each piece.</p></a>
+    <a class="card" href="#artisans"><span class="ico">☺</span><h4>Introduce the artisans</h4><p>Family story, tradition timeline, generations, awards, workshop photos and video.</p></a>
+    <a class="card" href="#buying"><span class="ico">₹</span><h4>Sell with UPI or COD</h4><p>Pay with a UPI app or QR code and give the UTR, or pay cash when the parcel arrives.</p></a>
+    <a class="card" href="#orders"><span class="ico">▤</span><h4>Run the orders</h4><p>Confirm payments, ship with tracking numbers, keep the customer informed, cancel and refund.</p></a>
+    <a class="card" href="#artisan-app"><span class="ico">📱</span><h4>Let artisans ship</h4><p>Artisans who ship themselves are paid directly and run their orders from the phone app.</p></a>
+    <a class="card" href="#money"><span class="ico">⇄</span><h4>Settle up fairly</h4><p>Commission and payouts per order, each confirmed by the side that receives the money.</p></a>
+  </div>
+
+  <h2 id="two-plugins">Two plugins, one manual</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:220px">Plugin</th><th>What it adds</th></tr></thead>
+    <tbody>
+      <tr><td><b>Artisan Outlet</b> 2.6.1<br><span class="muted">the core plugin</span></td><td>The catalogue (crafts, artisans, craft types), cart and checkout, UPI and cash on delivery, its own order database, shipping and tracking, emails, settlements with artisans, the sales report, website shortcodes and a REST API. Everything is under the <span class="ui">Artisan Outlet</span> menu in the dashboard.</td></tr>
+      <tr><td><b>Artisan Outlet Mobile</b> 2.4.1<br><span class="muted">the add-on</span></td><td>A phone app (a web app that can be added to the home screen) at <code>yoursite.com/craft-app/</code>, with an <b>artisan section</b> where artisans confirm payments, ship orders and settle up. Needs Artisan Outlet 2.6.0 or later.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="people">Who uses it</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:170px">Person</th><th>Where they work</th><th>What they do</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who customer">Customer</span></td><td>The website shop or the phone app</td><td>Browse, buy, pay, give the payment reference, track the order. No account is needed.</td></tr>
+      <tr><td><span class="who staff">Store staff</span></td><td>The dashboard (<i>Store staff</i> role, or an administrator)</td><td>Look after the catalogue and orders: confirm payments, ship, settle up with artisans.</td></tr>
+      <tr><td><span class="who artisan">Artisan</span></td><td>The artisan section of the phone app</td><td>Confirm payments, pack and ship (if they ship themselves), pay commission, confirm payouts.</td></tr>
+      <tr><td>Administrator</td><td>The dashboard</td><td>Everything staff can do, plus <a href="#settings">Settings</a> and plugins.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="ideas">Three ideas to know first</h2>
+  <ol>
+    <li><b>One artisan per order.</b> A cart holds one artisan’s crafts. Adding another artisan’s piece asks whether to empty the cart and start again, so each order goes from one maker to one customer.</li>
+    <li><b>Two ways an artisan can sell.</b> Either <i>the website ships</i> (customers pay the shop, which ships and later pays the artisan their share) or <i>the artisan ships</i> (customers pay the artisan’s own UPI ID; the artisan ships and later pays the shop its commission). See <a href="#flow-two-ways">How orders work</a>.</li>
+    <li><b>UPI is confirmed by a person.</b> The customer pays from any UPI app and types in the transaction reference (UTR). Whoever received the money checks their bank and taps <i>Money received</i> or <i>Not received</i>.</li>
+  </ol>
+</section>
+
+<!-- ═══════════════════════════════ 2. INSTALL ═══════════════════════════════ -->
+<section class="chapter" id="install" data-title="Installing">
+  <p class="kicker">Getting started</p>
+  <h1>Installing</h1>
+  <p class="lead">Install both plugins, check two WordPress settings, and put the shop on a page. Then work through <a href="#settings">Settings</a>, add <a href="#artisans">artisans</a> and <a href="#crafts">crafts</a>.</p>
+
+  <h2 id="install-needs">What you need</h2>
+  <ul>
+    <li>WordPress 6.2 or newer and PHP 7.4 or newer.</li>
+    <li><b>Pretty permalinks</b>: <span class="ui">Settings → Permalinks</span> set to anything except “Plain”. The phone app and the craft and artisan pages need it.</li>
+    <li>A <b>UPI ID</b> for the shop. A business or merchant UPI ID is recommended: some UPI apps limit payment links and QR codes for personal IDs.</li>
+  </ul>
+
+  <h2 id="install-steps">Installing the plugins</h2>
+  <ol class="steps">
+    <li><b>Upload Artisan Outlet.</b> <span class="ui">Plugins → Add New Plugin → Upload Plugin</span>, choose <code>artisan-outlet-2.6.1.zip</code>, <span class="ui">Install Now</span>, <span class="ui">Activate</span>.</li>
+    <li><b>Upload Artisan Outlet Mobile</b> (<code>artisan-outlet-mobile-2.4.1.zip</code>) the same way and activate it. If the core plugin is missing or older than 2.6, the add-on shows a notice and stays switched off.</li>
+    <li><b>Check what was created.</b> Activation creates the order tables and two pages: <b>Cart &amp; Checkout</b> (<code>/checkout/</code>) and <b>Track your order</b> (<code>/track-order/</code>). It also adds two roles, <i>Store staff</i> and <i>Artisan</i>, and the <span class="ui">Artisan Outlet</span> menu.</li>
+    <li><b>Put the shop on a page.</b> Create a page called “Shop” containing the shortcode <code>[ao_outlet]</code>. Add it, the checkout page and the tracking page to your site’s menu.</li>
+    <li><b>Set a Site Icon</b> in <span class="ui">Appearance → Customize → Site Identity</span> (block themes: <span class="ui">Settings → General</span>). The phone app uses it as its home-screen icon.</li>
+  </ol>
+  <div class="side">
+    <div>
+      <h3 id="install-menu">The Artisan Outlet menu</h3>
+      <div class="tbl-wrap"><table><tbody>
+        <tr><td><a href="#orders-dashboard">Dashboard</a></td><td>What needs doing now, and this month’s figures.</td></tr>
+        <tr><td><a href="#crafts">Crafts</a>, <a href="#artisans">Artisans</a></td><td>The catalogue.</td></tr>
+        <tr><td><a href="#orders">Orders</a></td><td>Every order, with a count of payments to verify on the menu.</td></tr>
+        <tr><td><a href="#money">Settlements</a></td><td>Money between the shop and each artisan.</td></tr>
+        <tr><td><a href="#money-report">Sales report</a></td><td>Sales and commission per artisan, with a CSV download.</td></tr>
+        <tr><td><a href="#settings-app">Mobile app</a></td><td>Opens the Mobile app tab of Settings.</td></tr>
+        <tr><td><a href="#crafts-types">Craft types</a></td><td>Handloom, Terracotta and so on.</td></tr>
+        <tr><td><a href="#settings">Settings</a></td><td>Administrators only.</td></tr>
+      </tbody></table></div>
+    </div>
+    <figure><img src="img/admin-menu.webp" alt="The Artisan Outlet menu: Dashboard, Crafts, Artisans, Orders, Settlements, Sales report, Mobile app, Craft types, Settings" loading="lazy"></figure>
+  </div>
+
+  <h2 id="install-roles">Roles</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:170px">Role</th><th>Can do</th></tr></thead>
+    <tbody>
+      <tr><td>Administrator</td><td>Everything, including Settings.</td></tr>
+      <tr><td><i>Store staff</i></td><td>Orders, settlements, the sales report, crafts and artisans, and uploading photos. Not Settings, not plugins.</td></tr>
+      <tr><td><i>Artisan</i></td><td>Only the artisan section of the phone app. These accounts are created from the artisan’s page; see <a href="#artisans-login">App login</a>.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══════════════════════════════ 3. SETTINGS ═══════════════════════════════ -->
+<section class="chapter" id="settings" data-title="Settings">
+  <p class="kicker">Getting started</p>
+  <h1>Settings</h1>
+  <p class="lead"><span class="ui">Artisan Outlet → Settings</span> has seven tabs. Each tab saves on its own with <span class="ui">Save Changes</span>, so changing one tab never touches another.</p>
+
+  <h2 id="settings-store">Store</h2>
+  <figure class="mid"><img src="img/settings-store.webp" alt="Store tab: store name, order number prefix, staff notification email, cart and checkout page, track order page" loading="lazy"></figure>
+  <ul>
+    <li><b>Order number prefix</b>: letters only. <code>HK-</code> gives order numbers such as <code>HK-1</code>, <code>HK-2</code>.</li>
+    <li><b>Send staff notifications to</b>: the email address for new orders, payments to verify and settlements.</li>
+    <li><b>Cart &amp; checkout page</b> and <b>Track order page</b>: the two pages created on activation. Change them only if you made your own pages with <code>[ao_checkout]</code> and <code>[ao_track_order]</code>.</li>
+  </ul>
+
+  <h2 id="settings-payments">Payments</h2>
+  <figure class="mid"><img src="img/settings-payments.webp" alt="Payments tab: website UPI ID, payee name, cancel unpaid orders after 48 hours, cash on delivery, COD fee and maximum" loading="lazy"></figure>
+  <ul>
+    <li><b>Website UPI ID</b>: customers pay this ID for orders the website ships. It must look like <code>name@bank</code>, or it isn’t saved.</li>
+    <li><b>UPI payee name</b>: shown to the customer beside the ID.</li>
+    <li><b>Cancel unpaid UPI orders after (hours)</b>: orders with no payment reference are cancelled automatically and their stock released, counted from when the order was placed. Default 48; 0 = never.</li>
+    <li><b>Cash on delivery</b>: offered only on orders the website ships, never on orders an artisan ships. Add a <b>COD fee</b> and a <b>COD maximum order value</b> (0 = no limit) if you want.</li>
+  </ul>
+
+  <h2 id="settings-shipping">Shipping &amp; commission</h2>
+  <figure class="mid"><img src="img/settings-shipping.webp" alt="Shipping and commission tab: shipping charge, free shipping above, default commission, couriers" loading="lazy"></figure>
+  <ul>
+    <li><b>Shipping charge per order</b>: for website-shipped orders, and the default for artisans who ship themselves (each can have their own; see <a href="#artisans-selling">Selling &amp; payment</a>).</li>
+    <li><b>Free shipping above</b>: orders whose items total reaches this amount ship free, whoever ships them. 0 = never free.</li>
+    <li><b>Default website commission (%)</b>: the shop’s share of the items total, not counting shipping. It can be changed per artisan.</li>
+    <li><b>Couriers</b>: one per line. Add a tracking address after a <code>|</code> with <code>{tracking}</code> where the tracking number goes, and customers get a <i>Track on courier site</i> link, for example <code>India Post|https://www.indiapost.gov.in/…?id={tracking}</code>.</li>
+  </ul>
+
+  <h2 id="settings-artisans">Artisan app</h2>
+  <figure class="mid"><img src="img/settings-artisans.webp" alt="Artisan app tab: packing photos and courier docket photos switched on, photo size, quality and auto-delete" loading="lazy"></figure>
+  <p>Photos that artisans take as proof of packing and dispatch. Both switches start <b>off</b>: when off, the app shows no photo button and the server refuses photos for that step.</p>
+  <ul>
+    <li><b>Packing photos</b> and <b>Courier docket / parcel photos</b>: switch on the steps you want.</li>
+    <li><b>Photo size</b> (longest side, default 1280 px) and <b>Photo quality</b> (default 75%): photos are shrunk on the server. In testing a 1.9 MB phone photo became about 164 KB.</li>
+    <li><b>Delete order photos after (days)</b>: counted from when the order is delivered, cancelled or returned; 0 keeps them. The order history notes the removal.</li>
+    <li>The tab shows how many order photos are stored now and how much space they use. Staff can always add photos from the order page.</li>
+  </ul>
+
+  <h2 id="settings-display">Shop display</h2>
+  <figure class="mid"><img src="img/settings-display.webp" alt="Shop display tab: six card templates, cards per row, cards per page, pagination and Add to cart on cards" loading="lazy"></figure>
+  <p>How the crafts are laid out, on the website and in the phone app alike: the <a href="#website-cards">card template</a>, cards per row (a maximum; rows wrap on narrow screens), cards per page, pagination (<i>Page numbers</i>, <i>Load more</i> or none) and whether each card has an <span class="ui">Add to cart</span> button. A shortcode can override any of these for one page.</p>
+
+  <h2 id="settings-look">Colours &amp; fonts</h2>
+  <div class="pair">
+    <figure><img src="img/settings-look-colours.webp" alt="Colour themes: Terracotta, Indigo, Forest, Marigold, Peacock, Charcoal, and eleven colours" loading="lazy"><figcaption>Colour themes and the eleven colours.</figcaption></figure>
+    <figure><img src="img/settings-look-type.webp" alt="Corner roundness, heading style, six font sizes and the live preview" loading="lazy"><figcaption>Shape, type sizes and the live preview.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>Colour themes</b>: Terracotta (the default, used in this manual), Indigo, Forest, Marigold, Peacock and Charcoal. Click one, see it in the preview, then save.</li>
+    <li><b>Colours</b>: fine-tune any of the eleven, including <i>Photo placeholder</i>, which fills the photo area for crafts and artisans without a photo and shows while photos load.</li>
+    <li><b>Corner roundness</b>, <b>Heading style</b> (classic serif or sans) and six <b>font sizes</b>: body text, page headings, craft names, prices, artisan details and buttons.</li>
+  </ul>
+  <p>The website shop and the phone app share these colours and sizes.</p>
+
+  <h2 id="settings-app">Mobile app</h2>
+  <figure class="mid"><img src="img/settings-app.webp" alt="Mobile app tab: the app address, app name, short name, home headline, home tagline and the website banner" loading="lazy"></figure>
+  <p>Added by Artisan Outlet Mobile. It shows the app’s address, and sets the <b>App name</b>, the <b>Short name</b> under the home-screen icon (about 12 characters), the <b>Home headline</b> and <b>tagline</b>, and the <b>Website banner</b>, an invitation to open the app shown to phone visitors of the website.</p>
+</section>
+
+<!-- ═══════════════════════════════ 4. ARTISANS ═══════════════════════════════ -->
+<section class="chapter" id="artisans" data-title="Adding artisans">
+  <p class="kicker">The catalogue</p>
+  <h1>Adding artisans</h1>
+  <p class="lead">Add the artisan before their crafts. The artisan page is where their story lives, and where you decide how their crafts are paid for and shipped.</p>
+
+  <h2 id="artisans-list">The artisan list</h2>
+  <figure><img src="img/artisans-list.webp" alt="Artisans list with location, who ships and is paid, number of crafts, settlement due and craft types" loading="lazy"><figcaption><span class="ui">Artisan Outlet → Artisans</span>. <i>Ships &amp; paid</i> shows <b>Website</b> or <b>Artisan directly</b>; <i>Settlement due</i> shows what is owed either way.</figcaption></figure>
+
+  <h2 id="artisans-edit">The artisan page</h2>
+  <p>Click <span class="ui">Add new artisan</span>, or an artisan’s name. Type the name as the title, write the <b>family story</b> in the main editor and a <b>one-line introduction</b> in the <span class="ui">Excerpt</span> box; the introduction appears on cards and lists. The portrait is the <span class="ui">Artisan photo</span> (featured image). Tick the craft types they practise.</p>
+  <figure><img src="img/artisan-edit.webp" alt="Edit artisan screen: title, story in the editor, Craft types and Artisan photo on the right, the Artisan details box below" loading="lazy"><figcaption>The edit screen uses the classic editor, so the <span class="ui">Artisan details</span> box sits right under the story.</figcaption></figure>
+  <p>Below the story is the <span class="ui">Artisan details</span> box with six tabs.</p>
+
+  <h3 id="artisans-profile">Profile</h3>
+  <figure class="mid"><img src="img/artisan-tab-profile.webp" alt="Profile tab: village or town, district, state, craft tradition, languages" loading="lazy"></figure>
+  <p>Village or town, district, state, the craft tradition (for example “Muga and Eri silk handloom weaving”) and languages spoken.</p>
+
+  <h3 id="artisans-heritage">Heritage</h3>
+  <figure class="mid"><img src="img/artisan-tab-heritage.webp" alt="Heritage tab: generations, practising since, awards, and a family tradition timeline with three milestones" loading="lazy"></figure>
+  <p>Generations practising the craft, the year the family started, awards and recognition (one per line), and the <b>family tradition timeline</b>: add milestones with a year, a title, a few words and an optional photo. Drag the handle to reorder.</p>
+
+  <h3 id="artisans-photos">Photos &amp; video</h3>
+  <figure class="mid"><img src="img/artisan-tab-photos.webp" alt="Photos and video tab: video URL and workshop gallery" loading="lazy"></figure>
+  <p>A YouTube or Vimeo address about the family or workshop, and the <b>workshop &amp; family gallery</b>.</p>
+
+  <h3 id="artisans-selling">Selling &amp; payment</h3>
+  <p>The most important tab: it decides who is paid and who ships for all of this artisan’s crafts.</p>
+  <div class="pair">
+    <figure><img src="img/artisan-tab-selling-website.webp" alt="The website ships selected, commission 20%" loading="lazy"><figcaption><b>The website ships</b> (Rupa).</figcaption></figure>
+    <figure><img src="img/artisan-tab-selling-artisan.webp" alt="The artisan ships selected, with the artisan's UPI ID, name, commission 15% and shipping 120" loading="lazy"><figcaption><b>The artisan ships</b> (Hemanta), with his own UPI ID.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>The website ships</b>: customers pay the shop (UPI or COD); the shop packs and ships, and pays the artisan their share after delivery.</li>
+    <li><b>The artisan ships</b>: customers pay the <b>artisan’s own UPI ID</b> (UPI only, no COD); the artisan confirms the payment, packs and ships, then pays the shop its commission. Fill in <b>Artisan UPI ID</b> and <b>Name on the UPI account</b>. Until a valid UPI ID is saved, the website ships for this artisan.</li>
+    <li><b>Website commission %</b>: this artisan’s rate (blank = the default).</li>
+    <li><b>Shipping charge when the artisan ships</b>: what customers pay for shipping on this artisan’s orders.</li>
+  </ul>
+  <p>Commission and shipping are fixed on each order when it is placed, so changing them later doesn’t alter past orders. The tab also shows what is owed either way, with a <span class="ui">Settle up</span> link.</p>
+
+  <h3 id="artisans-login">App login</h3>
+  <p>Gives the artisan a sign-in for the artisan section of the phone app, so they can confirm payments, ship orders and confirm settlements.</p>
+  <ol class="steps">
+    <li><b>Tick <span class="ui">Create a login</span></b> and enter the artisan’s 10-digit mobile number, and an email if they have one (for notifications).
+      <figure class="mid"><img src="img/artisan-tab-login.webp" alt="App login tab with Create a login, mobile number and email" loading="lazy"></figure></li>
+    <li><b>Click <span class="ui">Update</span>.</b> The mobile number and an <b>8-digit PIN</b> are shown once. Give them to the artisan now, in person or by phone.
+      <figure class="mid"><img src="img/artisan-login-pin.webp" alt="Share these with the artisan now — the PIN is shown only once: mobile number and PIN" loading="lazy"></figure></li>
+    <li><b>To reset a forgotten PIN</b>, tick <span class="ui">new PIN</span> beside the number and update again.</li>
+  </ol>
+  <p>Artisans who don’t ship themselves can sign in too, to follow their orders and confirm payouts.</p>
+
+  <h3 id="artisans-notes">Private notes</h3>
+  <figure class="mid"><img src="img/artisan-tab-notes.webp" alt="Private notes: contact person, contact phone, internal notes" loading="lazy"></figure>
+  <p>A contact person and phone, and internal notes. Never shown on the website or in the app.</p>
+</section>
+
+<!-- ═══════════════════════════════ 5. CRAFTS ═══════════════════════════════ -->
+<section class="chapter" id="crafts" data-title="Adding crafts">
+  <p class="kicker">The catalogue</p>
+  <h1>Adding crafts</h1>
+  <p class="lead">Each craft has a title, a description, a main photo and the <span class="ui">Craft details</span> box: price and stock, the artisan, how it is made, care and more photos.</p>
+
+  <figure><img src="img/crafts-list.webp" alt="Crafts list with price, stock, artisan, craft types" loading="lazy"><figcaption><span class="ui">Artisan Outlet → Crafts</span>, with price, stock (or <i>Sold out</i>) and the artisan.</figcaption></figure>
+
+  <h2 id="crafts-edit">The craft page</h2>
+  <figure><img src="img/craft-edit.webp" alt="Edit craft: title, description, craft types, main photo, Craft details box" loading="lazy"></figure>
+  <ul>
+    <li><b>Title</b> and <b>description</b>: what the piece is and why it is special.</li>
+    <li><b>Excerpt</b>: a short description for cards and the top of the page. If empty, the start of the description is used.</li>
+    <li><b>Main photo</b> (featured image) and <b>Craft types</b>.</li>
+  </ul>
+
+  <h3 id="crafts-price">Price &amp; stock</h3>
+  <figure class="mid"><img src="img/craft-tab-price.webp" alt="Price, sale price, pieces in stock, item code, feature on the home screen" loading="lazy"></figure>
+  <ul>
+    <li><b>Price</b> and an optional <b>Sale price</b> (shows a <i>Sale</i> tag and the old price struck through).</li>
+    <li><b>Pieces in stock</b>: leave blank for made-to-order or unlimited. Stock goes down when an order is placed and comes back if it is cancelled. At 0 the craft shows <i>Sold out</i>; at five or fewer it shows <i>Only 2 left</i> (with the number).</li>
+    <li><b>Item code (SKU)</b>: your own reference, shown on orders.</li>
+    <li><b>Feature on the home screen</b>: featured crafts come first in the shop and the app.</li>
+  </ul>
+
+  <h3 id="crafts-artisan">Artisan</h3>
+  <figure class="mid"><img src="img/craft-tab-artisan.webp" alt="Made by: Rupa Kalita — Sualkuchi, Kamrup, Assam" loading="lazy"></figure>
+  <p><b>Made by</b>: choose the artisan, or <span class="ui">Add a new artisan</span>. The artisan decides how this craft is shipped and paid for; those marked “(ships directly)” are paid directly. Craft types ticked here are added to the artisan too.</p>
+
+  <h3 id="crafts-making">Making process</h3>
+  <figure class="mid"><img src="img/craft-tab-making.webp" alt="Materials, technique, time to make, place of origin, video and three steps" loading="lazy"></figure>
+  <p>Materials, technique, time taken, place of origin and a making-process video. Under <b>Step by step</b>, add each step with a title, a description and a photo; drag to reorder. On the website these become the <i>How it is made</i> tab.</p>
+
+  <h3 id="crafts-care">Care and more photos</h3>
+  <div class="pair">
+    <figure><img src="img/craft-tab-care.webp" alt="Care instructions" loading="lazy"></figure>
+    <figure><img src="img/craft-tab-photos.webp" alt="More photos: Choose images" loading="lazy"></figure>
+  </div>
+  <p><b>Care instructions</b>, one per line. <b>More photos</b>: other angles, close-ups of the weave or texture, the piece in use.</p>
+
+  <h2 id="crafts-types">Craft types</h2>
+  <figure class="mid"><img src="img/craft-types.webp" alt="Craft types: Bell metal, Cane and bamboo, Handloom, Terracotta, with counts" loading="lazy"></figure>
+  <p><span class="ui">Artisan Outlet → Craft types</span>. They become the filter chips in the shop and the app, and can start a shortcode filtered: <code>[ao_outlet craft_type="handloom"]</code> uses the slug.</p>
+  <div class="callout tip"><b>Block editor</b>Craft and artisan pages use the classic editor so the details box sits right under the text. A developer can switch to the block editor with <code>add_filter( 'ao_use_block_editor', '__return_true' );</code>.</div>
+</section>
+
+<!-- ═══════════════════════════════ 6. WEBSITE ═══════════════════════════════ -->
+<section class="chapter" id="website" data-title="The shop on your website">
+  <p class="kicker">Selling</p>
+  <h1>The shop on your website</h1>
+  <p class="lead">One shortcode, <code>[ao_outlet]</code>, puts the whole shop on a page, with tabs for Crafts, Artisans, Cart and Track order. Every craft and artisan also has a page of its own.</p>
+
+  <h2 id="website-tabs">The shop page</h2>
+  <div class="pair">
+    <figure><img src="img/shop-filter.webp" alt="Crafts tab filtered to Handloom" loading="lazy"><figcaption><b>Crafts</b>: search, and filter by craft type.</figcaption></figure>
+    <figure><img src="img/shop-artisans.webp" alt="Artisans tab: four artisan cards" loading="lazy"><figcaption><b>Artisans</b>: each with place, tradition and generations.</figcaption></figure>
+  </div>
+  <p>The <b>Cart</b> tab shows a count when the cart has something in it; <b>Track order</b> finds an order by its number. On other pages, a floating cart button appears at the bottom corner once the cart has something in it.</p>
+  <figure class="phone"><img src="img/cart-fab.webp" alt="The floating cart button with a count of 2" loading="lazy" style="max-width:160px"></figure>
+
+  <h2 id="website-craft">A craft’s page</h2>
+  <figure><img src="img/craft-page-top.webp" alt="Muga silk mekhela chador: photo, craft type, the artisan, description, price, quantity, Add to cart, Only 2 left, and quick facts" loading="lazy"><figcaption>Photos, the craft type, the artisan, the short description, price with <span class="ui">Add to cart</span>, and quick facts.</figcaption></figure>
+  <div class="gallery">
+    <figure><img src="img/craft-page-making.webp" alt="How it is made tab: facts and three numbered steps" loading="lazy"><figcaption><b>How it is made</b>.</figcaption></figure>
+    <figure><img src="img/craft-page-care.webp" alt="Care tab" loading="lazy"><figcaption><b>Care</b>.</figcaption></figure>
+    <figure><img src="img/craft-page-artisan.webp" alt="The artisan tab with Read the family story" loading="lazy"><figcaption><b>The artisan</b>.</figcaption></figure>
+  </div>
+  <p>Below the tabs is <i>More by this artisan</i>. Tabs with nothing in them are hidden. Adding <code>#making</code>, <code>#care</code> or <code>#artisan</code> to the page address opens that tab.</p>
+
+  <h2 id="website-artisan">An artisan’s page</h2>
+  <figure><img src="img/artisan-page-top.webp" alt="Rupa Kalita: portrait, tradition, place, introduction and figures" loading="lazy"><figcaption>Portrait, tradition, place and figures: generations, practising since, crafts in the shop.</figcaption></figure>
+  <div class="pair">
+    <figure><img src="img/artisan-page-story.webp" alt="Our story tab with Recognition" loading="lazy"><figcaption><b>Our story</b>, with awards under <i>Recognition</i>.</figcaption></figure>
+    <figure><img src="img/artisan-page-tradition.webp" alt="Family tradition: a timeline from 1958 to 2016" loading="lazy"><figcaption><b>Family tradition</b>: the timeline.</figcaption></figure>
+  </div>
+  <p>The other tabs are <b>Crafts</b> (everything they sell) and <b>Workshop</b> (the gallery and video). <code>#story</code>, <code>#tradition</code> and so on open a tab directly.</p>
+
+  <h2 id="website-cards">Card templates</h2>
+  <p>Choose one in <span class="ui">Settings → Shop display</span>, or for one page with <code>card_style="…"</code>.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:110px">Template</th><th style="width:110px"><code>card_style</code></th><th>Looks like</th></tr></thead>
+    <tbody>
+      <tr><td>Paired</td><td><code>paired</code></td><td>Craft on the left, its artisan on the right. The default.</td></tr>
+      <tr><td>Classic</td><td><code>simple</code></td><td>Photo, name, artisan, price.</td></tr>
+      <tr><td>Gallery</td><td><code>overlay</code></td><td>Large photo with the name and price over it.</td></tr>
+      <tr><td>List</td><td><code>list</code></td><td>Small photo beside the details; compact on phones.</td></tr>
+      <tr><td>Story</td><td><code>story</code></td><td>Photo, name, a short description, price and the artisan.</td></tr>
+      <tr><td>Minimal</td><td><code>minimal</code></td><td>Photo, name and price only.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="gallery">
+    <figure><img src="img/cards-paired.webp" alt="Paired cards" loading="lazy"><figcaption>Paired</figcaption></figure>
+    <figure><img src="img/cards-simple.webp" alt="Classic cards" loading="lazy"><figcaption>Classic</figcaption></figure>
+    <figure><img src="img/cards-overlay.webp" alt="Gallery cards" loading="lazy"><figcaption>Gallery</figcaption></figure>
+    <figure><img src="img/cards-list.webp" alt="List cards" loading="lazy"><figcaption>List</figcaption></figure>
+    <figure><img src="img/cards-story.webp" alt="Story cards" loading="lazy"><figcaption>Story</figcaption></figure>
+    <figure><img src="img/cards-minimal.webp" alt="Minimal cards" loading="lazy"><figcaption>Minimal</figcaption></figure>
+  </div>
+  <p>Cards per row is a maximum: paired cards need about 300 px each and classic cards about 150 px, so a phone shows one paired card or two classic cards per row.</p>
+
+  <h2 id="website-shortcodes">Shortcodes</h2>
+  <h3 id="website-outlet"><code>[ao_outlet]</code>: the whole shop</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:150px">Attribute</th><th style="width:170px">Default</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>tabs</code></td><td><code>crafts,artisans,cart,track</code></td><td>Which tabs to show, in order, e.g. <code>tabs="crafts,cart"</code>.</td></tr>
+      <tr><td><code>craft_type</code></td><td>—</td><td>Start filtered to one craft type (its slug).</td></tr>
+      <tr><td><code>artisan</code></td><td>—</td><td>Only one artisan’s crafts: the artisan’s ID, shown in the address bar when you edit them.</td></tr>
+      <tr><td><code>mode</code></td><td>—</td><td><code>mode="app"</code> embeds the phone app (needs Artisan Outlet Mobile).</td></tr>
+      <tr><td><code>height</code></td><td><code>760</code></td><td>App height with <code>mode="app"</code>: pixels or a share of the screen (<code>85vh</code>).</td></tr>
+      <tr><td><code>align</code></td><td>—</td><td><code>wide</code> or <code>full</code> lets the shop or app stretch beyond the theme’s content column.</td></tr>
+      <tr><td><code>card_style</code>, <code>columns</code> (1–6), <code>per_page</code> (1–60), <code>pagination</code> (<code>numbers</code>, <code>load_more</code>, <code>none</code>), <code>add_to_cart</code> (<code>yes</code>/<code>no</code>)</td><td>from Settings</td><td>The <a href="#settings-display">Shop display</a> settings for this page.</td></tr>
+      <tr><td><code>font_base</code>, <code>font_heading</code>, <code>font_title</code>, <code>font_price</code>, <code>font_artisan</code>, <code>font_button</code></td><td>from Settings</td><td>Font sizes in pixels.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Examples:</p>
+<pre class="code">[ao_outlet]
+[ao_outlet columns="3" per_page="9" pagination="load_more"]
+[ao_outlet card_style="simple" columns="4" font_title="20"]
+[ao_outlet craft_type="pottery" add_to_cart="no"]
+[ao_outlet mode="app" align="full" height="85vh" per_page="6"]</pre>
+
+  <h3 id="website-small">Smaller pieces</h3>
+  <div class="tbl-wrap"><table>
+    <tbody>
+      <tr><td style="width:300px"><code>[ao_crafts craft_type="" artisan="" featured="1" per_page="12"]</code></td><td>A grid of crafts, with the same display attributes; no pagination unless you add <code>pagination="numbers"</code>.</td></tr>
+      <tr><td><code>[ao_artisans craft_type="" columns="3"]</code></td><td>A grid of artisans.</td></tr>
+      <tr><td><code>[ao_checkout]</code></td><td>Cart and checkout (on the page created on activation).</td></tr>
+      <tr><td><code>[ao_track_order]</code></td><td>Order tracking (likewise).</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="website-app">The app inside a page</h2>
+  <figure class="mid"><img src="img/embedded-app.webp" alt="The phone app embedded in a website page" loading="lazy"><figcaption><code>[ao_outlet mode="app" height="760"]</code>: the app fills the width of the page’s content area and uses the extra width for more cards per row.</figcaption></figure>
+</section>
+
+<!-- ═══════════════════════════════ 7. BUYING ═══════════════════════════════ -->
+<section class="chapter" id="buying" data-title="How customers buy">
+  <p class="kicker">Selling</p>
+  <h1>How customers buy</h1>
+  <p class="lead">What a customer sees from cart to delivery. The same steps work in the website shop and the phone app. No account is needed: the order is found by its number and the customer’s mobile number or email.</p>
+
+  <h2 id="buying-cart">The cart</h2>
+  <div class="side">
+    <div>
+      <p><span class="ui">Add to cart</span> on a card changes to <i>Added to cart</i>. The cart shows whose crafts these are (“From Rupa Kalita”), quantities, shipping and the total.</p>
+      <p><b>One artisan per order.</b> Adding another artisan’s piece asks: <i>“Your cart has crafts from Rupa Kalita. Each order can contain one artisan’s crafts only. Empty the cart and add this piece?”</i> <span class="ui">Cancel</span> keeps the cart as it is.</p>
+      <p>Shipping is free once the items total reaches the <a href="#settings-shipping">free-shipping amount</a>. The cart is kept in the browser, so it survives closing the page.</p>
+    </div>
+    <figure class="wide"><img src="img/cart.webp" alt="Cart from Rupa Kalita: Eri silk stole and gamosa, subtotal, free shipping, total, Checkout" loading="lazy"></figure>
+  </div>
+
+  <h2 id="buying-checkout">Checkout</h2>
+  <div class="side">
+    <div>
+      <ol>
+        <li><b>Your details</b>: full name, <b>mobile number</b> (required) and email (optional, for updates).</li>
+        <li><b>Delivery address</b>: house and street, area or landmark, town or village, district, state and the 6-digit PIN code.</li>
+        <li>An optional <b>note for the artisan</b>.</li>
+        <li><b>Payment</b>: <i>UPI</i>, or <i>Cash on delivery</i> when it is allowed. For an artisan who ships, only UPI is offered: <i>“This artisan ships the parcel and receives your UPI payment directly.”</i></li>
+        <li><span class="ui">Place order</span>.</li>
+      </ol>
+    </div>
+    <figure class="wide"><img src="img/checkout.webp" alt="Checkout form: name, mobile, email, address, state, PIN code, note, payment method, totals, Place order" loading="lazy"></figure>
+  </div>
+
+  <h2 id="buying-upi">Paying by UPI</h2>
+  <div class="side">
+    <div>
+      <p>The order page opens with two steps:</p>
+      <ol>
+        <li><b>Pay by UPI.</b> The amount, the payee and their UPI ID (with <span class="ui">Copy</span>). On a computer there is a <b>QR code</b> to scan with any UPI app. On a phone there is a <span class="ui">Pay with a UPI app</span> button that opens Google Pay, PhonePe, Paytm or BHIM with the amount filled in, and the QR code under <span class="ui">Show QR code</span>.</li>
+        <li><b>Enter the payment reference.</b> After paying, the customer copies the 12-digit <b>UTR / UPI reference</b> from their UPI app and clicks <span class="ui">Submit</span>. The same reference can’t be used on two orders.</li>
+      </ol>
+      <p>The order then waits for whoever received the money (the shop, or the artisan who ships) to check their bank.</p>
+    </div>
+    <figure class="wide"><img src="img/pay-upi-desktop.webp" alt="Order HK-1 awaiting payment: Step 1 pay by UPI with amount, UPI ID and QR code; Step 2 enter the payment reference" loading="lazy"></figure>
+  </div>
+  <div class="pair">
+    <figure><img src="img/pay-reference-sent.webp" alt="Thank you! We have your payment reference. We will confirm it after checking our bank." loading="lazy"><figcaption>Reference received.</figcaption></figure>
+    <figure><img src="img/customer-not-received.webp" alt="The payment step shown again with an update: the payment with this reference could not be found" loading="lazy"><figcaption>If the payee taps <i>Not received</i>, the reason appears in the updates and the customer can enter the reference again.</figcaption></figure>
+  </div>
+  <p>An order with no reference is cancelled automatically after the time set in <a href="#settings-payments">Payments</a> (48 hours by default), and its stock is released. Until a reference is given, the customer can cancel it themselves with <span class="ui">Cancel order</span>.</p>
+
+  <h2 id="buying-cod">Cash on delivery</h2>
+  <figure class="mid"><img src="img/order-cod.webp" alt="Order HK-2 confirmed: pay in cash when the parcel arrives, with a progress bar" loading="lazy"><figcaption>A COD order is confirmed straight away: <i>Pay in cash when the parcel arrives</i>, including any COD fee.</figcaption></figure>
+
+  <h2 id="buying-track">Tracking an order</h2>
+  <div class="pair">
+    <figure><img src="img/track-form.webp" alt="Track order form: order number and mobile number" loading="lazy"><figcaption>Order number, and the mobile number or email used at checkout.</figcaption></figure>
+    <figure><img src="img/customer-shipped.webp" alt="Order HK-1 shipped: progress bar, India Post tracking number, updates" loading="lazy"><figcaption>Progress from Confirmed to Delivered, the courier and tracking number, and every update.</figcaption></figure>
+  </div>
+  <p>The order page also opens from the link in the customer’s emails. With a tracking address set for the courier, a <span class="ui">Track on courier site</span> link appears. Notes that staff mark <i>Show to the customer</i> appear among the updates.</p>
+
+  <h2 id="buying-emails">Emails customers get</h2>
+  <p>If they gave an email: order placed (with payment details), payment received, payment not found, shipped (with tracking), delivered, and cancelled.</p>
+</section>
+
+<!-- ═══════════════════════════════ 8. PHONE APP ═══════════════════════════════ -->
+<section class="chapter" id="app" data-title="The phone app">
+  <p class="kicker">Selling</p>
+  <h1>The phone app</h1>
+  <p class="lead">Artisan Outlet Mobile serves an app at <code>yoursite.com/craft-app/</code>. It opens in any phone browser and can be added to the home screen, after which it starts like any other app. It works with the same crafts, cart, orders and settings as the website.</p>
+
+  <figure class="hotspot-fig phone" data-legend="app-legend" data-spots='{"brand":{"x":2,"y":1.5,"w":70,"h":4.5},"account":{"x":84.5,"y":1.5,"w":12,"h":5},"hero":{"x":4.1,"y":8.8,"w":91.79,"h":12.5},"search":{"x":4.1,"y":21.82,"w":91.79,"h":5.92},"chips":{"x":0,"y":28.69,"w":100,"h":7.42},"craft":{"x":4.1,"y":36.11,"w":45.9,"h":38.58},"artisan":{"x":50,"y":36.11,"w":45.9,"h":38.58},"nav":{"x":1.54,"y":92.54,"w":96.92,"h":7.46}}' style="max-width:340px">
+    <div class="hotspot-img"><img src="img/app-home.webp" alt="The app home screen" width="390" height="844"></div>
+    <figcaption>The home screen.</figcaption>
+  </figure>
+  <ol class="legend" id="app-legend">
+    <li data-spot="brand" data-href="#settings-app"><span>App name</span>, from Settings → Mobile app.</li>
+    <li data-spot="account" data-href="#app-account"><span>Account</span>: your orders, sign in, the artisan section.</li>
+    <li data-spot="hero" data-href="#settings-app"><span>Headline and tagline</span>.</li>
+    <li data-spot="search" data-href="#app-browse"><span>Search crafts</span>.</li>
+    <li data-spot="chips" data-href="#crafts-types"><span>Craft types</span> to filter by.</li>
+    <li data-spot="craft" data-href="#app-browse"><span>A craft</span>: tap for its page, or <i>Add to cart</i>.</li>
+    <li data-spot="artisan" data-href="#app-browse"><span>Its artisan</span>: tap for their profile.</li>
+    <li data-spot="nav" data-href="#app-browse"><span>Home, Crafts, Artisans, Cart, Orders</span>. Signed-in artisans get <i>My work</i>.</li>
+  </ol>
+
+  <h2 id="app-open">Opening and installing</h2>
+  <ul>
+    <li>Share the address <code>yoursite.com/craft-app/</code>, put it in your menu, or let the <b>website banner</b> invite phone visitors (<a href="#settings-app">Settings → Mobile app</a>).</li>
+    <li>On Android with Chrome, an <span class="ui">Install app</span> button appears in the app; on an iPhone, use Safari’s Share → <i>Add to Home Screen</i>. The icon is your Site Icon.</li>
+    <li>When offline, the app says so and offers <span class="ui">Try again</span>. Updates to the plugins reach installed apps straight away.</li>
+  </ul>
+  <figure class="phone"><img src="img/phone-banner.webp" alt="Website on a phone with a banner: Browse crafts, meet the artisans and track orders in our app. Open" loading="lazy"><figcaption>The banner on the website, on a phone. Closing it hides it on that phone.</figcaption></figure>
+
+  <h2 id="app-browse">Browsing</h2>
+  <div class="phones">
+    <figure><img src="img/app-crafts.webp" alt="Crafts screen" loading="lazy"><figcaption>Crafts, with search and craft types.</figcaption></figure>
+    <figure><img src="img/app-craft.webp" alt="A craft: photo, name, artisan, price, quantity and Add to cart" loading="lazy"><figcaption>A craft. For an artisan who ships: <i>you pay them directly by UPI</i>.</figcaption></figure>
+    <figure><img src="img/app-craft-making.webp" alt="How it is made in the app" loading="lazy"><figcaption><i>How it is made</i>.</figcaption></figure>
+    <figure><img src="img/app-artisan.webp" alt="Artisan profile in the app" loading="lazy"><figcaption>An artisan’s profile.</figcaption></figure>
+    <figure><img src="img/app-artisans.webp" alt="Artisans list in the app" loading="lazy"><figcaption>Artisans.</figcaption></figure>
+  </div>
+  <p>Going back is instant and keeps your place in the list; results are remembered for two minutes.</p>
+
+  <h2 id="app-buy">Buying in the app</h2>
+  <div class="phones">
+    <figure><img src="img/app-cart.webp" alt="Cart in the app" loading="lazy"><figcaption>The cart.</figcaption></figure>
+    <figure><img src="img/app-checkout-payment.webp" alt="Checkout: UPI only for an artisan who ships" loading="lazy"><figcaption>Checkout: COD isn’t offered when the artisan ships.</figcaption></figure>
+    <figure><img src="img/app-pay.webp" alt="Pay with a UPI app button and Show QR code" loading="lazy"><figcaption><span class="ui">Pay with a UPI app</span> opens the customer’s UPI app.</figcaption></figure>
+    <figure><img src="img/app-pay-qr.webp" alt="QR code shown" loading="lazy"><figcaption><span class="ui">Show QR code</span>, to pay from another phone.</figcaption></figure>
+    <figure><img src="img/app-pay-sent.webp" alt="Reference received, the artisan will confirm it" loading="lazy"><figcaption>The reference is sent to the artisan.</figcaption></figure>
+  </div>
+
+  <h2 id="app-account">Orders and Account</h2>
+  <div class="phones">
+    <figure><img src="img/app-orders.webp" alt="Your orders: orders on this device, and find an order" loading="lazy"><figcaption><b>Orders</b>: those placed on this phone, and <i>Find an order</i>.</figcaption></figure>
+    <figure><img src="img/app-order-photos.webp" alt="Order updates with packing and docket photos" loading="lazy"><figcaption>Updates on an order, including the artisan’s photos.</figcaption></figure>
+    <figure><img src="img/app-account.webp" alt="Account: your orders, customer sign in, I am an artisan, open full website" loading="lazy"><figcaption><b>Account</b>: <i>I am an artisan</i> opens the <a href="#artisan-app">artisan section</a>.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ 9. FLOW ═══════════════════════════════ -->
+<section class="chapter" id="flow" data-title="How orders work">
+  <p class="kicker">Orders</p>
+  <h1>How orders work</h1>
+  <p class="lead">Every order has an <b>order status</b> (where the parcel is) and a <b>payment status</b> (where the money is). Who moves it along depends on how the artisan sells.</p>
+
+  <h2 id="flow-two-ways">The two ways an artisan sells</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:190px"></th><th>The website ships</th><th>The artisan ships</th></tr></thead>
+    <tbody>
+      <tr><td>Customer pays</td><td>the shop’s UPI ID, or cash on delivery</td><td>the <b>artisan’s own UPI ID</b> (UPI only)</td></tr>
+      <tr><td>Confirms the payment</td><td><span class="who staff">Store staff</span></td><td><span class="who artisan">Artisan</span> in the app (staff can do it for them)</td></tr>
+      <tr><td>Packs and ships</td><td><span class="who staff">Store staff</span></td><td><span class="who artisan">Artisan</span> in the app (staff can do it for them)</td></tr>
+      <tr><td>Money between them</td><td>the shop pays the artisan their share once <b>delivered</b> (a <i>payout</i>)</td><td>the artisan pays the shop its commission once <b>shipped</b> (a <i>commission</i> payment)</td></tr>
+      <tr><td>In the example</td><td>Rupa Kalita, Dipali Das</td><td>Hemanta Pal, Bikash Deka</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="flow-steps">An order, step by step</h2>
+  <div class="flow">
+    <div><b>Placed</b>Awaiting payment.<br><span class="who customer">Customer</span></div>
+    <div><b>Reference given</b>Payment to verify.<br><span class="who customer">Customer</span></div>
+    <div><b>Money received</b>Confirmed · Paid.<br><span class="who staff">Staff</span> or <span class="who artisan">artisan</span></div>
+    <div><b>Packed</b>Optional, with a photo.<br><span class="who staff">Staff</span> or <span class="who artisan">artisan</span></div>
+    <div><b>Shipped</b>Courier and tracking number.<br><span class="who staff">Staff</span> or <span class="who artisan">artisan</span></div>
+    <div><b>On the way</b>In transit, out for delivery.<br><span class="who staff">Staff</span> or <span class="who artisan">artisan</span></div>
+    <div><b>Delivered</b>Settlement falls due.<br><span class="who staff">Staff</span> or <span class="who artisan">artisan</span></div>
+  </div>
+  <p>A cash-on-delivery order starts at <i>Confirmed</i> and becomes <i>Paid</i> when it is delivered.</p>
+
+  <h2 id="flow-status">Order statuses</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:170px">Status</th><th>Meaning</th><th style="width:250px">Can move to</th></tr></thead>
+    <tbody>
+      <tr><td>Awaiting payment</td><td>Placed; UPI not yet confirmed.</td><td>Confirmed (by confirming the payment), Cancelled</td></tr>
+      <tr><td>Confirmed</td><td>Paid, or a COD order.</td><td>Packed, Shipped, Cancelled</td></tr>
+      <tr><td>Packed</td><td>Ready to go.</td><td>Shipped, Cancelled</td></tr>
+      <tr><td>Shipped</td><td>Handed to the courier. A courier must be chosen.</td><td>In transit, Out for delivery, Delivered, Returned</td></tr>
+      <tr><td>In transit, Out for delivery</td><td>Updates on the way, each with an optional location.</td><td>Each other, Delivered, Returned</td></tr>
+      <tr><td>Delivered</td><td>Done.</td><td>Returned</td></tr>
+      <tr><td>Cancelled, Returned</td><td>Closed.</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="flow-payment">Payment statuses</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:170px">Status</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Not paid</td><td>No reference yet (or a COD order not yet delivered).</td></tr>
+      <tr><td>Payment to verify</td><td>The customer gave a reference; the payee must check their bank.</td></tr>
+      <tr><td>Paid</td><td>The payee confirmed it, or a COD order was delivered.</td></tr>
+      <tr><td>Refund due</td><td>Cancelled after payment (or after a reference was given): the payee must refund the customer by UPI.</td></tr>
+      <tr><td>Refunded</td><td>The refund reference has been recorded.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="flow-cancel">Cancelling and refunds</h2>
+  <ul>
+    <li><b>Customers</b> can cancel online only while the order is unpaid and has no reference.</li>
+    <li><b>Staff</b>, and <b>artisans who ship</b> (“I cannot make this order”), can cancel until the parcel ships, giving a reason the customer sees.</li>
+    <li>The stock comes back. If money was paid, the payment becomes <i>Refund due</i>: whoever received it refunds the customer by UPI and records the <b>refund UTR</b>.</li>
+    <li>A settlement that was due on a cancelled or returned order is dropped.</li>
+  </ul>
+
+  <h2 id="flow-who">Who did what</h2>
+  <p>Every step is recorded in the order’s history with the time and who did it: <i>Customer</i>, <i>Artisan</i>, <i>Store staff</i>, <i>Automatic</i>, or <b>Store staff for the artisan</b> when staff act on an artisan-shipped order on the artisan’s behalf.</p>
+</section>
+
+<!-- ═══════════════════════════════ 10. ORDERS ═══════════════════════════════ -->
+<section class="chapter" id="orders" data-title="Running orders (staff)">
+  <p class="kicker">Orders</p>
+  <h1>Running orders (staff)</h1>
+  <p class="lead">The store team works from the dashboard: see what needs doing, open the order, take the next step. Staff with the <i>Store staff</i> role can do everything in this chapter.</p>
+
+  <h2 id="orders-dashboard">The dashboard</h2>
+  <figure><img src="img/dashboard.webp" alt="Dashboard: 2 payments to verify, 1 order to pack and ship, 1 waiting on artisans, 0 refunds due, 0 settlements awaiting confirmation, this month, latest orders" loading="lazy"></figure>
+  <p><span class="ui">Artisan Outlet → Dashboard</span> counts what is waiting: <b>payments to verify</b>, <b>orders to pack &amp; ship</b>, orders <b>waiting on artisans</b> (artisan-shipped orders not yet done), <b>refunds due</b> and <b>settlements awaiting confirmation</b>. Click a number to see those orders. Below are this month’s paid orders, sales and commission, and the latest orders.</p>
+
+  <h2 id="orders-list">The order list</h2>
+  <figure><img src="img/orders-list.webp" alt="Orders list with filters, artisan filter, search, and columns for customer, artisan, status, payment, total and settlement" loading="lazy"></figure>
+  <ul>
+    <li>Filters: <i>Payments to verify</i>, <i>Awaiting payment</i>, <i>To pack &amp; ship</i>, <i>On the way</i>, <i>Delivered</i>, <i>Refund due</i>, <i>Cancelled / returned</i>, and one artisan.</li>
+    <li><b>Search</b> by order number, name, phone, UTR or tracking number.</li>
+    <li>Each row shows whether the artisan’s orders are <i>website ships</i> or <i>ships &amp; paid directly</i>, the payment method and reference, and the settlement.</li>
+  </ul>
+
+  <h2 id="orders-page">An order</h2>
+  <figure class="hotspot-fig" data-legend="order-legend" data-spots='{"status":{"x":0.55,"y":3.94,"w":98.9,"h":4.39},"items":{"x":0.55,"y":11.05,"w":64.71,"h":20.71},"history":{"x":0.55,"y":33.4,"w":64.71,"h":34.97},"customer":{"x":67.09,"y":11.05,"w":32.35,"h":22.92},"payment":{"x":67.09,"y":35.61,"w":32.35,"h":26.76},"shipping":{"x":67.09,"y":64,"w":32.35,"h":17.18},"money":{"x":67.09,"y":82.82,"w":32.35,"h":14.93}}'>
+    <div class="hotspot-img"><img src="img/order-verify.webp" alt="Order HK-1 awaiting payment, payment to verify" width="1280" height="860"></div>
+    <figcaption>Order HK-1 as it arrives: the customer has given a reference.</figcaption>
+  </figure>
+  <ol class="legend" id="order-legend">
+    <li data-spot="status" data-href="#flow-status"><span>Order number and statuses</span>, and where it was placed (website or app).</li>
+    <li data-spot="items" data-href="#orders-page"><span>Items</span> with item codes, shipping and total.</li>
+    <li data-spot="history" data-href="#orders-notes"><span>History</span> and notes.</li>
+    <li data-spot="customer" data-href="#orders-page"><span>Customer</span>, with call and WhatsApp links and the address.</li>
+    <li data-spot="payment" data-href="#orders-payment"><span>Payment</span>: confirm, or not received.</li>
+    <li data-spot="shipping" data-href="#orders-ship"><span>Shipping</span>: who ships, updates, cancel.</li>
+    <li data-spot="money" data-href="#money"><span>Website ↔ artisan</span>: the commission and the artisan’s share.</li>
+  </ol>
+
+  <h2 id="orders-payment">Confirming a payment</h2>
+  <div class="side">
+    <div>
+      <ol>
+        <li>Open your bank or UPI app and look for the amount and the reference shown.</li>
+        <li>Found it: <span class="ui">Money received — confirm payment</span> (with an optional note). The order becomes <i>Confirmed · Paid</i> and the customer is emailed.</li>
+        <li>Not there: type a reason for the customer and click <span class="ui">Not received — ask customer to check</span>. They see the reason and can enter the reference again.</li>
+      </ol>
+    </div>
+    <figure class="wide"><img src="img/order-panel-payment.webp" alt="Payment panel: UPI to the shop, reference, Money received and Not received buttons" loading="lazy"></figure>
+  </div>
+
+  <h2 id="orders-ship">Packing and shipping</h2>
+  <div class="side">
+    <div>
+      <p>In the <b>Shipping</b> box choose the next status and click <span class="ui">Update</span>:</p>
+      <ul>
+        <li><b>Packed</b> (optional).</li>
+        <li><b>Shipped</b>: choose the <b>courier</b> (required) and enter the <b>tracking number</b>.</li>
+        <li><b>In transit</b> and <b>Out for delivery</b>, each with an optional location, as often as you like.</li>
+        <li><b>Delivered</b>, or <b>Returned</b>.</li>
+      </ul>
+      <p>Each update can carry a note for the customer and a photo of the parcel or receipt.</p>
+    </div>
+    <figure class="wide"><img src="img/order-panel-shipping.webp" alt="Shipping panel: status Shipped, courier India Post, tracking number, location, note, Add photo, Update, Cancel order" loading="lazy"></figure>
+  </div>
+  <figure><img src="img/order-delivered.webp" alt="Order HK-1 delivered and paid, with full history" loading="lazy"><figcaption>HK-1 after delivery: every step in the history, and the payout to Rupa now due.</figcaption></figure>
+
+  <h2 id="orders-notes">Notes</h2>
+  <figure class="mid"><img src="img/order-panel-history.webp" alt="History with an internal note at the top, and the note box with Add photo and Show to the customer" loading="lazy"></figure>
+  <p>Under the history, type a note and click <span class="ui">Add note</span>. Notes are <i>internal</i> unless <span class="ui">Show to the customer</span> is ticked. A note can include a photo.</p>
+
+  <h2 id="orders-cancel">Cancelling and refunding</h2>
+  <p>In the Shipping box, type a reason (the customer sees it) and click <span class="ui">Cancel order</span>; this is possible until the order ships. If it was paid, the Payment box then asks you to <i>refund the customer by UPI, then record the reference</i>: enter the <b>Refund UTR</b> and click <span class="ui">Record refund</span>.</p>
+
+  <h2 id="orders-artisan">Orders an artisan ships</h2>
+  <div class="side">
+    <div>
+      <p>The artisan normally does every step in the app, and staff just watch. The same buttons are there in case the artisan can’t use the app, but use them only after confirming with the artisan by phone or WhatsApp. They are recorded as <b>“Store staff for the artisan”</b>.</p>
+      <p>For refunds on these orders, the artisan refunds from their own UPI account and records the reference.</p>
+    </div>
+    <figure class="wide"><img src="img/order-panel-artisan-payment.webp" alt="Payment panel on an artisan-shipped order with a warning to confirm with the artisan first" loading="lazy"></figure>
+  </div>
+
+  <h2 id="orders-staff-emails">Emails staff get</h2>
+  <p>At the address in <a href="#settings-store">Settings → Store</a>: new orders, payments to verify, an artisan cancelling an order, and settlements.</p>
+</section>
+
+<!-- ═══════════════════════════════ 11. ARTISAN SECTION ═══════════════════════════════ -->
+<section class="chapter" id="artisan-app" data-title="The artisan section">
+  <p class="kicker">Orders</p>
+  <h1>The artisan section of the app</h1>
+  <p class="lead">Artisans sign in to the phone app with their mobile number and PIN. Those who ship themselves run their orders here, from checking the payment to delivery, and settle up with the shop. Everything is a few large buttons, in the order the work happens.</p>
+
+  <h2 id="ap-signin">Signing in</h2>
+  <div class="phones">
+    <figure><img src="img/ap-account-entry.webp" alt="Account screen with I am an artisan" loading="lazy"><figcaption><span class="ui">Account → I am an artisan</span>, or the address <code>/craft-app/#/ap</code>.</figcaption></figure>
+    <figure><img src="img/ap-signin.webp" alt="Artisan sign in: mobile number and PIN" loading="lazy"><figcaption>The mobile number and 8-digit PIN from the shop (<a href="#artisans-login">App login</a>).</figcaption></figure>
+    <figure><img src="img/ap-todo.webp" alt="Namaste, Hemanta Pal: To do with one order, Check payment" loading="lazy"><figcaption><b>To do</b>: what needs the artisan now.</figcaption></figure>
+  </div>
+  <p>The tabs are <b>To do</b>, <b>On the way</b>, <b>Done</b> and <b>Money</b>. The bottom bar gains <span class="ui">My work</span>.</p>
+
+  <h2 id="ap-order">Working an order</h2>
+  <div class="phones">
+    <figure><img src="img/ap-check-payment.webp" alt="1. Check the payment: the customer says they paid with reference. Yes, money received / Not received" loading="lazy"><figcaption><b>1. Check the payment</b>: look in the bank or UPI app for the amount, then <span class="ui">Yes, money received</span> or <span class="ui">Not received</span> (with a reason for the customer).</figcaption></figure>
+    <figure><img src="img/ap-pack-photo.webp" alt="2. Pack the parcel with a photo added, Mark packed" loading="lazy"><figcaption><b>2. Pack the parcel</b>: add a photo if packing photos are on, then <span class="ui">Mark packed</span>.</figcaption></figure>
+    <figure><img src="img/ap-ship.webp" alt="3. Ship it: courier India Post, tracking number, docket photo, Mark shipped" loading="lazy"><figcaption><b>3. Ship it</b>: courier, tracking or receipt number, a photo of the docket, <span class="ui">Mark shipped</span>.</figcaption></figure>
+    <figure><img src="img/ap-on-the-way.webp" alt="Delivery updates: where is the parcel now, Add update, Out for delivery, Delivered" loading="lazy"><figcaption><b>Delivery updates</b>: where the parcel is, <i>Out for delivery</i>, <i>Delivered</i>.</figcaption></figure>
+    <figure><img src="img/ap-history.webp" alt="History with the docket and parcel photos" loading="lazy"><figcaption>The history, with the photos. The customer sees them too.</figcaption></figure>
+  </div>
+  <ul>
+    <li>The order shows the customer’s address with <span class="ui">Call</span> and <span class="ui">WhatsApp</span> buttons, the total and the website commission.</li>
+    <li><span class="ui">I cannot make this order</span> cancels it with a reason the customer sees. If it was paid, the artisan refunds by UPI and enters the <b>refund UTR</b>.</li>
+    <li>Photo buttons appear only for the steps switched on in <a href="#settings-artisans">Settings → Artisan app</a>.</li>
+  </ul>
+
+  <h2 id="ap-money">Money</h2>
+  <div class="phones">
+    <figure><img src="img/ap-money.webp" alt="Money: 180 owed to the store, pay commission with the order ticked, Pay with a UPI app" loading="lazy"><figcaption>What the artisan owes the shop, and what the shop owes them.</figcaption></figure>
+    <figure><img src="img/ap-pay-commission.webp" alt="UTR entered, I have paid" loading="lazy"><figcaption><b>Pay commission</b>: tick the orders, <span class="ui">Pay with a UPI app</span>, enter the UTR, <span class="ui">I have paid</span>.</figcaption></figure>
+    <figure><img src="img/ap-commission-sent.webp" alt="History: commission 180 waiting" loading="lazy"><figcaption>Sent to the store for confirmation: <i>Waiting</i> until staff confirm.</figcaption></figure>
+  </div>
+
+  <h2 id="ap-website">Artisans the website ships for</h2>
+  <div class="phones">
+    <figure><img src="img/ap-website-artisan.webp" alt="Namaste, Rupa Kalita: the store packs, ships and collects payment; My orders" loading="lazy"><figcaption><i>The store packs, ships and collects payment for your crafts.</i> They see their orders.</figcaption></figure>
+    <figure><img src="img/ap-payout-confirm.webp" alt="Did you receive this payment? 1,920 sent by the store, Received / Not received" loading="lazy"><figcaption>And confirm payouts: <span class="ui">Received</span> or <span class="ui">Not received</span>.</figcaption></figure>
+    <figure><img src="img/ap-payout-confirmed.webp" alt="Payout confirmed" loading="lazy"><figcaption>Confirmed.</figcaption></figure>
+  </div>
+  <p>Artisans with an email on their login also get emails for new orders, payments to verify and payouts to confirm.</p>
+</section>
+
+<!-- ═══════════════════════════════ 12. MONEY ═══════════════════════════════ -->
+<section class="chapter" id="money" data-title="Settling up with artisans">
+  <p class="kicker">Money</p>
+  <h1>Settling up with artisans</h1>
+  <p class="lead">Each order fixes, at the moment it is placed, the shop’s commission and the artisan’s share. Settling up means one side paying the other and the receiving side confirming it. Nothing counts as settled until the person who got the money says so.</p>
+
+  <h2 id="money-amounts">The amounts</h2>
+  <p>Commission is a percentage of the <b>items total</b>, not counting shipping. From the example orders:</p>
+  <div class="tbl-wrap"><table class="money">
+    <thead><tr><th>Order</th><th>Who ships</th><th>Items</th><th>Shipping</th><th>Commission</th><th>Artisan’s share</th><th>Who owes whom</th></tr></thead>
+    <tbody>
+      <tr><td>HK-1 (Rupa)</td><td>website</td><td>₹2,400</td><td>free</td><td>20% = ₹480</td><td>₹1,920</td><td>the shop pays Rupa ₹1,920 once <b>delivered</b></td></tr>
+      <tr><td>HK-4 (Hemanta)</td><td>artisan</td><td>₹1,200</td><td>₹120</td><td>15% = ₹180</td><td>₹1,020</td><td>Hemanta (who was paid ₹1,320) pays the shop ₹180 once <b>shipped</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="money-page">The Settlements page</h2>
+  <figure><img src="img/settlements.webp" alt="Settlements: balances per artisan and a commission waiting for confirmation with Received — confirm and Not received" loading="lazy"></figure>
+  <p><span class="ui">Artisan Outlet → Settlements</span> shows each artisan’s <b>balances</b> (commission owed to the website, payout owed to the artisan, amounts awaiting confirmation) and the payments <b>waiting for confirmation</b>. <span class="ui">Open</span> shows one artisan, with their orders due and history.</p>
+
+  <h3 id="money-commission">Commission from an artisan who ships</h3>
+  <ol class="steps">
+    <li><b>The artisan pays</b> from the app (<a href="#ap-money">Money → Pay commission</a>) and enters the UTR.</li>
+    <li><b>Check your bank</b>, then click <span class="ui">Received — confirm</span>, or <span class="ui">Not received</span>, which puts those orders back to <i>due</i>.</li>
+    <li>If the artisan paid you some other way, open the artisan and use <span class="ui">Record commission received</span> instead.</li>
+  </ol>
+  <figure class="mid"><img src="img/settlements-confirmed.webp" alt="Settlement confirmed: Hemanta's commission confirmed by store staff" loading="lazy"></figure>
+
+  <h3 id="money-payout">Payout to an artisan the website ships for</h3>
+  <ol class="steps">
+    <li><b>Open the artisan</b> on the Settlements page (or <span class="ui">Settle up</span> on their page). The orders due are listed and ticked, with the total.
+      <figure class="mid"><img src="img/settle-up.webp" alt="Settle up with Rupa Kalita: HK-1 ticked, 1,920, reference entered, Record payout sent" loading="lazy"></figure></li>
+    <li><b>Pay the artisan</b> by UPI or bank transfer (if they have a UPI ID, it is shown).</li>
+    <li><b>Enter the reference</b> and click <span class="ui">Record payout sent</span>. It waits for the artisan.
+      <figure class="mid"><img src="img/settle-up-recorded.webp" alt="Payout submitted, waiting for confirmation, with Artisan confirmed by phone and Not received" loading="lazy"></figure></li>
+    <li><b>The artisan confirms</b> in the app (<a href="#ap-website">Received</a>). If they can’t, and they confirm by phone, click <span class="ui">Artisan confirmed by phone</span>.</li>
+  </ol>
+  <figure class="mid"><img src="img/settlements-settled.webp" alt="Nothing to settle right now; history shows the payout confirmed by the artisan" loading="lazy"><figcaption>Settled: the history shows who confirmed it and when.</figcaption></figure>
+
+  <h2 id="money-report">Sales report</h2>
+  <figure class="mid"><img src="img/sales-report.webp" alt="Sales by artisan with a date range: orders, units, item sales, commission, artisan share, Download CSV" loading="lazy"></figure>
+  <p><span class="ui">Artisan Outlet → Sales report</span>: for any date range, per artisan, paid orders (with how many were direct), units, item sales, website commission and artisan share. COD orders count once delivered; totals exclude shipping. <span class="ui">Download CSV</span> for a spreadsheet.</p>
+</section>
+
+<!-- ═══════════════════════════════ 13. DEVELOPERS ═══════════════════════════════ -->
+<section class="chapter" id="developers" data-title="For developers">
+  <p class="kicker">Reference</p>
+  <h1>For developers</h1>
+  <h2 id="dev-data">Data</h2>
+  <ul>
+    <li>Crafts and artisans are post types <code>ao_craft</code> and <code>ao_artisan</code>, with the taxonomy <code>ao_craft_type</code>. Addresses: <code>/craft/…</code>, <code>/artisan/…</code>, archives <code>/crafts/</code> and <code>/artisans/</code>.</li>
+    <li>Orders live in their own tables: <code>ao_orders</code>, <code>ao_order_items</code>, <code>ao_order_events</code> (each event records the actor and an optional photo) and <code>ao_settlements</code>.</li>
+    <li>REST namespace <code>ao/v1</code>; the full list of routes is at the top of <code>includes/class-ao-rest.php</code>.</li>
+  </ul>
+  <h2 id="dev-hooks">Hooks</h2>
+  <div class="tbl-wrap"><table>
+    <tbody>
+      <tr><td style="width:260px"><code>ao_notify</code></td><td>Send SMS or WhatsApp: receives <code>$to_type</code>, <code>$order</code>, <code>$subject</code>, <code>$message</code>, <code>$context</code>. Hook it to your provider.</td></tr>
+      <tr><td><code>ao_payment_methods</code></td><td>Add an automatic payment gateway; call <code>AO_Orders::confirm_payment()</code> from its webhook.</td></tr>
+      <tr><td><code>ao_order_created</code>, <code>ao_order_event</code>, <code>ao_settlement_created</code>, <code>ao_settlement_updated</code></td><td>Actions after these happen.</td></tr>
+      <tr><td><code>ao_craft_data</code>, <code>ao_order_export</code>, <code>ao_order_view_url</code>, <code>ao_order_rate_limit</code></td><td>Filters for craft data, order data, the order page address and the order rate limit.</td></tr>
+      <tr><td><code>aom_app_slug</code></td><td>Change <code>craft-app</code> in the app address.</td></tr>
+      <tr><td><code>ao_use_block_editor</code></td><td>Use the block editor for crafts and artisans.</td></tr>
+    </tbody>
+  </table></div>
+  <h2 id="dev-lang">Translation</h2>
+  <p>All text is translatable (<code>artisan-outlet</code>, <code>artisan-outlet-mobile</code>). One translation, for example Hindi or Assamese, covers the website, the app and the artisan section. The QR code library is qrcode-generator by Kazuhiko Arase (MIT).</p>
+</section>
+
+<!-- ═══════════════════════════════ 14. TROUBLESHOOTING ═══════════════════════════════ -->
+<section class="chapter" id="troubleshooting" data-title="Troubleshooting and questions">
+  <p class="kicker">Help</p>
+  <h1>Troubleshooting and questions</h1>
+
+  <h2 id="trouble-app">The app or the craft pages show “Page not found”</h2>
+  <p>Pretty permalinks are off, or WordPress hasn’t refreshed its addresses. Open <span class="ui">Settings → Permalinks</span>, choose any setting except “Plain”, and click <span class="ui">Save Changes</span> (saving refreshes them).</p>
+
+  <h2 id="trouble-upi">The UPI ID isn’t saved</h2>
+  <p>It must look like <code>name@bank</code>: letters, digits, dots, hyphens or underscores, then <code>@</code> and the bank handle. The page says “The UPI ID does not look right” and keeps the old one.</p>
+
+  <h2 id="trouble-cod">Cash on delivery isn’t offered</h2>
+  <ul>
+    <li>The artisan ships their own orders (COD is never offered for them).</li>
+    <li>COD is switched off, or the order is over the <i>COD maximum order value</i> (<a href="#settings-payments">Settings → Payments</a>).</li>
+  </ul>
+
+  <h2 id="trouble-ref">“This transaction reference is already used on another order”</h2>
+  <p>Each UTR can be used once. The customer has probably copied an old reference; ask them to check their UPI app for the payment to this order.</p>
+
+  <h2 id="trouble-cancelled">An order cancelled itself</h2>
+  <p>UPI orders with no payment reference are cancelled after the hours set in <a href="#settings-payments">Payments</a> (48 by default), counted from when they were placed, and their stock is released. Set it to 0 to never cancel automatically.</p>
+
+  <h2 id="trouble-pin">An artisan forgot the PIN or can’t sign in</h2>
+  <p>On the artisan’s page, <span class="ui">App login</span> tab: tick <span class="ui">new PIN</span> and click <span class="ui">Update</span>. Give them the new PIN shown. The mobile number must be the one shown there.</p>
+
+  <h2 id="trouble-photo">No photo button in the artisan section</h2>
+  <p>Packing and docket photos are off by default: switch them on in <a href="#settings-artisans">Settings → Artisan app</a>.</p>
+
+  <h2 id="trouble-shipped">“Choose the courier before marking the order shipped”</h2>
+  <p>Pick a courier in the list. To add your own couriers, edit the list in <a href="#settings-shipping">Settings → Shipping &amp; commission</a>.</p>
+
+  <h2 id="trouble-faq">Questions</h2>
+  <h3>Do customers need an account?</h3>
+  <p>No. Orders are found by number plus the mobile number or email used at checkout. The app also remembers orders placed on that phone.</p>
+  <h3>Can one order contain crafts from two artisans?</h3>
+  <p>No. Each order goes from one artisan, so the customer places one order per artisan.</p>
+  <h3>Does changing an artisan’s commission change old orders?</h3>
+  <p>No. Commission and shipping are fixed on each order when it is placed.</p>
+  <h3>Can staff act for an artisan who has no smartphone?</h3>
+  <p>Yes: the order page has every button the artisan has. Confirm with the artisan by phone first; the history records it as “Store staff for the artisan”.</p>
+</section>
+
+<!-- ═══════════════════════════════ 15. CHANGES ═══════════════════════════════ -->
+<section class="chapter" id="changes" data-title="What’s new">
+  <p class="kicker">Help</p>
+  <h1>What’s new</h1>
+  <h2 id="v261">Core 2.6.1 · Mobile 2.4.1</h2>
+  <ul>
+    <li>Names with “&amp;” or an apostrophe now show correctly everywhere: craft types such as “Cane &amp; bamboo” and titles such as “Rupa’s stole” used to show HTML codes in the phone app, the website cart and payment pages, SMS or WhatsApp messages sent through <code>ao_notify</code>, and the sales-report CSV. Orders placed earlier display correctly too.</li>
+    <li>The UPI payment link no longer carries such codes in the payee’s name.</li>
+    <li>The <i>Feature on the home screen</i> tick box on the craft screen is a normal tick box again.</li>
+    <li>Mobile: when no app name is saved, the app and its home-screen label show the site title correctly even if it contains “&amp;” or quotes.</li>
+  </ul>
+  <h2 id="v260">Core 2.6.0 · Mobile 2.4.0</h2>
+  <ul>
+    <li>New <a href="#settings-artisans">Artisan app</a> settings tab: packing photos and courier docket photos as separate switches, both off by default.</li>
+    <li>Order photos are shrunk on the server (1280 px, 75% quality by default), keep only two small copies, and can be deleted automatically a set number of days after the order is finished. The tab shows the space used.</li>
+    <li>Fixed: opening an artisan order directly from a link showed no courier list. The add-on now needs core 2.6.0.</li>
+  </ul>
+  <h2 id="v251">Core 2.5.1</h2>
+  <p>Fixed: craft and artisan pages showed “There has been a critical error” when their Excerpt was empty.</p>
+  <h2 id="v250">Core 2.5.0 · Mobile 2.3.1</h2>
+  <p>New colour setting <i>Photo placeholder</i>, set by each colour theme.</p>
+  <h2 id="v240">Core 2.4.0 · Mobile 2.3.0</h2>
+  <p>Settings in tabs; six card templates; six colour themes and eleven colours with a live preview, shared by the website and the app; tabbed details boxes for crafts and artisans; redesigned craft and artisan pages; faster app with loading placeholders and instant Back.</p>
+  <h2 id="v230">Core 2.3.0 · Mobile 2.2.0</h2>
+  <p>Shop display settings shared by website and app; display attributes on <code>[ao_outlet]</code> and <code>[ao_crafts]</code>; Add to cart on cards; featured crafts first.</p>
+  <h2 id="v220">Core 2.2.0 · Mobile 2.1.0, and 2.1.0 · 2.0.1</h2>
+  <p>A new app home page of paired cards; <code>[ao_outlet]</code> (2.1.0), <code>mode="app"</code> filling the content width, <code>align</code>, and <code>height</code> in screen units.</p>
+  <h2 id="v200">Core 2.0.0 · Mobile 2.0.0</h2>
+  <p>Rebuilt without WooCommerce: own catalogue, cart, checkout, orders, shipping and tracking; UPI and COD; one artisan per order; the artisan section; settlements. (1.0.0 was built on WooCommerce.)</p>
+</section>
+
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Picture"><div><img alt=""><p></p></div></div>
+<button class="icon-btn to-top" id="to-top" type="button" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<script src="assets/js/manual.js"></script>
+</body>
+</html>

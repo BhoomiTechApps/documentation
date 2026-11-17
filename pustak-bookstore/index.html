@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pustak Bookstore user manual</title>
+<meta name="description" content="User manual for Pustak Bookstore 2.5.0, the WordPress bookstore plugin for India with UPI and Cash on Delivery.">
+<meta name="theme-color" content="#1f5c4a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f5c4a'/%3E%3Cpath d='M8 9.5c2.6-1.2 5.3-1.2 8 .4 2.7-1.6 5.4-1.6 8-.4v13c-2.6-1.1-5.3-1.1-8 .5-2.7-1.6-5.4-1.6-8-.5z' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M16 10v13' stroke='%23fff' stroke-width='1.8'/%3E%3C/svg%3E">
+<style>
+:root {
+	--accent: #1f5c4a;
+	--accent-soft: #e4efe9;
+	--accent-ink: #ffffff;
+	--bg: #fbf9f4;
+	--side: #f2ede2;
+	--side-hover: #e9e2d3;
+	--panel: #ffffff;
+	--text: #1f1d1a;
+	--muted: #5f5b52;
+	--line: #e2dccf;
+	--code: #f1ece2;
+	--warn: #8a5a12;
+	--warn-bg: #fbf1dc;
+	--note-bg: #e9f2ed;
+	--shadow: 0 1px 2px rgba(40, 30, 10, .06), 0 8px 24px rgba(40, 30, 10, .07);
+	--radius: 10px;
+	--sans: "Segoe UI", system-ui, -apple-system, Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+	--serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+	--mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+	color-scheme: light;
+}
+:root[data-theme="dark"] {
+	--accent: #7cc4a6;
+	--accent-soft: #1f3a31;
+	--accent-ink: #0f1d18;
+	--bg: #16181a;
+	--side: #1d2023;
+	--side-hover: #262a2e;
+	--panel: #1f2225;
+	--text: #ece8df;
+	--muted: #a8a397;
+	--line: #34383c;
+	--code: #2a2e32;
+	--warn: #f0c27a;
+	--warn-bg: #3a2f1c;
+	--note-bg: #1d3029;
+	--shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .3);
+	color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 84px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 6px; }
+.skip:focus { left: 8px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Header */
+.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; height: 64px; padding: 0 18px; background: var(--bg); border-top: 3px solid var(--accent); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; min-width: 0; }
+.brand-mark { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; background: var(--accent); color: var(--accent-ink); }
+.brand-mark svg { width: 22px; height: 22px; }
+.brand b { font-size: 18px; white-space: nowrap; }
+.brand small { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.search { position: relative; flex: 1; max-width: 460px; margin-left: auto; }
+.search input { width: 100%; height: 38px; padding: 0 40px 0 36px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--text); font: inherit; font-size: 15px; }
+.search > svg { position: absolute; left: 11px; top: 11px; width: 16px; height: 16px; color: var(--muted); }
+.search kbd { position: absolute; right: 9px; top: 8px; font: 12px var(--mono); padding: 1px 6px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); background: var(--bg); }
+.results { position: absolute; top: 44px; left: 0; right: 0; max-height: 70vh; overflow: auto; margin: 0; padding: 6px; list-style: none; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+.results[hidden] { display: none; }
+.results a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
+.results a:hover, .results a.is-active { background: var(--accent-soft); }
+.results b { display: block; font-size: 15px; }
+.results span { display: block; font-size: 13px; color: var(--muted); }
+.results mark { background: #f5df9a; color: inherit; border-radius: 2px; }
+:root[data-theme="dark"] .results mark { background: #6b5a20; }
+.results .none { padding: 10px; color: var(--muted); font-size: 14px; }
+.tools { display: flex; gap: 8px; }
+.icon-btn { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--text); cursor: pointer; }
+.icon-btn svg { width: 18px; height: 18px; }
+.menu-btn { display: none; }
+
+/* Layout */
+.wrap { display: grid; grid-template-columns: 290px minmax(0, 1fr); min-height: calc(100vh - 64px); }
+.side { position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; padding: 16px 12px 24px; background: var(--side); border-right: 1px solid var(--line); }
+.side ol { list-style: none; margin: 0; padding: 0; }
+.side > nav > ol > li { margin: 2px 0; }
+.side .ch { display: flex; gap: 10px; align-items: baseline; padding: 8px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 15px; line-height: 1.35; }
+.side .ch:hover { background: var(--side-hover); }
+.side .ch span:first-child { flex: none; width: 1.5em; color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+.side .ch.is-active { background: var(--accent); color: var(--accent-ink); }
+.side .ch.is-active span:first-child { color: inherit; opacity: .85; }
+.side .sub { margin: 4px 0 8px 26px; padding-left: 10px; border-left: 1px solid var(--line); }
+.side .sub a { display: block; padding: 5px 10px; border-radius: 6px; color: var(--muted); text-decoration: none; font-size: 14px; line-height: 1.35; }
+.side .sub a:hover { background: var(--side-hover); color: var(--text); }
+.side .sub a.is-here { color: var(--accent); font-weight: 600; }
+.side-foot { margin: 20px 10px 0; font-size: 13px; color: var(--muted); }
+
+main { padding: 40px 48px 80px; min-width: 0; }
+.chapter { max-width: 780px; }
+.chapter[hidden] { display: none; }
+.eyebrow { margin: 0 0 6px; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+h1 { margin: 0 0 14px; font-size: 38px; line-height: 1.15; letter-spacing: -.01em; }
+h2 { margin: 52px 0 14px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 26px; line-height: 1.25; }
+h1 + .lead + h2, .lead + h2 { margin-top: 36px; }
+h3 { margin: 32px 0 10px; font-size: 20px; line-height: 1.3; }
+h4 { margin: 22px 0 6px; font-size: 17px; }
+.anchor { margin-left: 8px; color: var(--muted); text-decoration: none; opacity: 0; font-weight: 400; }
+h2:hover .anchor, h3:hover .anchor, .anchor:focus { opacity: 1; }
+.lead { font-size: 19px; color: var(--muted); }
+.lead strong { color: var(--text); }
+p, ul, ol { margin: 0 0 14px; }
+li { margin-bottom: 6px; }
+li > ul, li > ol { margin-top: 6px; }
+code { font: .86em var(--mono); background: var(--code); padding: .12em .38em; border-radius: 4px; overflow-wrap: anywhere; }
+pre { margin: 0 0 16px; padding: 14px 16px; overflow-x: auto; background: var(--code); border-radius: 8px; font: 14px/1.6 var(--mono); }
+pre code { background: none; padding: 0; font-size: inherit; }
+.ui { font-weight: 600; }
+kbd { font: 13px var(--mono); padding: 1px 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; background: var(--panel); }
+
+/* Tables */
+.table { overflow-x: auto; margin: 0 0 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+th, td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+thead th { background: var(--side); font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+td:first-child { font-weight: 600; }
+td small { display: block; font-weight: 400; color: var(--muted); }
+table.plain td:first-child { font-weight: 400; }
+
+/* Figures */
+figure { margin: 22px 0 26px; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); background: #fff; }
+figure.narrow img { max-width: 360px; }
+figure.small img { max-width: 520px; }
+figure.phone img { max-width: 300px; border-radius: 22px; }
+figcaption { margin-top: 10px; text-align: center; color: var(--muted); font-size: 14px; font-style: italic; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; margin: 22px 0 26px; }
+.pair figure { margin: 0; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: start; margin: 22px 0 26px; }
+.trio figure { margin: 0; }
+
+/* Callouts */
+.note, .warn { margin: 18px 0; padding: 14px 16px 14px 46px; border-radius: var(--radius); position: relative; font-size: 16px; }
+.note { background: var(--note-bg); }
+.warn { background: var(--warn-bg); }
+.note::before, .warn::before { position: absolute; left: 16px; top: 13px; font-weight: 700; font-size: 18px; }
+.note::before { content: "✓"; color: var(--accent); }
+.warn::before { content: "!"; color: var(--warn); left: 21px; }
+.note p:last-child, .warn p:last-child, .note ul:last-child { margin-bottom: 0; }
+
+/* Tiles */
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin: 18px 0 8px; }
+.tile { display: block; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--text); text-decoration: none; transition: border-color .15s, transform .15s; }
+.tile:hover { border-color: var(--accent); transform: translateY(-1px); }
+.tile i { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 10px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-style: normal; font-size: 18px; }
+.tile h4 { margin: 0 0 4px; }
+.tile p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+/* Steps */
+ol.steps { list-style: none; counter-reset: s; padding: 0; }
+ol.steps > li { counter-increment: s; position: relative; padding-left: 42px; margin-bottom: 12px; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: 14px; font-weight: 700; }
+
+/* Status pills (as in the plugin) */
+.pill { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 13px; font-weight: 600; white-space: nowrap; background: #eceae4; color: #3c3a35; }
+.pill.awaiting { background: #fbe7c6; color: #7a4a00; }
+.pill.verifying { background: #e5dcf7; color: #4b2d8a; }
+.pill.confirmed { background: #d9eee3; color: #155b3b; }
+.pill.shipped { background: #d8e7f7; color: #1d4f86; }
+.pill.delivered { background: #1f5c4a; color: #fff; }
+.pill.cancelled { background: #f6dcdc; color: #8d2525; }
+.pill.returned { background: #efe4d6; color: #6b4a22; }
+
+/* Email sample */
+.email { margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
+.email header { padding: 10px 16px; background: var(--side); font-size: 14px; color: var(--muted); }
+.email header b { color: var(--text); }
+.email pre { margin: 0; border-radius: 0; background: var(--panel); white-space: pre-wrap; font-size: 13.5px; }
+
+/* Chapter navigation */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 56px; }
+.pager a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--text); text-decoration: none; font-weight: 600; }
+.pager a:hover { border-color: var(--accent); }
+.pager a span { display: block; font-size: 13px; color: var(--muted); font-weight: 500; }
+.pager .next { grid-column: 2; text-align: right; }
+
+.totop { position: fixed; right: 20px; bottom: 20px; z-index: 10; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--text); box-shadow: var(--shadow); cursor: pointer; display: grid; place-items: center; }
+.totop[hidden] { display: none; }
+.totop svg { width: 18px; height: 18px; }
+
+@media (max-width: 960px) {
+	.wrap { grid-template-columns: 1fr; }
+	.side { position: fixed; top: 64px; left: 0; bottom: 0; width: min(320px, 86vw); z-index: 30; transform: translateX(-100%); transition: transform .2s; box-shadow: var(--shadow); }
+	.side.is-open { transform: none; }
+	.menu-btn { display: grid; }
+	main { padding: 28px 20px 70px; }
+	.brand small { display: none; }
+	h1 { font-size: 31px; }
+	.pair, .trio { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+	.search kbd { display: none; }
+	.brand b { display: none; }
+	.top { gap: 10px; padding: 0 12px; }
+	body { font-size: 16px; }
+}
+@media print {
+	.top, .side, .pager, .totop, .skip, .anchor { display: none !important; }
+	.wrap { display: block; }
+	main { padding: 0; }
+	.chapter, .chapter[hidden] { display: block !important; max-width: none; page-break-before: always; }
+	.chapter:first-of-type { page-break-before: auto; }
+	figure, .table, .note, .warn, .email { break-inside: avoid; }
+	body { background: #fff; color: #000; font-size: 11.5pt; }
+	figure img { box-shadow: none; max-height: 120mm; width: auto; }
+	a { color: inherit; text-decoration: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script>
+(function () { try { var t = localStorage.getItem('pk-manual-theme'); if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {} })();
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to the manual</a>
+<header class="top">
+	<button class="icon-btn menu-btn" type="button" aria-label="Chapters" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+	<a class="brand" href="#welcome">
+		<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5c3-1.4 6-1.4 9 .5 3-1.9 6-1.9 9-.5v13c-3-1.3-6-1.3-9 .6-3-1.9-6-1.9-9-.6z"/><path d="M12 6v13"/></svg></span>
+		<b>Pustak Bookstore</b>
+		<small>User manual · 2.5.0</small>
+	</a>
+	<div class="search" role="search">
+		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+		<input type="search" id="q" placeholder="Search the manual" aria-label="Search the manual" autocomplete="off" aria-controls="results" aria-expanded="false">
+		<kbd aria-hidden="true">/</kbd>
+		<ul class="results" id="results" role="listbox" hidden></ul>
+	</div>
+	<div class="tools">
+		<button class="icon-btn" type="button" id="theme" aria-label="Switch light or dark" title="Switch light or dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+		<button class="icon-btn" type="button" id="print" aria-label="Print the whole manual" title="Print the whole manual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 9V3h10v6M7 17H4v-7a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v7h-3"/><path d="M7 14h10v7H7z"/></svg></button>
+	</div>
+</header>
+<div class="wrap">
+	<aside class="side" id="side" aria-label="Chapters">
+		<nav><ol id="toc"></ol></nav>
+		<p class="side-foot">Written for Pustak Bookstore 2.5.0 · <a href="#changes">What’s new</a></p>
+	</aside>
+	<main id="content" tabindex="-1">
+<section class="chapter" id="welcome" data-title="Welcome">
+<p class="eyebrow">Pustak Bookstore user manual</p>
+<h1>Welcome to Pustak Bookstore</h1>
+<p class="lead">Pustak turns a WordPress site into an online bookshop for India. You list books with their price and stock, customers buy them in a few taps, and they pay by <strong>UPI</strong> (Google Pay, PhonePe, Paytm, BHIM or any bank app) or <strong>Cash on Delivery</strong>. There is no payment gateway and no fees. Orders, shipping, tracking, returns and refunds are all kept in the plugin. No WooCommerce is needed.</p>
+<figure>
+	<img src="images/store.webp" width="1800" height="1209" alt="The bookstore page: an announcement bar, a heading, a search box, sort menu and genre buttons, then a Staff picks row of book covers with prices and Add to cart buttons">
+	<figcaption>The store on a website. The examples in this manual use a sample shop, “Brahmaputra Books” in Guwahati, with three fictional local authors.</figcaption>
+</figure>
+
+<h2 id="what-it-does">What you can do with it</h2>
+<div class="tiles">
+	<a class="tile" href="#books"><i aria-hidden="true">📚</i><h4>List your books</h4><p>Price and MRP, stock, ISBN, language, pages, new or pre-owned, and a cover — or a generated cloth-bound one.</p></a>
+	<a class="tile" href="#storefront"><i aria-hidden="true">🎨</i><h4>Design the store</h4><p>Six one-click looks, colours, fonts for Hindi and Assamese/Bengali titles, grid, list or shelves, with a live preview.</p></a>
+	<a class="tile" href="#buying"><i aria-hidden="true">₹</i><h4>Sell with UPI or COD</h4><p>A QR code on computers, Google Pay / PhonePe / Paytm buttons on phones, and Cash on Delivery with limits.</p></a>
+	<a class="tile" href="#orders"><i aria-hidden="true">📦</i><h4>Run the orders</h4><p>Confirm payments, ship with a tracking number, keep customers informed by email, cancel and restock.</p></a>
+	<a class="tile" href="#returns"><i aria-hidden="true">↩</i><h4>Handle returns</h4><p>Customers ask for a return from the tracking page; you record what came back and the refund you sent.</p></a>
+	<a class="tile" href="#direct"><i aria-hidden="true">✍</i><h4>Let authors sell</h4><p>Authors sell their own books through your store, are paid directly, and run their orders from a private page.</p></a>
+</div>
+
+<h2 id="people">Who uses it</h2>
+<div class="table"><table>
+	<thead><tr><th>Person</th><th>Where they work</th><th>What they do</th></tr></thead>
+	<tbody>
+		<tr><td>Customer</td><td>The store page, the book pages and the Track Order page</td><td>Browse, buy, pay, give the UPI reference number, track the order, ask for a return. No account is needed.</td></tr>
+		<tr><td>Store staff</td><td>The WordPress dashboard (Editor or Administrator)</td><td>Add books and authors, confirm payments, ship orders, record returns and refunds.</td></tr>
+		<tr><td>Author selling directly</td><td>Their private order page (a link, no login)</td><td>Confirm that the customer’s payment arrived, send the parcel, answer return requests, mark refunds sent.</td></tr>
+		<tr><td>Administrator</td><td>The dashboard</td><td>Everything staff can do, plus <a href="#settings-page">Settings</a>, the <a href="#storefront">Storefront</a> designer and <a href="#direct">Direct sales</a>.</td></tr>
+	</tbody>
+</table></div>
+
+<h2 id="ideas">Four ideas to know first</h2>
+<ol class="steps">
+	<li><strong>A person confirms each UPI payment.</strong> UPI pay-links send money straight to your UPI ID, so no bank tells the plugin that it arrived. The customer pays and types in the 12-digit UPI reference number (UTR). You find that payment in your UPI app or bank statement and click <span class="ui">Payment received</span>. See <a href="#flow-upi">How UPI payments work</a>.</li>
+	<li><strong>Stock is reserved when the order is placed.</strong> Copies come off stock as soon as an order is placed, and go back if you cancel it. Cancel unpaid UPI orders after a day or two so the books can be sold again.</li>
+	<li><strong>One seller per order.</strong> A cart holds either your store’s own books or one author’s books — never a mix. So every order has one seller, one payment, one parcel and one tracking number. See <a href="#direct-one-source">One seller per order</a>.</li>
+	<li><strong>Customers don’t need an account.</strong> They track an order with its number and their mobile number, and their details are remembered on their own device for next time.</li>
+</ol>
+</section>
+
+<section class="chapter" id="install" data-title="Installing">
+<p class="eyebrow">Getting started</p>
+<h1>Installing</h1>
+<p class="lead">Pustak is one plugin. It works with block themes and classic themes, and needs nothing else.</p>
+
+<h2 id="install-needs">What you need</h2>
+<ul>
+	<li>WordPress 6.0 or later and PHP 7.4 or later.</li>
+	<li>A UPI ID to be paid on. A <strong>business or merchant UPI ID</strong> (Google Pay for Business, PhonePe Business, Paytm Business or your bank’s merchant UPI) works best: some UPI apps block pay-links with a fixed amount to personal UPI IDs, though scanning the QR code still works.</li>
+	<li>Working email from your site, so that you, your customers and your authors are told about orders. Many hosts don’t send WordPress email reliably; an SMTP plugin such as WP Mail SMTP fixes that.</li>
+</ul>
+
+<h2 id="install-steps">Installing the plugin</h2>
+<ol class="steps">
+	<li>In the dashboard, go to <span class="ui">Plugins → Add New → Upload Plugin</span>, choose <code>pustak.zip</code> and click <span class="ui">Install Now</span>, then <span class="ui">Activate</span>.</li>
+	<li>Go to <span class="ui">Bookstore → Settings</span>, enter your UPI ID and save. Scan the test QR code that appears with your phone to check that a ₹1 payment would reach the right account (you don’t need to complete it).</li>
+	<li>Add books under <span class="ui">Bookstore → Add New Book</span> — or click <span class="ui">Add 6 sample books</span> on the Settings page to try the store first. Delete the samples any time.</li>
+	<li>Add the <strong>Bookstore</strong> and <strong>Track Order</strong> pages to your site’s menu.</li>
+</ol>
+<p>Activating the plugin creates those two pages for you:</p>
+<div class="table"><table>
+	<thead><tr><th>Page</th><th>Contains</th><th>What it is</th></tr></thead>
+	<tbody>
+		<tr><td>Bookstore</td><td><code>[pustak_store]</code></td><td>The catalogue, with search, genres, cart and checkout.</td></tr>
+		<tr><td>Track Order</td><td><code>[pustak_track]</code></td><td>Where customers look up an order, pay, see its progress and ask for a return.</td></tr>
+	</tbody>
+</table></div>
+<p>If either page is deleted, <span class="ui">Recreate missing store pages</span> on the Settings page makes it again.</p>
+
+<h2 id="install-menu">The Bookstore menu</h2>
+<div class="pair">
+	<figure class="narrow"><img src="images/menu.webp" width="240" height="460" alt="The Bookstore menu: All Books, Add New Book, Genres, Storefront, Authors, Orders with a count of 5, Settings, Direct sales" loading="lazy"><figcaption>The red count on Orders is how many need you.</figcaption></figure>
+	<div class="table"><table>
+		<thead><tr><th>Item</th><th>What it is for</th></tr></thead>
+		<tbody>
+			<tr><td>All Books</td><td>Your catalogue, with cover, author, price, stock and seller. <a href="#books-list">More</a></td></tr>
+			<tr><td>Add New Book</td><td>A new book. <a href="#books">More</a></td></tr>
+			<tr><td>Genres</td><td>The genre buttons in the store, and the shelves.</td></tr>
+			<tr><td>Storefront</td><td>How the store looks. <a href="#storefront">More</a></td></tr>
+			<tr><td>Authors</td><td>Author profiles and pages. <a href="#authors">More</a></td></tr>
+			<tr><td>Orders</td><td>Every order. The count is payments to verify, orders to ship and return requests to answer. <a href="#orders">More</a></td></tr>
+			<tr><td>Settings</td><td>Payments, delivery, returns, sharing and store details. <a href="#settings-page">More</a></td></tr>
+			<tr><td>Direct sales</td><td>Authors who sell their own books. <a href="#direct">More</a></td></tr>
+		</tbody>
+	</table></div>
+</div>
+
+<h2 id="install-roles">Who can do what</h2>
+<div class="table"><table>
+	<thead><tr><th>WordPress role</th><th>Can use</th></tr></thead>
+	<tbody>
+		<tr><td>Administrator</td><td>Everything, including Settings, Storefront and Direct sales.</td></tr>
+		<tr><td>Editor</td><td>Books, genres, authors and orders, and the Bookstore box on the dashboard.</td></tr>
+	</tbody>
+</table></div>
+<div class="note"><p>Deleting the plugin does not delete your books, authors or orders. They stay in your WordPress database and come back if you install Pustak again.</p></div>
+</section>
+
+<section class="chapter" id="settings-page" data-title="Settings">
+<p class="eyebrow">Getting started</p>
+<h1>Settings</h1>
+<p class="lead"><strong>Bookstore → Settings</strong> holds how you are paid, delivery charges, returns, sharing and your store’s details. All sections are saved together with <span class="ui">Save Changes</span> at the bottom. The <span class="ui">Customise storefront</span> button at the top opens the <a href="#storefront">Storefront</a> designer.</p>
+
+<h2 id="settings-upi">UPI payments</h2>
+<figure class="small"><img src="images/settings-upi.webp" width="1146" height="470" alt="UPI payments: the UPI switch, Your UPI ID brahmaputrabooks@okaxis, and Name shown in the UPI app" loading="lazy"></figure>
+<ul>
+	<li><strong>UPI</strong>: accept payment from any UPI app. Untick it to sell by Cash on Delivery only.</li>
+	<li><strong>Your UPI ID</strong>: where the money goes, such as <code>bookshop@okaxis</code>. An ID that doesn’t look like a UPI ID is refused with a message, and the old one is kept. UPI is offered at checkout only when it is ticked <em>and</em> an ID is saved.</li>
+	<li><strong>Name shown in the UPI app</strong>: the payee name the customer sees. Left empty, the store name is used.</li>
+</ul>
+
+<h2 id="settings-cod">Cash on Delivery</h2>
+<figure class="small"><img src="images/settings-cod.webp" width="1146" height="633" alt="Cash on Delivery: COD switch, COD charge 0, COD limit 3000, COD pincodes" loading="lazy"></figure>
+<ul>
+	<li><strong>COD</strong>: offer Cash on Delivery.</li>
+	<li><strong>COD charge (₹)</strong>: an extra amount added to COD orders. 0 for none.</li>
+	<li><strong>COD limit (₹)</strong>: orders above this total must pay by UPI. 0 for no limit. The default is ₹5,000.</li>
+	<li><strong>COD pincodes</strong>: allow COD only to these pincodes, separated by commas or on separate lines. Leave empty to allow it everywhere. Customers can check their pincode on any book page.</li>
+</ul>
+
+<h2 id="settings-delivery">Delivery</h2>
+<figure class="small"><img src="images/settings-delivery.webp" width="1146" height="419" alt="Delivery: delivery charge 50, free delivery from 499, pincode auto-fill switched on" loading="lazy"></figure>
+<ul>
+	<li><strong>Delivery charge (₹)</strong>: per order. The default is ₹50.</li>
+	<li><strong>Free delivery from (₹)</strong>: orders whose books total at least this amount ship free. The cart shows customers how much more they need. 0 turns free delivery off. The default is ₹499.</li>
+	<li><strong>Pincode auto-fill</strong>: fills in the city and state from the pincode at checkout, using the free India Post pincode service (<code>api.postalpincode.in</code>). Only the pincode is sent, from the customer’s browser.</li>
+</ul>
+
+<h2 id="settings-returns">Returns</h2>
+<figure class="small"><img src="images/settings-returns.webp" width="1146" height="569" alt="Returns: return requests switched on, return window 7 days, and how to send books back" loading="lazy"></figure>
+<ul>
+	<li><strong>Return requests</strong>: lets customers ask for a return from the Track Order page.</li>
+	<li><strong>Return window (days)</strong>: how long after delivery they can ask. The default is 7. If an order was never marked delivered, the window counts from shipping, with 7 extra days for transit.</li>
+	<li><strong>How to send books back</strong>: included in the email when you approve a request, for example the address to post the books to. Authors who send their own parcels write their own instructions when they approve.</li>
+</ul>
+<p>See <a href="#returns">Returns and refunds</a> for the whole process.</p>
+
+<h2 id="settings-sharing">Sharing</h2>
+<figure class="small"><img src="images/settings-sharing.webp" width="1146" height="318" alt="Sharing: share buttons switched on; WhatsApp, Facebook, X, Email and Copy link all ticked" loading="lazy"></figure>
+<p><strong>Share buttons</strong> puts WhatsApp, Facebook, X, Email and Copy link buttons on every book page and author page. Untick a button to hide it everywhere, or untick <span class="ui">Share buttons</span> to hide them all. On phones they show as icons only.</p>
+
+<h2 id="settings-store">Store</h2>
+<figure class="small"><img src="images/settings-store.webp" width="1146" height="794" alt="Store: store name, order emails address, WhatsApp number, low stock badge at 3, store page and track order page" loading="lazy"></figure>
+<ul>
+	<li><strong>Store name</strong>: used in emails, the checkout and the UPI app.</li>
+	<li><strong>Order emails go to</strong>: where you are told about new orders, payments to verify and return requests.</li>
+	<li><strong>WhatsApp number</strong>: optional. Customers get a button to message you about their order. Include the country code, for example <code>919876543210</code>.</li>
+	<li><strong>Low stock badge at</strong>: books show “Only 2 left” when stock is at or below this number. The default is 3.</li>
+	<li><strong>Store page</strong> and <strong>Track order page</strong>: the pages with <code>[pustak_store]</code> and <code>[pustak_track]</code>. Change them only if you made your own pages.</li>
+</ul>
+
+<h2 id="settings-side">Test your UPI QR and Get started</h2>
+<div class="pair">
+	<figure class="narrow"><img src="images/settings-side.webp" width="450" height="989" alt="Side panel: a test UPI QR code with the UPI ID, and a Get started list with View store and Recreate missing store pages" loading="lazy"></figure>
+	<div>
+		<p>Beside the settings:</p>
+		<ul>
+			<li><strong>Test your UPI QR</strong>: once your UPI ID is saved, a QR code for ₹1 appears. Scan it with your phone and check that your app shows the right name and account. You don’t have to complete the payment.</li>
+			<li><strong>Get started</strong>: the first three steps, a <span class="ui">View store</span> button, <span class="ui">Add 6 sample books</span> while you have none, and <span class="ui">Recreate missing store pages</span>.</li>
+		</ul>
+	</div>
+</div>
+</section>
+
+<section class="chapter" id="storefront" data-title="Storefront designer">
+<p class="eyebrow">Getting started</p>
+<h1>Storefront designer</h1>
+<p class="lead"><strong>Bookstore → Storefront</strong> shows a live preview of your real store beside the controls. Every change shows in the preview at once; nothing reaches your website until you click <span class="ui">Save</span>.</p>
+<figure>
+	<img src="images/storefront.webp" width="1800" height="1125" alt="The Storefront designer: controls on the left starting with six looks, and a live preview of the store on the right with Store, Book page and Tracking buttons and Computer and Phone buttons above it" loading="lazy">
+	<figcaption>Controls on the left, your store on the right.</figcaption>
+</figure>
+<p>Above the preview, choose what to look at — <span class="ui">Store</span>, <span class="ui">Book page</span> or <span class="ui">Tracking</span> — and how big a screen: <span class="ui">Computer</span> or <span class="ui">Phone</span>. <span class="ui">Open store</span> opens the real page in a new tab.</p>
+
+<h2 id="storefront-look">Look</h2>
+<p>Start from one of six looks, then fine-tune anything below. A look sets the colours, the title font, the card style, the cover shape and style, and the buttons. It leaves your text and content options alone.</p>
+<div class="table"><table class="plain">
+	<thead><tr><th>Look</th><th>Feel</th></tr></thead>
+	<tbody>
+		<tr><td><strong>Library</strong> (default)</td><td>Deep green, classic book serif, bound-book covers.</td></tr>
+		<tr><td><strong>Chai Stall</strong></td><td>Warm brown on cream, Lora titles, books on a bookshelf, pill buttons.</td></tr>
+		<tr><td><strong>Monsoon</strong></td><td>Blue-grey, Noto Serif (with Hindi and Assamese/Bengali), framed cards, outline buttons.</td></tr>
+		<tr><td><strong>Lotus</strong></td><td>Lotus pink, Mukta titles, flat paper covers.</td></tr>
+		<tr><td><strong>Night Reading</strong></td><td>Amber on a dark background, Literata titles.</td></tr>
+		<tr><td><strong>Newsprint</strong></td><td>Black and white, your theme’s font, square outline buttons.</td></tr>
+	</tbody>
+</table></div>
+<figure>
+	<img src="images/storefront-chai.webp" width="1800" height="1125" alt="The designer with the Chai Stall look picked: warm brown colours and books standing on a wooden shelf in the preview" loading="lazy">
+	<figcaption>The same store with the Chai Stall look, before saving.</figcaption>
+</figure>
+
+<h2 id="storefront-colours">Colours and fonts</h2>
+<ul>
+	<li><strong>Colours</strong>: buttons and highlights, text, and panel background. The panel background is used for the cart, checkout and tracking; if it isn’t white, the store gets it too, as a framed area on your page. A warning appears if the text would be hard to read.</li>
+	<li><strong>Book titles and headings</strong>: your theme’s font, a classic book serif (nothing to download), Literata, Lora, Noto Serif (English, हिन्दी, অসমীয়া/বাংলা) or Mukta (English and हिन्दी).</li>
+	<li><strong>Everything else</strong>: your theme’s font, the device font, Noto Sans, Mukta, or Hind Siliguri (English and অসমীয়া/বাংলা).</li>
+</ul>
+<p>Google fonts are loaded from Google’s servers. “Same as my theme”, “Classic book serif” and “Device font” load nothing extra.</p>
+
+<h2 id="storefront-text">Text</h2>
+<p>Size, weight and colour for headings, book titles on cards, author names, prices (twice as large on the book page), descriptions (with line spacing), buttons and the announcement bar. Headings can be normal, UPPERCASE or Small caps; buttons normal or UPPERCASE. Colours left on <span class="ui">Auto</span> follow the look you picked, so they stay readable if you change it. <span class="ui">Reset text styles</span> puts them all back.</p>
+
+<h2 id="storefront-layout">Layout and pages</h2>
+<ul>
+	<li><strong>Arrange books</strong>: <span class="ui">Grid</span>, <span class="ui">List</span> or <span class="ui">Shelf per genre</span> (a row for each genre, showing how many books it has). See <a href="#website-layouts">Layouts</a>.</li>
+	<li><strong>Let shoppers switch between grid and list</strong>: adds a switch to the toolbar. Each shopper’s choice is remembered on their device.</li>
+	<li><strong>Split books into pages</strong>, with <strong>Books per page</strong> (4–60, default 12), moved through with <span class="ui">Page numbers</span> or a <span class="ui">“Show more” button</span>. Pages apply to Grid and List; shelves always show every book.</li>
+	<li><strong>Book size</strong> (small, medium, large), <strong>Card style</strong> (plain, framed, bookshelf), <strong>Cover shape</strong> (bound book, flat, rounded) and <strong>Covers for books without a photo</strong> (cloth, paper, bold).</li>
+</ul>
+
+<h2 id="storefront-buttons">Buttons and cart</h2>
+<ul>
+	<li><strong>Button shape</strong> (square, rounded, pill) and <strong>Buttons on book cards</strong> (filled or outline).</li>
+	<li><strong>Button text</strong>: “Add to cart” by default — for example “Add to bag”, “Buy” or “किताब जोड़ें”.</li>
+	<li><strong>Floating cart button and drawer</strong>: on the right or the left.</li>
+	<li><strong>Cart button in the store toolbar</strong> and <strong>Track order button (delivery van)</strong>: show or hide each.</li>
+</ul>
+
+<h2 id="storefront-top">Top of the store</h2>
+<ul>
+	<li><strong>Announcement bar</strong>: a line across the top. Leave the text empty and it writes itself from your settings, for example “Free delivery on orders above ₹499 · Cash on Delivery available · Pay with any UPI app”.</li>
+	<li><strong>Heading</strong> and <strong>Intro line</strong>: for example “Books from the banks of the Brahmaputra”.</li>
+	<li><strong>Staff picks row</strong>, with its title: books with <span class="ui">Staff pick</span> ticked appear here.</li>
+	<li><strong>“New” badge</strong> for books added in the last so many days (default 30; 0 turns it off).</li>
+</ul>
+
+<h2 id="storefront-book">Book page</h2>
+<ul>
+	<li><strong>Use the Pustak book page design</strong>: the 3D book, buying panel, author profile and related books (see <a href="#website-book">The book page</a>). Turn it off to use your theme’s own page with a simple buy box.</li>
+	<li><strong>About the author</strong> and the <strong>“You may also like”</strong> row: show or hide each. Choose <span class="ui">Book page</span> above the preview to see them.</li>
+</ul>
+
+<h2 id="storefront-show">Show or hide</h2>
+<p>Switch any of these on or off across the store: the search box, the sort menu, genre buttons, author names, MRP and % off, “Only 2 left” badges, “Pre-owned” badges, and “Buy now” on book pages.</p>
+</section>
+<section class="chapter" id="books" data-title="Adding books">
+<p class="eyebrow">The catalogue</p>
+<h1>Adding books</h1>
+<p class="lead">Each book is a page of its own with a title, a description, a cover, and a box of shop details: <strong>Price, stock and details</strong>.</p>
+
+<h2 id="books-add">The book screen</h2>
+<p>Go to <span class="ui">Bookstore → Add New Book</span>:</p>
+<ul>
+	<li><strong>Title</strong>: the book’s title.</li>
+	<li><strong>Description</strong> (the main editor): shown as “About this book” on the book page.</li>
+	<li><strong>Excerpt</strong>: a short blurb, shown under each book in list view and on the back cover. Left empty, the first words of the description are used.</li>
+	<li><strong>Book cover</strong> (the featured image): a photo or scan of the front cover. Without one, the store draws a cloth-bound cover with the title and author, in a colour chosen from the title. Its style follows <a href="#storefront-layout">Covers for books without a photo</a>.</li>
+	<li><strong>Genres</strong>: tick one or more. They become the genre buttons in the store, and the shelves in the <span class="ui">Shelf per genre</span> layout.</li>
+</ul>
+<figure>
+	<img src="images/book-edit.webp" width="1500" height="804" alt="Price, stock and details box: Author Kalpana Saikia, selling price 320, MRP 380, copies in stock 8, ISBN, language English, pages 288, condition New, Staff pick ticked, Author profile, and Sold by Kalpana Saikia directly" loading="lazy">
+	<figcaption>The Price, stock and details box for “Rain over Majuli”.</figcaption>
+</figure>
+<div class="table"><table>
+	<thead><tr><th>Field</th><th>What it does</th></tr></thead>
+	<tbody>
+		<tr><td>Author</td><td>The author’s name as printed. It links the book to an <a href="#authors">author profile</a>, which is made automatically the first time a name is used.</td></tr>
+		<tr><td>Selling price (₹)<small>Required</small></td><td>What the customer pays. A book without a price can’t be bought and shows <span class="pill awaiting">No price</span> in the book list.</td></tr>
+		<tr><td>MRP (₹)</td><td>Optional. When it is higher than the price, the store shows it struck through with the % off, and the back cover shows “MRP ₹… (Incl. of all taxes)”.</td></tr>
+		<tr><td>Copies in stock</td><td>Leave blank for unlimited. Goes down with each order and back up if an order is cancelled. At 0 the book shows “Sold out”; at or below the <a href="#settings-store">low stock</a> number it shows “Only 2 left”.</td></tr>
+		<tr><td>ISBN</td><td>Shown in the details panel, printed as a scannable barcode on the back cover, and searchable in the store.</td></tr>
+		<tr><td>Language, Pages</td><td>Shown on the book page. Pages also set the thickness of the 3D book and the estimated reading time.</td></tr>
+		<tr><td>Condition</td><td>New or Pre-owned. Pre-owned books get a badge.</td></tr>
+		<tr><td>Staff pick</td><td>Shows the book in the Staff picks row at the top of the store.</td></tr>
+		<tr><td>Author profile</td><td>Which profile the book belongs to, for authors who share a name. See <a href="#authors-same-name">Authors with the same name</a>.</td></tr>
+		<tr><td>Sold by</td><td>The store, or an author who sells directly. Appears once <a href="#direct">Direct sales</a> are switched on.</td></tr>
+	</tbody>
+</table></div>
+
+<h2 id="books-list">The book list</h2>
+<figure>
+	<img src="images/books.webp" width="1800" height="1209" alt="All Books list with columns for cover, title, author, price, stock, sold by, genres and date" loading="lazy">
+</figure>
+<p><span class="ui">Bookstore → All Books</span> shows each book’s cover, author, price and stock. Stock is highlighted when it is low or sold out. With direct sales on, <strong>Sold by</strong> shows the store or the author, and “Author not ready” when the chosen author can’t take payment yet. A book whose author name is shared by more than one profile shows “Shared name — choose the author profile”.</p>
+
+<h2 id="books-samples">Sample books</h2>
+<p>While you have no books, <span class="ui">Add 6 sample books</span> on the Settings page adds six well-known Indian titles — Godaan, Gitanjali, The Discovery of India, Panchatantra Tales, Malgudi Days and Wings of Fire — with prices, stock and author profiles. They are ordinary books: edit or delete them like any other.</p>
+</section>
+
+<section class="chapter" id="authors" data-title="Author profiles">
+<p class="eyebrow">The catalogue</p>
+<h1>Author profiles</h1>
+<p class="lead">Every author gets a profile with a photo, a short biography and a page that lists all their books. Profiles are created from each book’s Author field, so most of the time you only add the details.</p>
+
+<h2 id="authors-screen">The Authors screen</h2>
+<figure>
+	<img src="images/authors.webp" width="1800" height="1209" alt="Authors screen: an Add New Author form on the left, and a list of authors with initials, description, number of books and whether they sell directly" loading="lazy">
+</figure>
+<p><span class="ui">Bookstore → Authors</span> lists every profile with its photo (or initials), biography, number of books and whether the author sells directly. Click a name to edit it.</p>
+
+<h2 id="authors-fields">Profile details</h2>
+<figure class="small">
+	<img src="images/author-profile.webp" width="1224" height="1022" alt="Edit Author: name Kalpana Saikia, slug, biography in the description, photo, Years b. 1978, From Jorhat, Known for Rain over Majuli, Tea Garden Stories" loading="lazy">
+</figure>
+<ul>
+	<li><strong>Name</strong>: as on the books. Renaming a profile also changes the Author field of its books.</li>
+	<li><strong>Description</strong>: the biography, shown on the author page and under “About the author” on each book page.</li>
+	<li><strong>Photo</strong>: without one, the profile shows the author’s initials.</li>
+	<li><strong>Years</strong> (for example <code>1861–1941</code> or <code>b. 1975</code>), <strong>From</strong> (hometown) and <strong>Known for</strong> (best-known works).</li>
+</ul>
+<p>Below these is the <strong>Direct sales</strong> section, for authors who sell their own books. See <a href="#direct-author">Setting up an author</a>.</p>
+
+<h2 id="authors-page">The author page</h2>
+<figure>
+	<img src="images/author.webp" width="1800" height="1529" alt="Author page for Kalpana Saikia: initials, name, years, biography, share buttons and her two books with prices and Add to cart buttons" loading="lazy">
+	<figcaption>An author’s page, with their books underneath.</figcaption>
+</figure>
+<p>Each author has a page at <code>yoursite.com/book-author/name/</code>, linked from their books. It shows the profile, the share buttons, and all their books, which can be added to the cart straight from there.</p>
+
+<h2 id="authors-same-name">Authors with the same name</h2>
+<p>A book is matched to a profile by name, ignoring capitals, spacing and full stops, so “A.K. Roy” and “a. k. roy” are the same author. Once a book is linked to a profile it stays with it.</p>
+<p>When two different authors share a name:</p>
+<ul>
+	<li>On the second author’s book, under <strong>Author profile</strong>, tick <span class="ui">This is a different author who is also called …</span>, then Update. They get their own profile.</li>
+	<li>Or on <span class="ui">Authors → Add New</span>, tick <span class="ui">A different author who has the same name as an existing profile</span>.</li>
+	<li>Fill in <strong>From</strong> or <strong>Years</strong> on each, so you can tell them apart. Pickers and Direct sales show both.</li>
+</ul>
+<div class="warn"><p><strong>New books with a shared name are not guessed.</strong> When several profiles share a name, a new book with that name is flagged “Shared name — choose the author profile” until you pick one on the book screen. A wrong guess could send a customer’s money to the wrong author.</p></div>
+</section>
+<section class="chapter" id="website" data-title="The store on your website">
+<p class="eyebrow">Selling</p>
+<h1>The store on your website</h1>
+<p class="lead">Customers see three kinds of page: the <strong>store</strong>, each <strong>book page</strong>, and each <strong>author page</strong>. The cart and checkout open as a drawer on top of whichever page they are on.</p>
+
+<h2 id="website-store">The store page</h2>
+<p>From the top down:</p>
+<ul>
+	<li><strong>Announcement bar</strong>: delivery and payment in one line, written from your settings unless you <a href="#storefront-top">write your own</a>.</li>
+	<li><strong>Heading and intro line</strong>, if you set them.</li>
+	<li><strong>Toolbar</strong>: a search box (title, author or ISBN), a sort menu (Newest, Price low to high, Price high to low, Title A–Z), the grid/list switch, a Track order button (the delivery van) and a cart button with a count.</li>
+	<li><strong>Genre buttons</strong>: <span class="ui">All</span> and one per genre. Search, genres and sorting work together, across all pages.</li>
+	<li><strong>Staff picks</strong>: a row of the books you ticked, scrolling sideways.</li>
+	<li><strong>The books</strong>, with page numbers or a Show more button underneath. Page links can be bookmarked and shared.</li>
+</ul>
+<p>Each card shows the cover, title, author, price with MRP and % off, and the button. Badges mark books that are <strong>New</strong>, <strong>Only 2 left</strong>, <strong>Sold out</strong>, <strong>Pre-owned</strong> or a staff pick. Books an author sells directly say <strong>Sold by the author</strong>.</p>
+
+<h2 id="website-layouts">Layouts</h2>
+<div class="pair">
+	<figure><img src="images/store-list.webp" width="1800" height="1209" alt="The store in list view: one book per row with a small cover, the title, author, a short description, price and an Add to cart button" loading="lazy"><figcaption>List: a row per book, with a short description.</figcaption></figure>
+	<figure><img src="images/store-shelves.webp" width="1800" height="1209" alt="The store as shelves: a row per genre with its name and number of books, such as Biography 1 book and Children 2 books" loading="lazy"><figcaption>Shelf per genre: a sideways row for each genre.</figcaption></figure>
+</div>
+<p>Grid is the default. Shelf rows show only whole books — as many as fit, stretched to fill the width — and their arrows move one full set at a time. Each shelf shows its number of books (“3 of 12” while searching).</p>
+
+<h2 id="website-book">The book page</h2>
+<figure>
+	<img src="images/book.webp" width="1800" height="1209" alt="Book page for Rain over Majuli: a 3D book on the left with a Turn over button; on the right the genre, language and pages, the title, author, Staff pick and New arrival labels, Sold directly by Kalpana Saikia, the price ₹320 with MRP ₹380 and 16% off, In stock, Add to cart and Buy now, delivery and payment details, and share buttons" loading="lazy">
+	<figcaption>A book page. The page takes its colours from the cover.</figcaption>
+</figure>
+<ul>
+	<li><strong>A 3D book</strong> whose thickness follows the page count. It tilts as the mouse moves, and <span class="ui">Turn over</span> shows the back cover with the blurb, “MRP ₹… (Incl. of all taxes)” and a scannable ISBN barcode.</li>
+	<li><strong>The buying panel</strong>: price, stock, <span class="ui">Add to cart</span> and <span class="ui">Buy now</span> (straight to checkout), delivery and payment details, and a <strong>Cash on Delivery check</strong> by pincode. The pincode is remembered for checkout.</li>
+	<li><strong>About this book</strong>, a details panel (ISBN, language, pages, condition and an estimated reading time), <strong>About the author</strong>, <strong>More by this author</strong> and <strong>You may also like</strong>.</li>
+	<li>A slim buy bar slides in once the main buttons scroll out of view.</li>
+	<li>Share buttons, as set under <a href="#settings-sharing">Sharing</a>.</li>
+</ul>
+<figure class="small"><img src="images/book-back.webp" width="1800" height="1209" alt="The 3D book turned over to show its back cover" loading="lazy"><figcaption>After “Turn over”: the back cover, with the blurb, MRP and barcode.</figcaption></figure>
+<p>Search engines are given each book’s price, availability, ISBN and author, so they can show them in results. To use your theme’s own book page instead, turn off <a href="#storefront-book">Use the Pustak book page design</a>.</p>
+
+<h2 id="website-shortcodes">Shortcodes</h2>
+<p>Put the store or the tracking form on any page or post with a Shortcode block:</p>
+<div class="table"><table>
+	<thead><tr><th>Shortcode</th><th>Shows</th></tr></thead>
+	<tbody>
+		<tr><td><code>[pustak_store]</code></td><td>The catalogue.</td></tr>
+		<tr><td><code>[pustak_track]</code></td><td>The order tracking form.</td></tr>
+	</tbody>
+</table></div>
+<p><code>[pustak_store]</code> takes these options:</p>
+<div class="table"><table>
+	<thead><tr><th>Option</th><th>Values</th><th>What it does</th></tr></thead>
+	<tbody>
+		<tr><td><code>genre</code></td><td><code>fiction,poetry</code></td><td>Only these genres (their slugs, comma separated).</td></tr>
+		<tr><td><code>layout</code></td><td><code>grid</code> · <code>list</code> · <code>shelves</code></td><td>Overrides the layout chosen in the Storefront designer.</td></tr>
+		<tr><td><code>per_page</code></td><td><code>12</code> · <code>0</code></td><td>Books per page; 0 shows all.</td></tr>
+		<tr><td><code>limit</code></td><td><code>100</code></td><td>The most books to show (default 500).</td></tr>
+	</tbody>
+</table></div>
+<pre><code>[pustak_store genre="poetry" layout="list"]
+[pustak_store layout="shelves"]</code></pre>
+</section>
+
+<section class="chapter" id="buying" data-title="How customers buy">
+<p class="eyebrow">Selling</p>
+<h1>How customers buy</h1>
+<p class="lead">From the first click to a confirmed order takes three screens in one drawer: the <strong>cart</strong>, the <strong>checkout</strong>, and <strong>payment</strong>. Nobody needs an account.</p>
+
+<h2 id="buying-cart">The cart</h2>
+<div class="pair">
+	<figure><img src="images/cart.webp" width="660" height="1290" alt="Your cart: You get free delivery, Panchatantra Tales and The Discovery of India with quantity buttons, subtotal ₹598, delivery free, total ₹598, and a Checkout button" loading="lazy"></figure>
+	<div>
+		<p><span class="ui">Add to cart</span> drops the book into the cart and a floating cart button shows the count. The cart:</p>
+		<ul>
+			<li>shows how much more is needed for <strong>free delivery</strong>, with a progress bar;</li>
+			<li>lets the customer change quantities (never more than are in stock) or remove a book;</li>
+			<li>is kept on their device, so it is still there when they come back.</li>
+		</ul>
+		<p>If the customer adds a book from a different seller — an author’s book to a cart of store books, say — the drawer asks them to <span class="ui">Check out my cart first</span> or <span class="ui">Empty my cart and add this book</span>. See <a href="#direct-one-source">One seller per order</a>.</p>
+	</div>
+</div>
+
+<h2 id="buying-checkout">Checkout</h2>
+<div class="pair">
+	<figure><img src="images/checkout.webp" width="660" height="1290" alt="Checkout: contact (full name, mobile number with +91, optional email) and delivery address (pincode, house and street, city and state)" loading="lazy"></figure>
+	<figure><img src="images/checkout-pay.webp" width="660" height="1290" alt="Checkout payment choice: UPI (Google Pay, PhonePe, Paytm, BHIM or any UPI app) or Cash on Delivery, and the Place order button" loading="lazy"></figure>
+</div>
+<ul>
+	<li><strong>Contact</strong>: full name, a 10-digit mobile number (for courier updates), and an optional email for the order confirmation and updates.</li>
+	<li><strong>Delivery address</strong>: the pincode first — with <a href="#settings-delivery">Pincode auto-fill</a> on, the city and state fill themselves — then house number and street, city or district, and state.</li>
+	<li><strong>Payment</strong>: UPI or Cash on Delivery. COD is offered only where your <a href="#settings-cod">COD settings</a> allow it for this total and pincode; otherwise the checkout says why.</li>
+</ul>
+<p>The button shows the total: <span class="ui">Continue to pay · ₹598</span> for UPI, <span class="ui">Place order · ₹598</span> for COD. After the first order, the customer’s details are remembered on their device and filled in next time. Prices and stock are always checked again on your server, so a changed price or a book that just sold out is caught before the order is made.</p>
+
+<h2 id="buying-upi">Paying by UPI</h2>
+<div class="trio">
+	<figure><img src="images/pay.webp" width="660" height="1290" alt="Pay to confirm on a computer: order PK-KQ9FE7 reserved, amount ₹598 to Brahmaputra Books, a QR code, the UPI ID with a Copy button" loading="lazy"><figcaption>On a computer: a QR code.</figcaption></figure>
+	<figure><img src="images/pay-phone.webp" width="780" height="1688" alt="Pay to confirm on a phone: Pay in your UPI app with buttons for Google Pay, PhonePe, Paytm and Other UPI app" loading="lazy"><figcaption>On a phone: app buttons.</figcaption></figure>
+	<figure><img src="images/pay-utr.webp" width="660" height="1290" alt="Step 2, Enter the UPI reference number: the 12-digit number typed in and an I’ve paid button" loading="lazy"><figcaption>Then the UPI reference number.</figcaption></figure>
+</div>
+<p>The order is placed and the books are reserved. The customer then:</p>
+<ol class="steps">
+	<li><strong>Pays.</strong> On a computer they scan the QR code with any UPI app. On a phone they tap <span class="ui">Google Pay</span>, <span class="ui">PhonePe</span>, <span class="ui">Paytm</span> or <span class="ui">Other UPI app</span>, which opens with the amount and your UPI ID filled in (or <span class="ui">Pay from another phone? Show QR code</span>). The UPI ID can also be copied and paid by hand. The order number goes in the payment note.</li>
+	<li><strong>Enters the UPI reference number</strong> — the 12-digit UPI Ref. No. or UTR shown in their app after paying — and taps <span class="ui">I’ve paid</span>.</li>
+</ol>
+<figure class="narrow"><img src="images/paid.webp" width="660" height="1290" alt="Payment sent: Payment reference received. We’ll confirm your order after matching it with our account, usually within a few hours." loading="lazy"><figcaption>Once the reference is in, the order is “Verifying payment” until you confirm it.</figcaption></figure>
+<p>The order is now <span class="pill verifying">Verifying payment</span> and you are emailed. If the customer closes the drawer before paying, they can pay later from the Track Order page or the link in their email. A wrong reference can be corrected with <span class="ui">Entered the wrong number?</span></p>
+
+<h2 id="buying-cod">Cash on Delivery</h2>
+<p>A COD order is <span class="pill confirmed">Confirmed</span> at once: there is nothing to verify. The customer sees the total to keep ready, including any COD charge.</p>
+
+<h2 id="buying-emails">What the customer is emailed</h2>
+<p>If the customer gave an email address, they get one when the order is placed (with the items, total, address and a tracking link) and when it is <strong>Confirmed</strong>, <strong>Shipped</strong> (with the courier and tracking number), <strong>Delivered</strong> or <strong>Cancelled</strong>. They are also emailed about return requests, recorded returns and refunds.</p>
+<div class="email">
+	<header><b>[Brahmaputra Books] Order PK-A2KANR received</b> · to anjali@example.com</header>
+<pre>Hi Anjali Das,
+
+Thanks for your order PK-A2KANR. Please complete the UPI payment of ₹398 to confirm it. If you have already paid, enter the UPI reference number on the tracking page so we can confirm it quickly.
+
+  1 × Gitanjali — ₹149
+  1 × Panchatantra Tales — ₹199
+
+Subtotal: ₹348
+Delivery: ₹50
+Total: ₹398
+Payment: UPI
+
+Deliver to:
+  Anjali Das, 9800100001
+  House 14, Rukmini Nagar, near Dispur Post Office
+  Guwahati, Assam 781006
+
+Track your order: https://yoursite.com/track-order/?order=PK-A2KANR</pre>
+</div>
+
+<h2 id="buying-track">The Track Order page</h2>
+<figure>
+	<img src="images/track.webp" width="1800" height="1107" alt="Track Order page for PK-2P44Y4: status Shipped, a progress line Placed, Confirmed, Shipped, Delivered, the courier India Post EE123456789IN with a Copy button, the items and total, and Order history" loading="lazy">
+	<figcaption>A shipped order on the Track Order page.</figcaption>
+</figure>
+<p>Customers look up an order with its <strong>order number</strong> and the <strong>mobile number</strong> it was placed with. The link in their email fills in the number for them, and the last order placed on their device opens by itself. The page shows:</p>
+<ul>
+	<li>the status and a progress line: Placed → Confirmed → Shipped → Delivered;</li>
+	<li>the payment panel, while a UPI order is still unpaid;</li>
+	<li>the courier and tracking number, with a Copy button;</li>
+	<li>the books, total and delivery address, and the <span class="ui">Order history</span> with your notes;</li>
+	<li>returns and refunds, and <span class="ui">Request a return</span> once the order has shipped;</li>
+	<li><span class="ui">Ask us on WhatsApp</span>, if you set a <a href="#settings-store">WhatsApp number</a>.</li>
+</ul>
+
+<h2 id="buying-return">Asking for a return</h2>
+<div class="pair">
+	<figure><img src="images/return-form.webp" width="891" height="639" alt="Request a return: you can ask until 22 Nov 2026; The Weaver’s Daughter with a copies menu set to 1; reason Wrong book sent; details; Send return request" loading="lazy"></figure>
+	<div>
+		<p>Within the <a href="#settings-returns">return window</a>, <span class="ui">Request a return</span> on the Track Order page lets the customer choose the books and how many copies, a reason, and add details. The reasons are:</p>
+		<ul>
+			<li>Arrived damaged · Printing or binding fault · Wrong book sent · Wrong edition, language or format · Not as described · Fewer copies than ordered · Received the same book twice · Ordered by mistake or no longer needed · Arrived too late · Something else (details required)</li>
+		</ul>
+	</div>
+</div>
+<figure class="small"><img src="images/track-request.webp" width="1800" height="1229" alt="Track Order page for a delivered order showing a yellow box: return requested on 17 Nov 2026, one copy of The Discovery of India, arrived damaged, with the customer’s note" loading="lazy"><figcaption>A request waiting for an answer, as the customer sees it.</figcaption></figure>
+<p>The customer is emailed a confirmation and the page shows the request and, later, your answer. One request can be open per order; after a decline the customer can ask again within the window. What you do next is in <a href="#returns-requests">Answering a return request</a>.</p>
+</section>
+<section class="chapter" id="flow" data-title="How orders work">
+<p class="eyebrow">Orders</p>
+<h1>How orders work</h1>
+<p class="lead">Every order has a number like <strong>PK-7Q4M9X</strong> — letters and digits that can’t be confused, such as no O and 0 — a status, and a timeline of everything that happened to it.</p>
+
+<h2 id="flow-statuses">Order statuses</h2>
+<div class="table"><table>
+	<thead><tr><th>Status</th><th>Means</th><th>Next</th></tr></thead>
+	<tbody>
+		<tr><td><span class="pill awaiting">Awaiting payment</span></td><td>A UPI order was placed; the customer hasn’t given a payment reference yet. The books are reserved.</td><td>The customer pays and enters the reference, or you cancel it.</td></tr>
+		<tr><td><span class="pill verifying">Verifying payment</span></td><td>The customer says they paid and gave a UPI reference. You are emailed.</td><td>You check the payment arrived and click <span class="ui">Payment received</span>.</td></tr>
+		<tr><td><span class="pill confirmed">Confirmed</span></td><td>Paid (UPI), or a Cash on Delivery order. Ready to pack.</td><td>Send it and click <span class="ui">Mark shipped</span>.</td></tr>
+		<tr><td><span class="pill shipped">Shipped</span></td><td>The parcel is on its way, usually with a courier and tracking number.</td><td><span class="ui">Mark delivered</span> when it arrives.</td></tr>
+		<tr><td><span class="pill delivered">Delivered</span></td><td>The customer has the books. The return window counts from now.</td><td>Done, unless books come back.</td></tr>
+		<tr><td><span class="pill cancelled">Cancelled</span></td><td>Won’t be sent. The books go back into stock.</td><td>Refund the customer if they paid by UPI.</td></tr>
+		<tr><td><span class="pill returned">Partly returned</span></td><td>Some copies came back after shipping.</td><td>Set by <a href="#returns-record">recording a return</a>, not from the status list.</td></tr>
+		<tr><td><span class="pill returned">Returned</span></td><td>Every copy came back.</td><td>Set by recording a return.</td></tr>
+	</tbody>
+</table></div>
+
+<h2 id="flow-upi">How UPI payments work</h2>
+<p>UPI pay-links send money straight to your UPI ID, so there is no automatic confirmation. Instead:</p>
+<ol class="steps">
+	<li>The customer places the order → <span class="pill awaiting">Awaiting payment</span>. Stock is reserved.</li>
+	<li>The customer pays from their UPI app and enters the 12-digit UPI reference number → <span class="pill verifying">Verifying payment</span>. You get an email: “Verify payment for PK-…”.</li>
+	<li>You find that reference in your UPI app or bank statement and check the amount → click <span class="ui">Payment received</span> → <span class="pill confirmed">Confirmed</span>. The customer is emailed.</li>
+</ol>
+<div class="warn"><p><strong>Unpaid orders are not cancelled automatically.</strong> An order that stays <span class="pill awaiting">Awaiting payment</span> keeps its books out of stock. Cancel such orders after a day or two to put the books back — filter the Orders list by <span class="ui">Awaiting payment</span> to find them.</p></div>
+
+<h2 id="flow-cod">How Cash on Delivery works</h2>
+<p>A COD order starts at <span class="pill confirmed">Confirmed</span>. You pack it, ship it and mark it delivered when the courier has collected the cash. The order screen reminds you how much to collect.</p>
+
+<h2 id="flow-stock">Stock</h2>
+<ul>
+	<li>Copies come off stock when an order is placed, whatever the payment method.</li>
+	<li>Cancelling puts them back; un-cancelling takes them off again.</li>
+	<li>Returned copies go back only if you tick <span class="ui">Put these books back in stock</span> when you record the return. Books that were returned and restocked are never counted twice if the order is later cancelled.</li>
+	<li>Books with a blank stock are unlimited and never change.</li>
+</ul>
+
+<h2 id="flow-safety">Safety checks</h2>
+<ul>
+	<li>Prices, stock and delivery charges are worked out on your server, never taken from the customer’s browser.</li>
+	<li>A hidden field turns away spam robots, and each network can place at most 8 orders in 15 minutes.</li>
+	<li>Tracking, payment references and return requests are limited to a few tries every 15 minutes, and need the order’s mobile number (or the secret link from checkout).</li>
+</ul>
+</section>
+
+<section class="chapter" id="orders" data-title="Running orders">
+<p class="eyebrow">Orders</p>
+<h1>Running orders</h1>
+<p class="lead">Day to day, everything happens from <strong>Bookstore → Orders</strong>. Most orders need only one click in the list to move them on.</p>
+
+<h2 id="orders-dashboard">What needs you</h2>
+<div class="pair">
+	<figure><img src="images/dashboard.webp" width="789" height="434" alt="Bookstore box on the dashboard: ₹3,218 from 6 confirmed orders in the last 30 days after refunds; 2 payments to verify, 2 orders to ship, 1 waiting for UPI payment, 1 return request to answer, 1 refund to send, 1 delivery charge to receive from authors" loading="lazy"></figure>
+	<div>
+		<p>The <strong>Bookstore</strong> box on the WordPress dashboard shows your takings from confirmed orders in the last 30 days, after refunds, and links to each list that needs you: payments to verify, orders to ship, orders waiting for UPI payment, return requests, refunds to send and delivery charges due from authors.</p>
+		<p>The red count beside <span class="ui">Orders</span> in the menu is payments to verify, orders to ship and return requests together.</p>
+	</div>
+</div>
+
+<h2 id="orders-list">The Orders list</h2>
+<figure>
+	<img src="images/orders.webp" width="1800" height="1250" alt="The Orders list with columns Order, Customer, Total, Payment with UTR, Sold by, Status and Date, and filters for date, status and seller" loading="lazy">
+</figure>
+<ul>
+	<li><strong>Columns</strong>: order number and number of books, customer with phone, city and pincode, total, payment (UPI with the customer’s UTR, or COD), seller, status and date. Return requests and refunds to send are flagged under the status.</li>
+	<li><strong>Filters</strong>: by status, and — with direct sales on — by seller: the store, <span class="ui">Authors’ books you send</span>, or one author.</li>
+	<li><strong>Search</strong>: by order number, customer name or phone number.</li>
+	<li><strong>One-click actions</strong>: hover over an order to see the next step — <span class="ui">Payment received</span>, <span class="ui">Mark shipped</span> or <span class="ui">Mark delivered</span>. Use the order screen when you want to add a tracking number or a note.</li>
+</ul>
+
+<h2 id="orders-screen">The order screen</h2>
+<figure>
+	<img src="images/order.webp" width="1800" height="1250" alt="Order PK-C8VAJX, Verifying payment: the books and totals, Deliver to with phone, WhatsApp customer and email, Payment by UPI with the customer’s UTR and what to check; on the right the Status box and the Timeline" loading="lazy">
+	<figcaption>An order waiting for its payment to be checked.</figcaption>
+</figure>
+<ul>
+	<li><strong>Order</strong>: the books (linked to their pages), quantities and amounts, subtotal, delivery, any COD charge, the total, and refunds if there were returns.</li>
+	<li><strong>Deliver to</strong>: the address, a tap-to-call phone number, <span class="ui">WhatsApp customer</span> (with a ready-written message about the order’s status) and their email.</li>
+	<li><strong>Payment</strong>: COD with the amount to collect, or UPI with the UPI ID that was paid and the customer’s reference (UTR), and what to check before confirming.</li>
+	<li><strong>Returns</strong>: return requests, returns and refunds. See <a href="#returns">Returns and refunds</a>.</li>
+</ul>
+<div class="pair">
+	<figure><img src="images/order-status.webp" width="420" height="600" alt="Status box: order status Confirmed, courier and tracking number, note for the customer, and Update order" loading="lazy"><figcaption>The Status box.</figcaption></figure>
+	<figure><img src="images/order-timeline.webp" width="420" height="441" alt="Timeline: Order placed · UPI; Verifying payment · Payment reference received; Confirmed; Tracking: India Post EE123456789IN; Shipped" loading="lazy"><figcaption>The Timeline, newest first.</figcaption></figure>
+</div>
+<p>In the <strong>Status</strong> box on the right:</p>
+<ul>
+	<li><strong>Order status</strong>: pick the new status.</li>
+	<li><strong>Courier and tracking number</strong>: for example <code>India Post EE123456789IN</code>. It is shown on the tracking page and in the Shipped email.</li>
+	<li><strong>Note for the customer</strong>: optional, shown in their order history.</li>
+	<li><span class="ui">Update order</span> saves everything.</li>
+</ul>
+<p>The <strong>Timeline</strong> records every change with its date and time: payments, status changes, tracking numbers, notes, returns, and actions taken by authors. Notes about money between you and an author are kept here for you and not shown to the customer.</p>
+
+<h2 id="orders-ship">Sending an order</h2>
+<ol class="steps">
+	<li>Pack the books of a <span class="pill confirmed">Confirmed</span> order.</li>
+	<li>On the order screen, type the courier and tracking number, set the status to <strong>Shipped</strong> and click <span class="ui">Update order</span>.</li>
+	<li>The customer is emailed with the tracking number and the tracking page shows it.</li>
+	<li>When it arrives, use <span class="ui">Mark delivered</span> in the list. The customer is emailed, and the return window starts.</li>
+</ol>
+
+<h2 id="orders-cancel">Cancelling</h2>
+<p>Set the status to <strong>Cancelled</strong>. The books go back into stock and the customer is emailed that any UPI payment will be refunded to the same account — send the refund from your UPI app. To cancel an order by mistake, set it back to its earlier status; the books come off stock again. For books that came back <em>after</em> shipping, don’t cancel: <a href="#returns-record">record a return</a>.</p>
+
+<h2 id="orders-emails">Emails to you</h2>
+<div class="table"><table>
+	<thead><tr><th>Email</th><th>When</th></tr></thead>
+	<tbody>
+		<tr><td>New order PK-… · ₹…</td><td>An order is placed, with the books, address and payment.</td></tr>
+		<tr><td>Verify payment for PK-…</td><td>A customer enters a UPI reference, with a link to the order.</td></tr>
+		<tr><td>Return request for PK-…</td><td>A customer asks for a return.</td></tr>
+		<tr><td>Author updates</td><td>An author selling directly confirms a payment, sends a parcel, records a return or sends a refund, or pays you a delivery charge.</td></tr>
+	</tbody>
+</table></div>
+<p>All go to <a href="#settings-store">Order emails go to</a>. Every email’s subject starts with your store name in brackets. Emails go out from your site’s usual WordPress sender address; an SMTP plugin lets you choose that address. Authors’ replies to their emails come back to your order email.</p>
+</section>
+
+<section class="chapter" id="returns" data-title="Returns and refunds">
+<p class="eyebrow">Orders</p>
+<h1>Returns and refunds</h1>
+<p class="lead">A return can start with the customer asking on the tracking page, or simply with a parcel coming back. Either way, you record what came back in the order’s <strong>Returns</strong> box and then mark the refund as sent.</p>
+
+<h2 id="returns-requests">Answering a return request</h2>
+<figure class="small"><img src="images/order-request.webp" width="1167" height="1262" alt="Returns box with a request from the customer: one copy of The Discovery of India, arrived damaged, the customer’s note, a message box, and Approve return and Decline buttons; below it the Record a return form" loading="lazy"></figure>
+<p>A new request shows <span class="pill awaiting">Return requested</span> in the Orders list, the dashboard and the menu count, and you are emailed. On the order:</p>
+<ol class="steps">
+	<li>Read the books, reason and the customer’s note at the top of the Returns box.</li>
+	<li>Write a message to the customer. To approve, add anything you like — your <a href="#settings-returns">How to send books back</a> text is included for you. To decline, give the reason; it is required.</li>
+	<li>Click <span class="ui">Approve return</span> or <span class="ui">Decline</span>. The customer is emailed and the tracking page shows your answer.</li>
+	<li>When the books arrive, record the return (below). The form is already filled in from the request, and recording it closes the request.</li>
+</ol>
+
+<h2 id="returns-record">Recording a return</h2>
+<figure class="small"><img src="images/order-returned.webp" width="1167" height="1052" alt="Returns box: a recorded return of one Wings of Fire, back in stock, refund ₹275 to send with a Mark refund sent button, Undo the latest return, and a form to record another return" loading="lazy"></figure>
+<p>Returns can be recorded on shipped, delivered and partly returned orders.</p>
+<ol class="steps">
+	<li>Enter how many copies of each book came back. You can record several returns on one order.</li>
+	<li>Leave <span class="ui">Put these books back in stock</span> ticked, or untick it for damaged copies.</li>
+	<li>Check the <strong>Refund to the customer</strong>. It starts at the price of the returned books; change it to include delivery, or set 0 for no refund.</li>
+	<li>Add a reason if you like (the customer sees it) and click <span class="ui">Record return</span>.</li>
+</ol>
+<p>The order becomes <span class="pill returned">Partly returned</span> or <span class="pill returned">Returned</span>, the customer is emailed, and the tracking page shows the return. While an order has returns, its status list is locked: the status follows the returns.</p>
+<div class="note"><p><strong>A Cash on Delivery parcel that came back undelivered</strong> (refused or returned to sender) starts with a ₹0 refund, because the customer never paid.</p></div>
+
+<h2 id="returns-refund">Sending the refund</h2>
+<p>Send the money back from your UPI app or bank, then click <span class="ui">Mark refund sent</span> on the return. The customer is emailed. Until then the return shows “Refund to send”, and the dashboard and Orders list count it.</p>
+
+<h2 id="returns-undo">Undoing a mistake</h2>
+<p><span class="ui">Undo the latest return (a mistake)</span> takes its books back out of stock and puts the order back to its earlier status. Nobody is emailed.</p>
+
+<h2 id="returns-authors">Returns of authors’ books</h2>
+<div class="table"><table>
+	<thead><tr><th>Who sent the parcel</th><th>Who answers and records it</th><th>Who refunds</th></tr></thead>
+	<tbody>
+		<tr><td>The author sent it and was paid</td><td>The author, on their order page — or you, on the order screen.</td><td>The author, who taps <span class="ui">Refund sent</span>.</td></tr>
+		<tr><td>The author was paid, you sent it</td><td>You: the books come back to you, with your instructions.</td><td>The author refunds the price of the books (not delivery) and taps <span class="ui">Refund sent</span>.</td></tr>
+		<tr><td>You were paid and sent it</td><td>You.</td><td>You. The returned books come off what you owe the author; see <a href="#money-returns">Settling up after returns</a>.</td></tr>
+	</tbody>
+</table></div>
+<p>Everyone involved is emailed: the author when you record a return, and you when the author records one or sends a refund.</p>
+</section>
+<section class="chapter" id="direct" data-title="Direct sales by authors">
+<p class="eyebrow">Authors who sell</p>
+<h1>Direct sales by authors</h1>
+<p class="lead">Direct sales let authors sell their own books through your store. You keep the catalogue, orders and tracking in one place, and each author chooses how they are paid and who sends the parcel.</p>
+
+<h2 id="direct-on">Turning direct sales on</h2>
+<figure>
+	<img src="images/direct.webp" width="1800" height="1290" alt="Direct sales by authors: an On switch with Turn off direct sales, four steps, and a table of authors selling directly with contact, payment, delivery, books sold by them, You owe, their order page link with Copy, Email link, Open and New link, and Move all to store" loading="lazy">
+</figure>
+<p>Go to <span class="ui">Bookstore → Direct sales</span> and click <span class="ui">Turn on direct sales</span>. While they are off, every book is sold and paid to the store, whatever its <strong>Sold by</strong> says. Then:</p>
+<ol class="steps">
+	<li>Set up each author on their profile (below).</li>
+	<li>On each of their books, choose them under <strong>Sold by</strong> — or click <span class="ui">Sell all their books</span> on this page. <span class="ui">Move all to store</span> does the opposite.</li>
+</ol>
+
+<h2 id="direct-author">Setting up an author</h2>
+<div class="pair">
+	<figure><img src="images/author-direct.webp" width="1224" height="1835" alt="Direct sales section of an author profile: Sells books directly, email, phone, WhatsApp, UPI ID, name on UPI account, payment QR image, who dispatches, delivery charge, free delivery above, Cash on Delivery, and the author’s order page link" loading="lazy"></figure>
+	<div>
+		<p>Open the author under <span class="ui">Bookstore → Authors</span>. In the <strong>Direct sales</strong> section:</p>
+		<ul>
+			<li><strong>Sells books directly</strong>: tick it.</li>
+			<li><strong>Email</strong>: new orders, payments and their order page link go here. Without one the author isn’t told automatically.</li>
+			<li><strong>Phone</strong> and <strong>WhatsApp</strong> (blank if the same as the phone).</li>
+			<li><strong>UPI ID</strong>, <strong>Name on UPI account</strong> (shown as “Pay to …”), and a <strong>Payment QR image</strong> — a screenshot of their QR from Google Pay, PhonePe, Paytm or their bank. With a UPI ID, customers get a QR with the exact amount filled in; the picture is used only when there is no UPI ID.</li>
+			<li><strong>Who dispatches</strong>: see the next section.</li>
+			<li><strong>Delivery charge</strong> and <strong>Free delivery above</strong>: the author’s own, used only when they send the parcel. Blank means the same as the store; 0 for free delivery above means never free.</li>
+			<li><strong>Cash on Delivery</strong>: allowed when the author sends the parcel, with no extra charge.</li>
+		</ul>
+	</div>
+</div>
+<p>An author is <strong>Ready</strong> once customers have a way to pay them. Until then their books stay with the store, and the book list says “Author not ready”.</p>
+
+<h2 id="direct-modes">Who dispatches</h2>
+<p>Each author works in one of three ways. Whoever sends the parcel is paid for the whole order, with one delivery charge — the customer pays once.</p>
+<div class="table"><table>
+	<thead><tr><th>Choice</th><th>The customer pays</th><th>Delivery charge</th><th>Who sends</th><th>Needs</th></tr></thead>
+	<tbody>
+		<tr><td>The author is paid, and packs and sends the parcel<small>“Author dispatches”</small></td><td>The author, to their QR or by COD</td><td>The author’s</td><td>The author</td><td>A UPI ID, QR or Cash on Delivery</td></tr>
+		<tr><td>The author is paid, and the bookstore packs and sends the parcel<small>“Author is paid · you dispatch”</small></td><td>The author, by UPI only</td><td>Yours, which the author passes on to you</td><td>You</td><td>A UPI ID or QR</td></tr>
+		<tr><td>The bookstore is paid, and packs and sends the parcel<small>“You are paid · you dispatch”</small></td><td>You</td><td>Yours</td><td>You, and you owe the author for their books</td><td>Nothing more</td></tr>
+	</tbody>
+</table></div>
+<p>The money between you and the author in the second and third ways is covered in <a href="#money">Settling up with authors</a>.</p>
+
+<h2 id="direct-customer">What customers see</h2>
+<ul>
+	<li>Store cards say <strong>Sold by the author</strong>; the cart says who sells each book.</li>
+	<li>The book page has <strong>Sold directly by</strong> with the author’s delivery and payment details and an <span class="ui">Ask … on WhatsApp</span> link.</li>
+	<li>Checkout shows the QR, UPI ID and delivery charge of whoever is paid. If that seller doesn’t take the customer’s chosen payment method, their order uses the other one, and checkout says so.</li>
+	<li>Tracking and emails say “Sold by [author]”, or “Sold by [author] · sent by [store]” when you send it.</li>
+</ul>
+
+<h2 id="direct-one-source">One seller per order</h2>
+<p>A cart holds either the bookstore’s own books or one author’s books — never a mix, whoever sends them. If a shopper adds a book from a different source, the drawer explains why and offers <span class="ui">Check out my cart first</span> or <span class="ui">Empty my cart and add this book</span>. So every order has one seller, one payment, one parcel and one tracking number.</p>
+
+<h2 id="direct-emails">Keeping authors informed</h2>
+<p>Authors are emailed automatically, from your store, with a link straight to the order on their page:</p>
+<div class="table"><table>
+	<thead><tr><th>Email</th><th>When</th></tr></thead>
+	<tbody>
+		<tr><td>New order PK-… for your books</td><td>An order for their books is placed: the books, amount, delivery address and their order page link.</td></tr>
+		<tr><td>Payment sent for PK-… · please check</td><td>The customer says they have paid, with the UPI reference.</td></tr>
+		<tr><td>Order PK-… confirmed / cancelled</td><td>You confirm or cancel one of their orders.</td></tr>
+		<tr><td>Order PK-… has been sent</td><td>You send a parcel that includes their books.</td></tr>
+		<tr><td>Order PK-… includes your books · ₹… due to you</td><td>An order you are paid for and send includes their books (the third way), with what you will owe them.</td></tr>
+		<tr><td>Returns and refunds</td><td>A customer asks for a return, a return is recorded, or a refund is due from them.</td></tr>
+	</tbody>
+</table></div>
+<p>Replies come to your order email. Authors without an email are flagged on Direct sales and in Orders, with a WhatsApp link as a fallback. <span class="ui">Email the author the order again</span> on any order resends it.</p>
+
+<h2 id="direct-page">The Direct sales page</h2>
+<p>The table lists each author selling directly:</p>
+<ul>
+	<li><strong>Author</strong>, with <span class="pill confirmed">Ready</span> or what is missing; <strong>Contact</strong>; <strong>Payment</strong> (UPI ID, QR image, Cash on Delivery yes or no); <strong>Delivery</strong> (charge, free delivery limit and who dispatches).</li>
+	<li><strong>Books sold by them</strong>: for example “1 of 2”, linked to the list of their books, with <span class="ui">Sell all their books</span>.</li>
+	<li><strong>You owe</strong>: what you owe them for their books, and <strong>They owe you</strong> amounts. See <a href="#money">Settling up</a>.</li>
+	<li><strong>Author’s order page</strong>: their private link, with <span class="ui">Copy</span>, <span class="ui">Email link</span>, <span class="ui">Open</span> and <span class="ui">New link</span>, and how many orders are waiting for them.</li>
+</ul>
+</section>
+
+<section class="chapter" id="author-page" data-title="The author’s order page">
+<p class="eyebrow">Authors who sell</p>
+<h1>The author’s order page</h1>
+<p class="lead">Each selling author gets a <strong>private link</strong> to their own order page. There is no login and nothing to install: it works in any phone’s browser.</p>
+
+<h2 id="author-page-link">The private link</h2>
+<p>The link looks like <code>yoursite.com/?pustak_seller=…</code>, with a long secret code. It is in every email the author gets. From <span class="ui">Bookstore → Direct sales</span> or the author’s profile you can copy it, email it to them, or make a <span class="ui">New link</span> — the old one stops working at once, and the new one is emailed to the author. Do that if a link is shared by mistake.</p>
+
+<h2 id="author-page-list">What the author sees</h2>
+<div class="pair">
+	<figure class="phone"><img src="images/portal-phone.webp" width="780" height="1688" alt="Orders for Kalpana Saikia on a phone: 1 order needs you, a search box, To do, All and Awaiting payment lists, and order PK-YQCQ72 verifying payment with the books, total ₹600, the customer’s reference, the delivery address, and a Payment received · ₹600 button" loading="lazy"></figure>
+	<div>
+		<ul>
+			<li><strong>A summary</strong>: how many orders need them, delivery charges they owe you, and what you owe them.</li>
+			<li><strong>Search</strong> by order number, customer name, phone or city.</li>
+			<li><strong>Lists</strong> with counts: To do, All, Awaiting payment, Confirmed, Shipped, Delivered, Returns, Cancelled, and Sent by the bookstore. Twenty compact rows a page, newest first; <strong>To do</strong> says what to do for each.</li>
+			<li><strong>The order</strong>, tapped open: books, total, payment and the customer’s reference, the delivery address with call, WhatsApp and <span class="ui">Copy address</span>, and the button for the next step. After acting, the author comes back to the same list.</li>
+		</ul>
+		<p>The page loads one page of orders at a time, so it stays quick however many orders an author has.</p>
+	</div>
+</div>
+
+<h2 id="author-page-actions">What authors do there</h2>
+<div class="table"><table>
+	<thead><tr><th>Button</th><th>When</th><th>What happens</th></tr></thead>
+	<tbody>
+		<tr><td>Payment received</td><td>The customer’s money has reached them.</td><td>The order is Confirmed and the customer is emailed.</td></tr>
+		<tr><td>Dispatched (courier and tracking number)</td><td>They send the parcel themselves.</td><td>The order is Shipped; the customer gets the tracking email; you are emailed.</td></tr>
+		<tr><td>Mark delivered</td><td>Their parcel has arrived.</td><td>The order is Delivered.</td></tr>
+		<tr><td>Approve / Decline</td><td>A customer asks to return books they sent.</td><td>The customer is emailed the answer and the author’s instructions.</td></tr>
+		<tr><td>Record a return</td><td>Books came back to them.</td><td>As on the order screen: copies, restock, refund.</td></tr>
+		<tr><td>Refund sent</td><td>They have refunded the customer.</td><td>The customer and you are emailed.</td></tr>
+		<tr><td>Delivery charge paid</td><td>They have passed your delivery charge on (when you send their parcels).</td><td>You are emailed to check it arrived.</td></tr>
+	</tbody>
+</table></div>
+<p>Authors whose parcels you send see only the payment, delivery charge and refund steps: you do the shipping and answer return requests. A <span class="ui">How this page works</span> section at the bottom explains it all in their words.</p>
+<div class="note"><p>You can always do any of these yourself on the order screen. The author is emailed when you confirm, cancel or send one of their orders.</p></div>
+</section>
+
+<section class="chapter" id="money" data-title="Settling up with authors">
+<p class="eyebrow">Authors who sell</p>
+<h1>Settling up with authors</h1>
+<p class="lead">When an author is paid and sends the parcel, there is nothing to settle. In the other two ways, money passes between you and the author after each order, and Pustak keeps count.</p>
+
+<h2 id="money-owe">You are paid and send it: you owe the author</h2>
+<figure class="small"><img src="images/order-owed.webp" width="542" height="285" alt="Books sold by authors: Ritu Phukan · ₹450, The Weaver’s Daughter, and a Mark ₹450 paid to author button" loading="lazy"></figure>
+<p>The customer pays you for the whole order, delivery included, and you owe the author the price of their books. For example, Bikash orders three copies of Ritu Phukan’s <em>The Weaver’s Daughter</em> at ₹150, by Cash on Delivery:</p>
+<div class="table"><table class="plain">
+	<tbody>
+		<tr><td>Bikash pays you</td><td>3 × ₹150 + ₹50 delivery = <strong>₹500</strong></td></tr>
+		<tr><td>You owe Ritu</td><td>3 × ₹150 = <strong>₹450</strong> (delivery is yours)</td></tr>
+	</tbody>
+</table></div>
+<ol class="steps">
+	<li>Once the order is paid (Confirmed, Shipped or Delivered), its <strong>Books sold by authors</strong> box shows <span class="ui">Mark ₹450 paid to author</span>. The Direct sales page adds it to the author’s <strong>You owe</strong> total, and Orders can be filtered by <span class="ui">Authors’ books you send</span>.</li>
+	<li>Pay the author the way you have agreed, then click the button. It shows <span class="pill confirmed">Paid to author</span>, with <span class="ui">Undo</span>.</li>
+</ol>
+
+<h2 id="money-fee">The author is paid and you send it: the delivery charge</h2>
+<figure class="small"><img src="images/order-fee.webp" width="542" height="261" alt="Delivery charge from the author: ₹50 due from Hemanta Bora, and a Delivery charge received · ₹50 button" loading="lazy"></figure>
+<p>For authors whose books you keep and post but who want the money to come to them. Nandini orders two copies of Hemanta Bora’s <em>Songs of the Brahmaputra</em> at ₹180:</p>
+<ol class="steps">
+	<li>Nandini pays <strong>Hemanta</strong> the whole amount by UPI: 2 × ₹180 + your ₹50 delivery = <strong>₹410</strong>. Your delivery charge and free-delivery limit apply.</li>
+	<li>Hemanta checks the money arrived and taps <span class="ui">Payment received</span>. The order is Confirmed.</li>
+	<li>Hemanta pays you the <strong>₹50</strong> delivery charge — his page shows your UPI ID and a pay link with the amount — and taps <span class="ui">Delivery charge paid</span>. You are emailed.</li>
+	<li>You check it arrived and click <span class="ui">Delivery charge received</span> on the order, or in the Orders list. Hemanta is emailed.</li>
+	<li>You pack and send the parcel and mark it Shipped with the tracking number, as usual. Nandini and Hemanta are emailed.</li>
+</ol>
+<p>Until it is received, the order shows “Delivery ₹50 due from author”, Direct sales shows “They owe you ₹50 delivery charges”, and the dashboard counts it. You can send the parcel first if you like; the charge stays due. If the order qualified for free delivery, nothing is passed on, and you can send it as soon as the author confirms the payment.</p>
+<p>If you cancel such an order, the author is asked to refund the customer in full; if you had already received the delivery charge, the order reminds you to return it.</p>
+
+<h2 id="money-returns">Settling up after returns</h2>
+<ul>
+	<li><strong>You were paid and sent it</strong>: returned books come off what you owe the author. If you had already paid them, the order shows “Author owes you ₹… back” with <span class="ui">Mark received back</span>, and Direct sales shows “They owe you”. The author is emailed.</li>
+	<li><strong>The author was paid and you sent it</strong>: the books come back to you, and the author refunds the customer the price of the books — delivery isn’t refunded — then taps <span class="ui">Refund sent</span>.</li>
+	<li><strong>The author was paid and sent it</strong>: the author refunds the customer. Nothing passes between you.</li>
+</ul>
+</section>
+<section class="chapter" id="developers" data-title="For developers">
+<p class="eyebrow">Reference</p>
+<h1>For developers</h1>
+<p class="lead">Pustak keeps everything in standard WordPress data: posts, terms, post meta and options. There are no custom database tables.</p>
+
+<h2 id="dev-data">Data</h2>
+<div class="table"><table>
+	<thead><tr><th>What</th><th>Stored as</th></tr></thead>
+	<tbody>
+		<tr><td>Books</td><td>Post type <code>book</code> (public, archive at <code>/books/</code>, single pages at <code>/book/slug/</code>). Shop details in post meta: <code>_pustak_author</code>, <code>_pustak_price</code>, <code>_pustak_mrp</code>, <code>_pustak_stock</code> (blank = unlimited), <code>_pustak_isbn</code>, <code>_pustak_language</code>, <code>_pustak_pages</code>, <code>_pustak_condition</code> (<code>new</code> / <code>used</code>), <code>_pustak_featured</code>, <code>_pustak_seller</code> (author term ID, blank for the store).</td></tr>
+		<tr><td>Genres</td><td>Taxonomy <code>book_genre</code> (hierarchical, <code>/genre/slug/</code>).</td></tr>
+		<tr><td>Authors</td><td>Taxonomy <code>book_author</code> (<code>/book-author/slug/</code>). Term meta <code>_pustak_life</code>, <code>_pustak_place</code>, <code>_pustak_known</code>, <code>_pustak_photo</code>; direct-sales fields as <code>_pustak_ds_*</code>, including the private page key <code>_pustak_ds_key</code>.</td></tr>
+		<tr><td>Orders</td><td>Private post type <code>pustak_order</code>. Post meta includes <code>_pustak_number</code>, <code>_pustak_key</code>, <code>_pustak_status</code>, <code>_pustak_items</code>, <code>_pustak_subtotal</code>, <code>_pustak_shipping</code>, <code>_pustak_cod_fee</code>, <code>_pustak_total</code>, the customer fields, <code>_pustak_payment</code>, <code>_pustak_utr</code>, <code>_pustak_tracking</code>, <code>_pustak_log</code>, <code>_pustak_seller_key</code>, <code>_pustak_ships</code>, <code>_pustak_returns</code> and <code>_pustak_requests</code>.</td></tr>
+		<tr><td>Settings</td><td>Options <code>pustak_settings</code> (Settings page), <code>pustak_design</code> (Storefront) and <code>pustak_direct_sales</code> (on/off).</td></tr>
+	</tbody>
+</table></div>
+<p>Seller keys used throughout are <code>store</code> or <code>a{term_id}</code> for an author.</p>
+
+<h2 id="dev-rest">REST API</h2>
+<p>The store’s script talks to these routes under <code>/wp-json/pustak/v1</code>:</p>
+<div class="table"><table>
+	<thead><tr><th>Route</th><th>Method</th><th>Does</th></tr></thead>
+	<tbody>
+		<tr><td><code>/books</code></td><td>GET</td><td>Current price and stock of up to 50 books, by <code>?ids=1,2,3</code>, so the cart stays up to date.</td></tr>
+		<tr><td><code>/orders</code></td><td>POST</td><td>Places an order (one per seller). Limited to 8 per network per 15 minutes.</td></tr>
+		<tr><td><code>/orders/{number}/payment</code></td><td>POST</td><td>Saves the customer’s UPI reference (UTR) and moves the order to Verifying payment.</td></tr>
+		<tr><td><code>/orders/{number}/return</code></td><td>POST</td><td>A customer’s return request.</td></tr>
+		<tr><td><code>/track</code></td><td>POST</td><td>Looks up an order for the tracking page.</td></tr>
+	</tbody>
+</table></div>
+<p>Order routes are authorised by the order’s secret key (given to the customer’s browser at checkout) or by the mobile number on the order, and are rate-limited per network.</p>
+
+<h2 id="dev-hooks">Actions</h2>
+<div class="table"><table>
+	<thead><tr><th>Action</th><th>Arguments</th><th>Fires when</th></tr></thead>
+	<tbody>
+		<tr><td><code>pustak_order_created</code></td><td><code>$order_id</code></td><td>An order is saved.</td></tr>
+		<tr><td><code>pustak_order_status_changed</code></td><td><code>$order_id, $old, $new</code></td><td>Any status change.</td></tr>
+		<tr><td><code>pustak_order_returned</code></td><td><code>$order_id, $index, $record</code></td><td>A return is recorded.</td></tr>
+		<tr><td><code>pustak_order_refunded</code></td><td><code>$order_id, $index, $record</code></td><td>A refund is marked sent.</td></tr>
+		<tr><td><code>pustak_return_requested</code></td><td><code>$order_id, $index, $request</code></td><td>A customer asks for a return.</td></tr>
+		<tr><td><code>pustak_return_decided</code></td><td><code>$order_id, $index, $request</code></td><td>A request is approved or declined.</td></tr>
+		<tr><td><code>pustak_author_update</code></td><td><code>$order_id, $what, $author</code></td><td>An author acts on their page: <code>paid</code>, <code>shipped</code>, <code>tracking</code> or <code>delivered</code>.</td></tr>
+		<tr><td><code>pustak_fee_update</code></td><td><code>$order_id, $what, $by</code></td><td>A delivery charge from an author is <code>sent</code>, <code>received</code> or undone (<code>undo</code>).</td></tr>
+	</tbody>
+</table></div>
+<p>All of Pustak’s emails are sent from these actions, so you can add your own (an SMS, a WhatsApp Business message, an accounting entry) the same way.</p>
+
+<h2 id="dev-templates">Templates</h2>
+<p>Copy a template into a <code>pustak</code> folder in your theme to change it:</p>
+<ul>
+	<li><code>yourtheme/pustak/single-book.php</code> — the book page.</li>
+	<li><code>yourtheme/pustak/author.php</code> — the author page.</li>
+</ul>
+<p>Both work in block themes and classic themes. The store and tracking page are shortcodes, styled through the <a href="#storefront">Storefront</a> designer.</p>
+
+<h2 id="dev-translation">Translation and privacy</h2>
+<ul>
+	<li>All text uses the text domain <code>pustak</code>.</li>
+	<li>Pincode auto-fill sends only the pincode, from the customer’s browser, to the India Post service at <code>api.postalpincode.in</code>. Turn it off under <a href="#settings-delivery">Delivery</a>.</li>
+	<li>Google fonts are loaded only when you choose one in the Storefront designer.</li>
+	<li>The customer’s cart, details and last order are kept in their own browser’s storage, not in cookies.</li>
+	<li>Authors’ order pages are never cached and ask search engines not to index them.</li>
+</ul>
+</section>
+
+<section class="chapter" id="troubleshooting" data-title="Troubleshooting and questions">
+<p class="eyebrow">Help</p>
+<h1>Troubleshooting and questions</h1>
+
+<h2 id="t-email">Nobody is getting emails</h2>
+<p>Many hosts don’t deliver WordPress email reliably. Install an SMTP plugin (for example WP Mail SMTP), connect it to a real mailbox and send a test email. Check <a href="#settings-store">Order emails go to</a>. To test one author, use <span class="ui">Email link</span> on <span class="ui">Bookstore → Direct sales</span>; if it fails, the page says so.</p>
+
+<h2 id="t-author-email">An author isn’t getting emails</h2>
+<p>Check that their profile has an email address under Direct sales — authors without one are flagged “No email yet”. Then see above. On any order you can click <span class="ui">Email the author the order again</span>, or use the WhatsApp link instead.</p>
+
+<h2 id="t-upi-blocked">The customer’s UPI app won’t pay</h2>
+<p>Some apps block pay-links with a fixed amount to personal UPI IDs. Use a business or merchant UPI ID. Meanwhile, customers can still scan the QR code or pay the UPI ID by hand.</p>
+
+<h2 id="t-no-utr">A customer paid but didn’t enter the reference</h2>
+<p>If you can see the payment in your UPI app or bank — matching the amount, and often the order number in the note — set the order to <strong>Confirmed</strong> yourself, or click <span class="ui">Payment received</span> in the Orders list. If they typed a wrong reference, they can correct it on the tracking page with <span class="ui">Entered the wrong number?</span>.</p>
+
+<h2 id="t-stuck">Books show as sold out but nobody paid</h2>
+<p>Unpaid UPI orders keep their books reserved. Filter Orders by <span class="ui">Awaiting payment</span> and cancel the old ones; the books go back into stock.</p>
+
+<h2 id="t-pages">The store or tracking page is missing</h2>
+<p>Use <span class="ui">Recreate missing store pages</span> on the Settings page, then check that <a href="#settings-store">Store page and Track order page</a> point to them.</p>
+
+<h2 id="t-404">Book or author pages say “not found”</h2>
+<p>Go to <span class="ui">Settings → Permalinks</span> in WordPress and click <span class="ui">Save Changes</span> without changing anything. Pustak also refreshes permalinks once after each update.</p>
+
+<h2 id="t-look">The book page looks wrong in my theme</h2>
+<p>Pustak’s book page works with block and classic themes. If your theme fights it, turn off <a href="#storefront-book">Use the Pustak book page design</a> to use your theme’s own page with a simple buy box, or make a <a href="#dev-templates">theme template</a>. If you use a page-caching plugin, clear its cache after changing the Storefront.</p>
+
+<h2 id="t-sold-by">A book is “Sold by” an author but the store is paid</h2>
+<p>Direct sales may be switched off, or the author isn’t ready: they need a UPI ID, QR or Cash on Delivery (or a UPI ID or QR if you send their parcels). The book list says “Author not ready”, and the Direct sales page says what is missing.</p>
+
+<h2 id="t-shared">A book says “Shared name — choose the author profile”</h2>
+<p>More than one profile has that author’s name. Open the book, choose the right one under <strong>Author profile</strong> and Update. See <a href="#authors-same-name">Authors with the same name</a>.</p>
+
+<h2 id="t-link">An author lost their link, or shared it</h2>
+<p>On <span class="ui">Bookstore → Direct sales</span>, click <span class="ui">Email link</span> to send it again, or <span class="ui">New link</span> to replace it. The old link stops working at once.</p>
+
+<h2 id="t-pincode">City and state don’t fill in at checkout</h2>
+<p>The free India Post pincode service is sometimes slow or down. Customers can type the city and choose the state themselves. You can turn the auto-fill off under <a href="#settings-delivery">Delivery</a>.</p>
+
+<h2 id="faq">Questions</h2>
+<h3 id="faq-woo">Does it need WooCommerce?</h3>
+<p>No. Pustak is self-contained.</p>
+<h3 id="faq-fees">Are there any fees?</h3>
+<p>No. Customers pay you directly by UPI or in cash; there is no gateway between you.</p>
+<h3 id="faq-where">Where are orders stored?</h3>
+<p>As private posts in your WordPress database, under <span class="ui">Bookstore → Orders</span>. Deleting the plugin does not delete orders or books.</p>
+<h3 id="faq-account">Do customers need an account?</h3>
+<p>No. They track orders with the order number and their mobile number, and their details are remembered on their own device.</p>
+<h3 id="faq-languages">Can book titles be in Hindi or Assamese?</h3>
+<p>Yes. Choose Noto Serif or Mukta for titles, and Noto Sans, Mukta or Hind Siliguri for the rest, under <a href="#storefront-colours">Fonts</a>. The button text can be in any language too.</p>
+</section>
+
+<section class="chapter" id="changes" data-title="What’s new">
+<p class="eyebrow">Help</p>
+<h1>What’s new</h1>
+<p class="lead">Changes in each version of Pustak Bookstore, newest first.</p>
+<h3 id="v2-5-0">2.5.0</h3>
+<ul>
+	<li>New: Share buttons — WhatsApp, Facebook, X, Email and Copy link — on every book page and author page.</li>
+	<li>New Settings → Sharing: one switch for all book and author pages, and a choice of which buttons to show.</li>
+</ul>
+<h3 id="v2-4-0">2.4.0</h3>
+<ul>
+	<li>Authors who share a name are no longer merged. Books keep the profile they are linked to; a new “Author profile” choice on the book lets you give a different author with the same name their own profile; books with an ambiguous name are flagged instead of guessed (so “Sell all their books” can’t pick up another author’s books). Same-name profiles can be added on the Authors screen, and are shown with their hometown and years wherever you pick an author.</li>
+	<li>Renaming an author profile updates the Author field of its books.</li>
+	<li>Author’s order page redesigned for many orders: summary chips, search, list tabs with counts, 20 compact rows per page with Newer/Older, and a single-order view for actions. Only one page of orders is loaded at a time.</li>
+	<li>Emails link straight to the order on the author’s page. Older links still work.</li>
+</ul>
+<h3 id="v2-3-0">2.3.0</h3>
+<ul>
+	<li>New: “Who dispatches” has a third choice — the author is paid, and the bookstore packs and sends the parcel. The customer pays the author (books and the store’s delivery charge, by UPI), the author confirms it and passes the delivery charge on to the store, then the store sends the parcel.</li>
+	<li>Author’s order page: “Delivery charge paid” with the store’s UPI ID and a pay link for the exact amount; the parcel’s progress once the store sends it.</li>
+	<li>Order screen: “Delivery charge from the author” box with “Delivery charge received” (also a one-click action in the Orders list). A reminder appears if you go to send before it has arrived.</li>
+	<li>Direct sales shows the delivery charges each author still owes you; the dashboard and an Orders filter list them.</li>
+	<li>Returns for these orders come back to the store: the store answers the request and records the return, and the author refunds the book price (not delivery) and marks it sent.</li>
+	<li>Shop, cart, checkout, tracking and emails say “Sold by [author] · sent by [store]” for these books.</li>
+	<li>“Authors’ books you send” in the Orders filter now includes these orders.</li>
+</ul>
+<h3 id="v2-2-1">2.2.1</h3>
+<ul>
+	<li>Track order: after a failed lookup, the mobile number stays filled in so the customer can check it for typos.</li>
+	<li>Track order: the “+91” prefix no longer wraps onto two lines in narrow or themed layouts.</li>
+</ul>
+<h3 id="v2-2-0">2.2.0</h3>
+<ul>
+	<li>New: Customers can request a return from the Track Order page, choosing books, copies and a reason (9 book-specific reasons plus “Something else”), within a set number of days after delivery (default 7).</li>
+	<li>Approve or decline requests from the order screen, or authors do it on their order page for parcels they sent. The customer, store and author are emailed at each step, and the tracking page shows the request status and reply.</li>
+	<li>An approved request fills in the return form. Recording the return closes the request.</li>
+	<li>New Settings → Returns section: turn requests on or off, set the return window, and add instructions for sending books back.</li>
+	<li>The dashboard, Orders list and menu count show return requests waiting for an answer.</li>
+</ul>
+<h3 id="v2-1-0">2.1.0</h3>
+<ul>
+	<li>New: Sales returns. Return some or all copies from shipped or delivered orders, with or without putting them back in stock. Each return records a refund that you mark as sent. New statuses: "Partly returned" and "Returned".</li>
+	<li>Returns for books sent by authors: the author records returns and marks refunds sent on their order page, and the bookstore and customer are emailed. Returns recorded by the bookstore email the author with the refund to make.</li>
+	<li>Authors' books sent by the bookstore: returned books come off what you owe the author. Anything already paid for them shows as owed back to you.</li>
+	<li>The tracking page shows returns and refund status. The dashboard revenue is after refunds, and it lists refunds still to send.</li>
+	<li>Cancelling an order that had restocked returns no longer puts those books back in stock twice.</li>
+</ul>
+<h3 id="v2-0-0">2.0.0</h3>
+<ul>
+	<li>Authors are now kept informed by email instead of WhatsApp: new orders, payments sent by customers, confirmations, cancellations and parcels sent by the store, each with a link to their order page. Replies go to the store email.</li>
+	<li>New: Email field on author profiles; “Email link” and “Email the author the order again” buttons; making a new order page link emails it to the author.</li>
+	<li>Track order button: a delivery-van button next to the cart button in the store toolbar opens the Track Order page (Storefront → show/hide).</li>
+	<li>One source per order: the bookstore’s own books and an author’s books (or two authors’ books) can’t be in the same cart; the shopper is asked to order them separately.</li>
+	<li>“Who dispatches” per author: whoever sends the parcel is paid in full with their own delivery charge (one payment per order). When the store sends an author’s books it is paid for them, with “Mark paid to author” on each order and a “You owe” total per author.</li>
+	<li>Direct sales by authors, author order pages and genre shelf counts (from 1.9–1.10) are all part of this release.</li>
+</ul>
+<h3 id="v1-10-0">1.10.0</h3>
+<ul>
+	<li>New: Shelf per genre shows the number of books on each shelf (“3 of 12” while searching).</li>
+	<li>New: Author’s order page — authors who sell directly confirm payment and record dispatch (courier + tracking number) from a private link; the customer and the bookstore are notified.</li>
+</ul>
+<h3 id="v1-9-0">1.9.0</h3>
+<ul>
+	<li>New: Direct sales by authors. Author contact, UPI ID and QR on profiles, “Sold by” on books, one order per seller at checkout with that seller’s QR, seller shown on cards, book page, cart, tracking, emails and orders.</li>
+</ul>
+<h3 id="v1-8-2">1.8.2</h3>
+<ul>
+	<li>Shelf rows (Shelf per genre, Staff picks, More by this author, You may also like) now show only whole books: as many as fit, stretched to fill the width, with no book cut off at the edge. The arrows move one full set at a time.</li>
+</ul>
+<h3 id="v1-8-1">1.8.1</h3>
+<ul>
+	<li>Cards, lists and shelves always fit inside the theme's content area, in every layout, card style and book size — including narrow columns, sidebars and boxed looks.</li>
+	<li>Space between cards shrinks smoothly with the available width instead of jumping at fixed screen sizes.</li>
+	<li>Grid, list, toolbar and book-page layouts now switch based on the width of the theme's container, not the screen.</li>
+	<li>The bookshelf ledge and the Staff picks panel no longer stick out past the container edges.</li>
+</ul>
+<h3 id="v1-8-0">1.8.0</h3>
+<ul>
+	<li>Back cover is always readable: photo covers wrap their own blurred artwork round to the back, and generated covers use a deep tone of their colour. It no longer turns see-through in browsers or CSS optimisers that don't support colour mixing.</li>
+	<li>Book covers stay visible when switching between grid and list, changing pages or filtering, including with lazy-loading plugins.</li>
+	<li>Fallback colours for older browsers.</li>
+	<li>Browsers always pick up updated styles after an update.</li>
+	<li>Smaller store toolbar and genre buttons.</li>
+	<li>Cart button (icon with a count) in the store toolbar; can be turned off in Storefront → Buttons and cart.</li>
+</ul>
+<h3 id="v1-5-0">1.5.0</h3>
+<ul>
+	<li>Book page design with a 3D book, back cover and ISBN barcode, COD pincode check and sticky buy bar.</li>
+	<li>Author profiles and author pages.</li>
+	<li>Text customisation in the Storefront designer: sizes, weights, colours, line spacing, letter case and a body font.</li>
+	<li>Grid or list view, with an optional switch for shoppers.</li>
+	<li>Pagination with a chosen number of books per page: page numbers or a Show more button.</li>
+</ul>
+<h3 id="v1-1-0">1.1.0</h3>
+<ul>
+	<li>New Storefront designer with live preview, looks, fonts, layouts, Staff picks and announcement bar.</li>
+</ul>
+<h3 id="v1-0-0">1.0.0</h3>
+<ul>
+	<li>First release.</li>
+</ul>
+
+</section>
+
+	</main>
+</div>
+<button class="totop" type="button" aria-label="Back to top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<script>
+(function () {
+	'use strict';
+	var chapters = [].slice.call(document.querySelectorAll('.chapter'));
+	var toc = document.getElementById('toc');
+	var side = document.getElementById('side');
+	var menuBtn = document.querySelector('.menu-btn');
+
+	// Heading anchors.
+	document.querySelectorAll('.chapter h2[id], .chapter h3[id]').forEach(function (h) {
+		var a = document.createElement('a');
+		a.className = 'anchor'; a.href = '#' + h.id; a.textContent = '#';
+		a.setAttribute('aria-label', 'Link to this section');
+		h.appendChild(a);
+	});
+
+	// Chapter list, numbered, with each chapter's sections.
+	chapters.forEach(function (ch, i) {
+		var title = ch.getAttribute('data-title');
+		var li = document.createElement('li');
+		li.innerHTML = '<a class="ch" href="#' + ch.id + '"><span>' + (i + 1) + '</span><span></span></a>';
+		li.querySelector('span:last-child').textContent = title;
+		var subs = ch.querySelectorAll('h2[id]');
+		if (subs.length) {
+			var ol = document.createElement('ol');
+			ol.className = 'sub'; ol.hidden = true;
+			subs.forEach(function (h) {
+				var a = document.createElement('a');
+				a.href = '#' + h.id; a.textContent = h.firstChild.textContent.trim();
+				var sli = document.createElement('li'); sli.appendChild(a); ol.appendChild(sli);
+			});
+			li.appendChild(ol);
+		}
+		toc.appendChild(li);
+
+		// Previous / next.
+		var nav = document.createElement('nav');
+		nav.className = 'pager'; nav.setAttribute('aria-label', 'Chapters');
+		if (i > 0) nav.innerHTML += '<a class="prev" href="#' + chapters[i - 1].id + '"><span>← Previous</span>' + esc(chapters[i - 1].getAttribute('data-title')) + '</a>';
+		if (i < chapters.length - 1) nav.innerHTML += '<a class="next" href="#' + chapters[i + 1].id + '"><span>Next →</span>' + esc(chapters[i + 1].getAttribute('data-title')) + '</a>';
+		ch.appendChild(nav);
+	});
+
+	function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+	function chapterFor(id) {
+		if (!id) return chapters[0];
+		var el = document.getElementById(id);
+		if (!el) return chapters[0];
+		return el.classList.contains('chapter') ? el : (el.closest('.chapter') || chapters[0]);
+	}
+
+	var current = null;
+	function show(scroll) {
+		var id = decodeURIComponent(location.hash.slice(1));
+		var ch = chapterFor(id);
+		chapters.forEach(function (c) { c.hidden = c !== ch; });
+		toc.querySelectorAll('.ch').forEach(function (a) {
+			var on = a.getAttribute('href') === '#' + ch.id;
+			a.classList.toggle('is-active', on);
+			if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+			var sub = a.parentNode.querySelector('.sub');
+			if (sub) sub.hidden = !on;
+		});
+		toc.querySelectorAll('.sub a').forEach(function (a) { a.classList.toggle('is-here', a.getAttribute('href') === '#' + id); });
+		document.title = ch.getAttribute('data-title') + ' — Pustak Bookstore user manual';
+		if (scroll !== false) {
+			var target = id && id !== ch.id ? document.getElementById(id) : null;
+			if (target) target.scrollIntoView(); else if (current !== ch) window.scrollTo(0, 0);
+		}
+		current = ch;
+		side.classList.remove('is-open'); menuBtn.setAttribute('aria-expanded', 'false');
+	}
+	window.addEventListener('hashchange', function () { show(); });
+	show();
+
+	// Section the reader is in, highlighted in the sidebar.
+	var heads = function () { return current ? [].slice.call(current.querySelectorAll('h2[id]')) : []; };
+	window.addEventListener('scroll', function () {
+		var here = null;
+		heads().forEach(function (h) { if (h.getBoundingClientRect().top < 140) here = h.id; });
+		toc.querySelectorAll('.sub a').forEach(function (a) { a.classList.toggle('is-here', a.getAttribute('href') === '#' + here); });
+		totop.hidden = window.scrollY < 700;
+	}, { passive: true });
+
+	menuBtn.addEventListener('click', function () {
+		var open = side.classList.toggle('is-open');
+		menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+	});
+
+	// Light / dark.
+	document.getElementById('theme').addEventListener('click', function () {
+		var dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+		if (dark) document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+		try { localStorage.setItem('pk-manual-theme', dark ? 'dark' : 'light'); } catch (e) {}
+	});
+
+	// Print every chapter.
+	document.getElementById('print').addEventListener('click', function () { window.print(); });
+
+	var totop = document.querySelector('.totop');
+	totop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); document.getElementById('content').focus({ preventScroll: true }); });
+
+	// Search: every section (h2 / h3 with an id) and the text under it.
+	var index = [];
+	chapters.forEach(function (ch) {
+		var title = ch.getAttribute('data-title');
+		var entry = { id: ch.id, title: title, where: title, text: '' };
+		index.push(entry);
+		[].slice.call(ch.children).forEach(function (el) {
+			if (el.classList.contains('pager')) return;
+			if (/^H[23]$/.test(el.tagName) && el.id) {
+				entry = { id: el.id, title: el.firstChild.textContent.trim(), where: title, text: '' };
+				index.push(entry);
+			} else {
+				entry.text += ' ' + words(el);
+			}
+		});
+	});
+	// Text of an element with a space between its parts, so words in separate boxes don’t run together.
+	function words(el) {
+		var t = '';
+		el.childNodes.forEach(function (n) { t += n.nodeType === 3 ? n.textContent : (/^(STRONG|B|EM|I|CODE|A|SPAN|SMALL|KBD|MARK)$/.test(n.tagName) ? words(n) : ' ' + words(n) + ' '); });
+		return t.replace(/\s+/g, ' ');
+	}
+	var q = document.getElementById('q'), results = document.getElementById('results'), active = -1;
+	function norm(s) { return s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, ''); }
+	function mark(text, words) {
+		var out = esc(text);
+		words.forEach(function (w) { out = out.replace(new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'), '<mark>$1</mark>'); });
+		return out;
+	}
+	function search() {
+		var words = norm(q.value).split(/\s+/).filter(function (w) { return w.length > 1; });
+		results.innerHTML = ''; active = -1;
+		if (!words.length) { results.hidden = true; q.setAttribute('aria-expanded', 'false'); return; }
+		var hits = [];
+		index.forEach(function (e) {
+			var t = norm(e.title), b = norm(e.text), score = 0;
+			for (var i = 0; i < words.length; i++) {
+				var w = words[i], inT = t.indexOf(w) > -1, inB = b.indexOf(w) > -1;
+				if (!inT && !inB) return;
+				score += (inT ? 10 : 0) + (inB ? 1 : 0);
+			}
+			var at = b.indexOf(words[0]), snip = '';
+			if (at > -1) { var s = Math.max(0, at - 50); snip = (s ? '…' : '') + e.text.substr(s, 140).trim() + '…'; }
+			hits.push({ e: e, score: score, snip: snip });
+		});
+		hits.sort(function (a, b) { return b.score - a.score; });
+		hits.slice(0, 10).forEach(function (h) {
+			var li = document.createElement('li');
+			li.innerHTML = '<a role="option" href="#' + h.e.id + '"><b>' + mark(h.e.title, words) + '</b><span>' + esc(h.e.where) + (h.snip ? ' · ' + mark(h.snip, words) : '') + '</span></a>';
+			results.appendChild(li);
+		});
+		if (!hits.length) results.innerHTML = '<li class="none">Nothing found. Try another word.</li>';
+		results.hidden = false; q.setAttribute('aria-expanded', 'true');
+	}
+	function move(d) {
+		var links = results.querySelectorAll('a'); if (!links.length) return;
+		active = (active + d + links.length) % links.length;
+		links.forEach(function (a, i) { a.classList.toggle('is-active', i === active); });
+		links[active].scrollIntoView({ block: 'nearest' });
+	}
+	q.addEventListener('input', search);
+	q.addEventListener('keydown', function (e) {
+		if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+		else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+		else if (e.key === 'Enter') { var links = results.querySelectorAll('a'); var a = links[Math.max(0, active)]; if (a) { e.preventDefault(); location.hash = a.getAttribute('href').slice(1); close(); } }
+		else if (e.key === 'Escape') { close(); q.blur(); }
+	});
+	function close() { results.hidden = true; q.setAttribute('aria-expanded', 'false'); }
+	results.addEventListener('click', function (e) { if (e.target.closest('a')) { close(); q.value = ''; } });
+	document.addEventListener('click', function (e) { if (!e.target.closest('.search')) close(); });
+	document.addEventListener('keydown', function (e) {
+		if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); q.focus(); q.select(); }
+	});
+
+	// Printing shows every chapter; afterwards only the current one.
+	window.addEventListener('afterprint', function () { show(false); });
+})();
+</script>
+</body>
+</html>

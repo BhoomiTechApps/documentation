@@ -500,14 +500,14 @@ td:first-child code{white-space:nowrap}
 <p>USB mode needs <b>Chrome or Edge</b> (version 86 or later). It works whether or not a <a href="#kiosk-site">kiosk site</a> is set. After a restart the kiosk reopens the same folder by itself. If the browser wants permission again, a <span class="ui">Reconnect to saved USB folder</span> button appears. One tap reconnects, without picking the folder again.</p>
 
 <h2 id="kiosk-site">The kiosk site</h2>
-<p>The <b>kiosk site</b> is the WordPress site running the LexiPic Kiosk plugin. It provides two things: the list of approved pages for Remote URL, and the kiosk PIN. No site is built into the app. A new kiosk starts with none, and you enter it under <span class="ui">Kiosk site</span> at the bottom of the setup card.</p>
+<p>The <b>kiosk site</b> is a WordPress site running the <b>Kiosk Card plugin</b> (version 1.7.0 or later) or the <b>LexiPic Kiosk plugin</b>. It provides two things: the list of approved pages for Remote URL, and the kiosk PIN. No site is built into the app. A new kiosk starts with none, and you enter it under <span class="ui">Kiosk site</span> at the bottom of the setup card.</p>
 <div class="side-by">
-<figure><img class="zoom" src="img/kc-setup-url.webp" alt="A new kiosk's setup card: Remote URL selected, and below it the Kiosk site section open, marked Not set, with an empty box for the WordPress site with the LexiPic Kiosk plugin, a note that with no kiosk site Remote URL can't be used and changing the source is not PIN-protected while USB Drive works without one, and a Save kiosk site button" width="1020" height="1260" loading="lazy"><figcaption>A new kiosk: no kiosk site yet.</figcaption></figure>
+<figure><img class="zoom" src="img/kc-setup-url.webp" alt="A new kiosk's setup card: Remote URL selected, and below it the Kiosk site section open, marked Not set, with an empty box for the WordPress site with the Kiosk Card or LexiPic Kiosk plugin, a note that with no kiosk site Remote URL can't be used and changing the source is not PIN-protected while USB Drive works without one, and a Save kiosk site button" width="1020" height="1260" loading="lazy"><figcaption>A new kiosk: no kiosk site yet.</figcaption></figure>
 <figure><img class="zoom" src="img/kc-site-saved.webp" alt="The setup card after saving: Kiosk site heritage.example.org, the box showing https://heritage.example.org, a note that Remote URL pages must be on this site's approved list and changing the source needs this site's kiosk PIN, Save kiosk site and Clear buttons, and the message Kiosk site saved: heritage.example.org" width="1020" height="1260" loading="lazy"><figcaption>Kiosk site saved.</figcaption></figure>
 </div>
 <ol class="steps">
 <li>Type the site’s address, for example <code>https://example.org</code>. Plain <code>example.org</code> works too, and <code>https://</code> is added for you. If WordPress lives in a sub-folder, include it: <code>https://example.org/wp</code>.</li>
-<li>Press <span class="ui">Save kiosk site</span>. The kiosk first checks that the LexiPic Kiosk plugin answers at that address. If it doesn’t, nothing is saved and the message says why.</li>
+<li>Press <span class="ui">Save kiosk site</span>. The kiosk first checks that the site answers as a kiosk site. If it doesn’t, nothing is saved and the message says why.</li>
 </ol>
 <p>Only <code>https://</code> addresses are accepted, except <code>http://localhost</code> for testing. The address is saved on this kiosk only. <span class="ui">Clear</span> removes it after asking.</p>
 <table class="tbl">
@@ -520,8 +520,19 @@ td:first-child code{white-space:nowrap}
 </tbody></table>
 <div class="note warn"><b class="k">Set a kiosk site on public kiosks</b> Without one there is no PIN, so anyone who taps <span class="ui">⚙ source</span> can change what the kiosk shows. On a kiosk that visitors can reach, set the kiosk site so the PIN protects it, even if the kiosk only uses a USB drive.</div>
 
+<h3 id="plugin-kiosk-site">Setting up the kiosk site in the Kiosk Card plugin</h3>
+<p>In WordPress, go to <b>Kiosk Card</b> and find the <b>Kiosk Card app: kiosk site</b> card.</p>
+<figure><img class="zoom" src="img/plugin-kiosk-site.webp" alt="The Kiosk Card plugin's admin card 'Kiosk Card app: kiosk site': a ticked box 'Let the Kiosk Card app use this site as its kiosk site'; Address for the app with a Copy button; Approved domains, one per line; Kiosk PIN with 'A PIN is set', New PIN and Repeat boxes and Remove the PIN; Save app settings" width="1600" height="947" loading="lazy"><figcaption>The plugin’s kiosk-site settings, here on a test site.</figcaption></figure>
+<ol class="steps">
+<li>Tick <b>Let the Kiosk Card app use this site as its kiosk site</b>. It is off until you do.</li>
+<li>Under <b>Approved domains</b>, list the host names whose pages kiosks may show, one per line, such as <code>museum.example.org</code>. Pasted addresses are cut down to their host name. This site is listed to start with, so kiosks can show its own kiosk page.</li>
+<li>Type a <b>Kiosk PIN</b> of 4 to 12 digits twice. It is stored only as a hash. After five wrong tries from one address, the site refuses further tries for up to ten minutes.</li>
+<li>Press <span class="ui">Save app settings</span>, then copy the <b>Address for the app</b> and enter it under <span class="ui">Kiosk site</span> on each kiosk.</li>
+</ol>
+<p>The app needs WordPress addresses of the form <code>/wp-json/…</code>, so Settings › Permalinks must not be “Plain”; the card says so if it is. If the LexiPic Kiosk plugin is also active and already provides the kiosk site, Kiosk Card leaves it to that plugin and says so on the card.</p>
+
 <h2 id="url-mode">Remote URL</h2>
-<p><span class="ui">Remote URL</span> shows a kiosk web page full screen, such as a LexiPic Kiosk WordPress site’s kiosk page. It needs a <a href="#kiosk-site">kiosk site</a> and a connection. Enter the page’s full address and press <span class="ui">Display This URL</span>.</p>
+<p><span class="ui">Remote URL</span> shows a kiosk web page full screen, such as the kiosk page of a site with the Kiosk Card plugin. It needs a <a href="#kiosk-site">kiosk site</a> and a connection. Enter the page’s full address and press <span class="ui">Display This URL</span>.</p>
 <ul>
 <li>The page’s site must be on the kiosk site’s approved list. The hostname must match exactly. If the list cannot be reached and none is saved from before, the address is refused.</li>
 <li>If the page cannot be reached, a “Can’t reach the page” screen appears, and the kiosk tries again every few seconds until it loads.</li>
@@ -530,7 +541,7 @@ td:first-child code{white-space:nowrap}
 </ul>
 
 <h2 id="change-source">Changing the source (PIN)</h2>
-<p>Once a source is set, a small <span class="ui">⚙ source</span> button sits in the corner. With a kiosk site set, it asks for the kiosk PIN. This is the same PIN as the LexiPic Kiosk WordPress plugin’s kiosk admin, managed in WordPress. The PIN is checked by the kiosk site each time and never stored on the kiosk, so this needs a connection. After several wrong tries the kiosk asks you to wait a minute.</p>
+<p>Once a source is set, a small <span class="ui">⚙ source</span> button sits in the corner. With a kiosk site set, it asks for the kiosk PIN. The PIN is set in the plugin, in WordPress (see below). The PIN is checked by the kiosk site each time and never stored on the kiosk, so this needs a connection. After several wrong tries the kiosk asks you to wait a minute.</p>
 <div class="side-by">
 <figure><img class="zoom" src="img/kc-pin.webp" alt="A small card over the kiosk: Enter PIN to change source, a PIN box, Cancel and Unlock" width="1020" height="1260" loading="lazy"><figcaption>Changing the source.</figcaption></figure>
 <figure><img class="zoom" src="img/kc-site-pin.webp" alt="A card over the setup screen: Enter the PIN of heritage.example.org to change the kiosk site, a PIN box, Cancel and Unlock" width="1020" height="1260" loading="lazy"><figcaption>Changing the kiosk site asks for the current site’s PIN.</figcaption></figure>
@@ -610,7 +621,7 @@ td:first-child code{white-space:nowrap}
 <dt>The kiosk won’t accept a web address.</dt>
 <dd>Either no <a href="#kiosk-site">kiosk site</a> is set, the page’s site is not on its approved list, or the list could not be fetched. Ask the WordPress site’s administrator to add the domain.</dd>
 <dt>Saving the kiosk site fails.</dt>
-<dd>The LexiPic Kiosk plugin must be active at that address and the site online. Check for typos, and include the sub-folder if WordPress is installed in one.</dd>
+<dd>The site must be online with the kiosk site switched on in its Kiosk Card plugin (or the LexiPic Kiosk plugin active), and its permalinks must not be “Plain”. Check for typos, and include the sub-folder if WordPress is installed in one.</dd>
 <dt>The PIN is refused or can’t be checked.</dt>
 <dd>The PIN is checked by the kiosk site, so the kiosk needs a connection. After several wrong attempts, wait a minute.</dd>
 <dt>Anyone can change what the kiosk shows.</dt>
@@ -637,7 +648,7 @@ td:first-child code{white-space:nowrap}
 <tr><td><code>GET <i>site</i>/wp-json/lexipic-kiosk/v1/allowlist</code></td><td>Returns <code>{ "domains": [ … ] }</code>, the approved hostnames for Remote URL.</td></tr>
 <tr><td><code>POST <i>site</i>/wp-json/lexipic-kiosk/v1/pin/verify</code></td><td>Takes <code>{ "pin": "…" }</code>; HTTP 200 means correct, 429 means too many attempts.</td></tr>
 </tbody></table>
-<p>The approved domains and the PIN are managed in WordPress, not on the kiosk. Kiosk Card’s <code>README.md</code> has the full details.</p>
+<p>The Kiosk Card plugin (1.7.0 or later) provides these addresses while its kiosk site is switched on (see <a href="#plugin-kiosk-site">Setting up the kiosk site in the Kiosk Card plugin</a>); the LexiPic Kiosk plugin provides the same ones. The approved domains and the PIN are managed in WordPress, not on the kiosk. Kiosk Card’s <code>README.md</code> and the plugin’s <code>readme.txt</code> have the full details.</p>
 
 <h2 id="code-files">Right-click and code files</h2>
 <p>In LexiPic, right-click is off; text fields have a small Copy and Paste menu instead. Opening a <code>.js</code> or <code>.css</code> address returns to the app: <code>sw.js</code> handles this after the first visit, and <code>.htaccess</code> handles it on Apache from the first visit. On other servers, redirect when <code>Sec-Fetch-Dest</code> is <code>document</code> and refuse when it is <code>empty</code>. Kiosk Card blocks right-click and long press. Both measures only deter casual copying.</p>
@@ -663,6 +674,8 @@ td:first-child code{white-space:nowrap}
 <div class="changes">
 <h3><span class="v">LexiPic 2.3.3</span> A web link for each word</h3>
 <ul><li>Optional <a href="#link-field">Link</a> and Link button text on each word, shown as a button on the card and on the kiosk; searchable; saved in exports and backups.</li></ul>
+<h3><span class="v">Kiosk Card plugin 1.7.0</span> Kiosk site for the app</h3>
+<ul><li>The WordPress plugin can act as the app’s <a href="#plugin-kiosk-site">kiosk site</a>: approved domains and a hashed, rate-limited kiosk PIN, under Kiosk Card › Kiosk Card app: kiosk site. Off by default.</li></ul>
 <h3><span class="v">Kiosk Card 1.4.0</span> Kiosk site set on the kiosk</h3>
 <ul><li>The WordPress site that supplies the approved pages and the PIN is no longer built in. It is empty by default and set under <a href="#kiosk-site">Kiosk site</a> on the setup card; it is checked before saving, and changing it needs the current site’s PIN. The version is shown on the setup card.</li></ul>
 <h3><span class="v">Kiosk Card 1.3.0</span> Link buttons</h3>
